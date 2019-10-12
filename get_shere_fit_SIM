@@ -1,22 +1,32 @@
+
 %Generating X_i's and Y_i's ~
 n=20;
 nsim=15;
+
+%Generating Unif(0,1) random variables..
 x1=rand(n,nsim);
 x2=rand(n,nsim);
 
+Considering the high and low noise scenarios:
 tau=[0.2 0.35];
 
 u1 = tau(1)*randn(20, 15); u2 = tau(1)*randn(20, 15); % low noise Normal with N(0,(tau(1))^2) components 
-v1 = tau(2)*randn(20, 15); v2 = tau(2)*randn(20, 15); 
+v1 = tau(2)*randn(20, 15); v2 = tau(2)*randn(20, 15); % high noise Normal 
 
 %mreg1 = arrayfun(@(j) reg_curve(x1(:, j))', 1:nsim, 'UniformOutput', false);
 %mreg2 = arrayfun(@(j) reg_curve(x2(:, j))', 1:nsim, 'UniformOutput', false);
 
-%Y1 = get_shere_fit(reg_curve(x1(:, 1))', [u1(1, :) u2(1, :)]);
+%The following is the simulated Y
 Y1 = add_noise(reg_curve(x1(:, 1))', [u1(1, :) u2(1, :)]);
 
-%Defining the kernel function:
+%Defining the Epanechnikov kernel function:
 
+function epK = epKernel(x,y,h)
+    x_st=(x-y)/h;
+    epK = 0.75*(1 - x_st^2)*(abs(x_st)<= 0.2);
+end
+
+%Calculating the Kernel function
 Kmat = repmat(NaN, 20, 20);
 beta=0.1;
 h=0.35;
@@ -27,8 +37,19 @@ for i = 1:size(X,1)
          Kmat(i,j) = epKernel(X(i,1),X(j,1),h)
     end
 end
+                      
+%Creating the predicted Y - values                      
+Y_hat=repmat(NaN, 20, 3);
 
-%The diagonal elements are non-zero so we have to deduct them,
+for i=1:size(Y_hat, 1)
+    Y_hat(i,:)= (Y1*Kmat(:,i))'-Y1(:,i)'*Kmat(i,i);
+end
 
-Kmat*Y1.'
 
+%Calculating the geodesic distance between the points
+
+dvec = arrayfun(@(i) Y_hat(i,:)*Y1(:,i), 1:20)
+    
+mean(acos(dvec))
+
+%It gives us the complex number
