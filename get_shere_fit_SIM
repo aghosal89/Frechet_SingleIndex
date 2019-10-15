@@ -1,10 +1,19 @@
 
+s=19854
+rng(s);
 n=20;
 nsim=15;
 x1=rand(n,nsim);
 x2=rand(n,nsim);
-
 tau=[0.2 0.35];
+
+  %define function for the frechet regression function:
+  reg_curve = @(t) [sqrt(1-t.^2).*cos(pi*t), sqrt(1-t.^2).*sin(pi*t), t];
+  %define the struct
+
+%Generating X_i's and Y_i's 
+
+
 
 u1 = tau(1)*randn(20, 15); u2 = tau(1)*randn(20, 15); % low noise Normal with N(0,(tau(1))^2) components 
 v1 = tau(2)*randn(20, 15); v2 = tau(2)*randn(20, 15); 
@@ -19,7 +28,7 @@ Y2 = cell2mat(arrayfun(@(j) add_noise(mreg2{1}(:, j), [v1(j, 1) v2(j, 1)]), 1:n,
 %Defining the kernel function:
 
 Kmat= repmat(NaN, 20, 20);
-beta= 0:0.05:1;
+beta= 0:0.01:1;
 h=0.5;
 Y_hat=repmat(NaN, 20, 3);
 dvec=repmat(NaN, length(beta), nsim);
@@ -38,23 +47,10 @@ for l=1:nsim
     end
 %The diagonal elements are non-zero so we have to deduct them,
 
-dvec(k,l) =mean(arrayfun(@(i) (acos(Y_hat(i,:)*Y1(:,i)))^2, 1:n));
+dvec(k,l) = mean(arrayfun(@(i) (acos(Y_hat(i,:)*Y1(:,i)))^2, 1:n));
     end
 end
 
-               
-%Creating the predicted Y - values                      
-Y_hat=repmat(NaN, 20, 3);
 
-for i=1:size(Y_hat, 1)
-    Y_hat(i,:)= (Y1*Kmat(:,i))'-Y1(:,i)'*Kmat(i,i);
-end
-
-
-%Calculating the geodesic distance between the points
-
-dvec = arrayfun(@(i) Y_hat(i,:)*Y1(:,i), 1:20)
-    
-mean(acos(dvec))
-
+save sphere_results_15_SIM.mat dvec
 
