@@ -172,6 +172,6 @@ end
 plot( 0.01:0.05:1, dvec)
 xlabel('Beta')
 ylabel('MSE')
-title('MSE variation for each of 50 simulations')
+title('MSE variation for each of 30 simulations')
 
 
