@@ -137,17 +137,21 @@ end
 
 
 
-
-% Sphere simulations for n = 50
-
-nsim =30;
-n=50;
+% Sphere simulations for n = 100
+% Sphere simulation for nsim = 30
 addpath(genpath('Manopt_2.0'))
 %addpath sphere_spline
 
+nsim =30;
+n=100;
 reg_curve = @(t) [sqrt(1-t.^2).*cos(pi*t), sqrt(1-t.^2).*sin(pi*t), t];
-beta=0.01:0.08:1;
+beta=0.01:0.05:1;
 dvec=repmat(NaN, length(beta), nsim);
+
+%Generating the data from fixed beta value~
+b=0.6352;
+
+[pm, z_f, Y_lcf, Y_frf] = sphere_sims_SIM(19845, nsim, n, [0.2 0.35], 0.3 , b);
 
 for r= 1:length(beta)
     
@@ -158,20 +162,61 @@ for r= 1:length(beta)
 
 %yt = [sqrt(1-z'.^2).*cos(pi*z'), sqrt(1-z'.^2).*sin(pi*z'), z']';
 
-yout2 = arrayfun(@(l) reg_curve(z(:,l)), 1:nsim, 'UniformOutput', false);
+%yout2 = arrayfun(@(l) reg_curve(z(:,l)), 1:nsim, 'UniformOutput', false);
 %yout = cell2mat(arrayfun(@(t) reg_curve(t)', z(:,i)),1:nsim, 'UniformOutput', false); 
 %yout = arrayfun(@(t) reg_curve(t)', z); 
 
 %M = spherefactory(3);
 
-dvec(r,:) = arrayfun(@(i) mean((arrayfun(@(l) acos(yout2{i}(l, :)*Y_fr{i}(:,l)),1:n)).^2), 1:nsim);
+% ISE and MISE for local constant and local freche fits
+%se_fr1 = cellfun(@(z) cell2mat(arrayfun(@(j) arrayfun (@(i) M.dist(yt(:, j), z(:, j, i))^2, 1:length(pm.h1))', 1:length(xout), 'UniformOutput', false)), Y_fr1, 'UniformOutput', false);
+%se_lc1 = cellfun(@(z) cell2mat(arrayfun(@(j) arrayfun (@(i) M.dist(yt(:, j), z(:, j, i))^2, 1:length(pm.h1))', 1:length(xout), 'UniformOutput', false)), Y_lc1, 'UniformOutput', false);
+%se_fr2 = cellfun(@(z) cell2mat(arrayfun(@(j) arrayfun (@(i) M.dist(yt(:, j), z(:, j, i))^2, 1:length(pm.h2))', 1:length(xout), 'UniformOutput', false)), Y_fr2, 'UniformOutput', false);
+%se_lc2 = cellfun(@(z) cell2mat(arrayfun(@(j) arrayfun (@(i) M.dist(yt(:, j), z(:, j, i))^2, 1:length(pm.h2))', 1:length(xout), 'UniformOutput', false)), Y_lc2, 'UniformOutput', false);
+
+%ise_fr1 = cell2mat (cellfun (@(s) trapz(xout, s'), se_fr1, 'UniformOutput', false)')'; mise_fr1 = nanmean(ise_fr1');
+%ise_lc1 = cell2mat (cellfun (@(s) trapz(xout, s'), se_lc1, 'UniformOutput', false)')'; mise_lc1 = nanmean(ise_lc1');
+%ise_fr2 = cell2mat (cellfun (@(s) trapz(xout, s'), se_fr2, 'UniformOutput', false)')'; mise_fr2 = nanmean(ise_fr2');
+%ise_lc2 = cell2mat (cellfun (@(s) trapz(xout, s'), se_lc2, 'UniformOutput', false)')'; mise_lc2 = nanmean(ise_lc2');
+
+% number of simulations which failed to converge at any point of xout at each bandwidth - happens near boundaries of xout for a few simluations for small bandwidths
+
+%hfl_fr1 = arrayfun(@(i) sum(cellfun(@(s) any(isnan(s(i,:))), se_fr1)), 1:length(pm.h1));
+%hfl_lc1 = arrayfun(@(i) sum(cellfun(@(s) any(isnan(s(i,:))), se_lc1)), 1:length(pm.h1));
+%hfl_fr2 = arrayfun(@(i) sum(cellfun(@(s) any(isnan(s(i,:))), se_fr2)), 1:length(pm.h2));
+%hfl_lc2 = arrayfun(@(i) sum(cellfun(@(s) any(isnan(s(i,:))), se_lc2)), 1:length(pm.h2));
+
+% ISE and MISE for spline smoothing
+
+%ise_sp1 = zeros(length(Y_sp1), length(lambda), length(T), length(e)); ise_sp2 = ise_sp1;
+
+%for i = 1:size(ise_sp1, 1)
+%  for j = 1:length(lambda)
+%    for k = 1:length(T)
+%      for l = 1:length(e)
+
+%        ise_sp1(i, j, k, l) = trapz(xout, arrayfun(@(c) M.dist(yt(:, c), Y_sp1{i}(:, c, j, k, l))^2, 1:length(xout)));
+%        ise_sp2(i, j, k, l) = trapz(xout, arrayfun(@(c) M.dist(yt(:, c), Y_sp2{i}(:, c, j, k, l))^2, 1:length(xout)));
+%
+%      end
+%    end
+%  end
+%end
+
+%mise_sp1 = squeeze(nanmean(ise_sp1, 1));
+%mise_sp2 = squeeze(nanmean(ise_sp2, 1));
+
+dvec(r,:) = arrayfun(@(i) mean((arrayfun(@(l) acos(Y_frf{i}(:, l)'*Y_fr{i}(:,l)),1:n)).^2), 1:nsim);
 
 end
 
+save sphere_results_n100_nsim30_SIM.mat Y_lc * Y_fr * Y_lcf * Y_frf * dvec
+
+load sphere_results_n100_nsim30_SIM.mat
 
 plot( 0.01:0.05:1, dvec)
 xlabel('Beta')
 ylabel('MSE')
-title('MSE variation for each of 30 simulations')
+title('MSE variation for n=100, nsim=30')
 
 
