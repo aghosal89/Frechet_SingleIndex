@@ -20,28 +20,28 @@ length(country)
 # the year for which we analyze mortality
 Yr <-2013
 
-#Setting working directory
+#Setting working directory (Modified according to the user)
 setwd("~/MATLAB/DistData/AllCountries_lt")
 
 #getting covariate data~
 
 gdp <- read.csv("GDP_YOY_perc.csv", stringsAsFactors =T)                 # gdp year-on-year percentage change 
 #gdp = subset(gdp, gdp[,c("Country.Name")] %in% country)     # selecting data for the countries considered above
-gdp = subset(gdp, gdp[,c("ï..Country.Name")] %in% country)     # selecting data for the countries considered above
-country_<- gdp[,c("ï..Country.Name")]                         # storing the counties in order they appear in covariate dataset
+gdp = subset(gdp, gdp[,c("Ã¯..Country.Name")] %in% country)     # selecting data for the countries considered above
+country_<- gdp[,c("Ã¯..Country.Name")]                         # storing the counties in order they appear in covariate dataset
 gdp <- gdp[,paste('X',Yr,sep ="")]                            # selecting the for given year for above countries
 
 unemp <- read.csv("Unemp_perc.csv", header=T)                     # unemplyment percentage data 
-unemp = subset(unemp, unemp[,c("ï..Country.Name")] %in% country)  # selecting data for the countries considered above
+unemp = subset(unemp, unemp[,c("Ã¯..Country.Name")] %in% country)  # selecting data for the countries considered above
 unemp<- unemp[,paste('X',Yr,sep ="")]                             # selecting the for given year for above countries
 
 hcexp <- read.csv("HC_exp_percGDP.csv", header=T)                    # Healthcare expenditure percentage of gdp 
-hcexp = subset(hcexp, hcexp[,c("ï..Country.Name")] %in% country)      # selecting the for given year for above countries
+hcexp = subset(hcexp, hcexp[,c("Ã¯..Country.Name")] %in% country)      # selecting the for given year for above countries
 hcexp<- hcexp[,paste('X',Yr,sep ="")]                                 # selecting data for the countries considered above
 hcexp[18]<- mean(hcexp[-18])
 
 co2d <- read.csv("CO2_damage.csv", header=T)                      # damage in USD caused by atmospheric CO2
-co2d = subset(co2d, co2d[,c("ï..Country.Name")] %in% country)       # selecting data for the countries considered above
+co2d = subset(co2d, co2d[,c("Ã¯..Country.Name")] %in% country)       # selecting data for the countries considered above
 co2d<- co2d[,paste('X',Yr,sep ="")]                               # selecting the for given year for above countries
 
 infmort <- read.csv("infmort.csv", header = T)                          # death of infants under age 1 year for every 1000 live births
@@ -56,7 +56,8 @@ cvr <- data.frame(cbind(gdp, unemp, hcexp, co2d, infmort))
 row.names(cvr)<- country_  
 colnames(cvr)<- c("GDP.YoY.%","Unemp.%","HC.Expen.%of.GDP","CO2damage.USD","Infant.Mort.1000.births")
 
-# The function to create the data vectors for computation of quantiles/density
+# The function to create the data vectors for computation of quantiles/density.
+# each age is repeated the number of times as the deaths observed at that age.
 data_vec<- function(x,f) {
   l<- 0    # initiate the vector by 0                  
   for (i in 1:length(x)) {        
@@ -66,9 +67,10 @@ data_vec<- function(x,f) {
   return(as.numeric(l))
 }
 
-#Remove the + sign at age 110
+#The data obtained from https://mortality.org/ is such that age of individuals alive beyond 110 years is recorded as 110+. 
+# the following function removes the + sign at age 110 for further numerical analysis.
 Remove_plus <- function(data) {
-  n = nrow(data)
+  n = nrow(data)  
   for (i in 1:n) {
     if(data[i, "Age"]=="110+") {
       data[i, "Age"]=110
@@ -84,9 +86,9 @@ Remove_plus <- function(data) {
 
 # in the following segment we gather the response data by the following steps:
 #  1) read the lifetable corresponding to a specific country
-#  2) remove '+' sign from age '110+' category
+#  2) remove '+' sign from age '110+' category using 'Remove_plus' function above.
 #  3) gather the 'age-at-death' for age range [20,110].
-#  4) subset data for the given year. 
+#  4) subset data for the chosen year. 
 #  5) create dataset for gathering quantile function using 'data_vec' function above
 
 
