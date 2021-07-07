@@ -3,8 +3,9 @@
 %% Sphere simulations n=50, p=2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%Adding path to 'manopt' folder
+%Adding path to folders
 addpath(genpath('manopt'))
+addpath(genpath('FMINSEARCHBND'))
 
 % For beta in circumference of a unit circle;
 
@@ -203,8 +204,9 @@ std(acos(beta_opt_mspe_ln_mat*b'))
 %% Sphere simulations n=50, p=3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%Adding path to files and folder
+%Adding path to folders
 addpath(genpath('manopt'))
+addpath(genpath('FMINSEARCHBND'))
 
 % For beta in circumference of a unit circle;
 
@@ -371,8 +373,9 @@ save Sphere_results_n50_nsim200_p3_neldermead.mat mreg1 * mspe_hn * mspe_ln * et
 %% Sphere simulations n=50, p=4
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%Adding path to files and folder
+%Adding path to folders
 addpath(genpath('manopt'))
+addpath(genpath('FMINSEARCHBND'))
 
 % For beta in circumference of a unit circle;
 
