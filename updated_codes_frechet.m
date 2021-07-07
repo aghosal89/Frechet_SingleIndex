@@ -1,12 +1,12 @@
 %% For computing Mean Square Prediction Error (MSPE), Mean Square Estimation Error (MSEE)
 
-%% Sphere simulations n=50, p=4
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Sphere simulations n=50, p=4, High Noise
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% generating path for folder 'Manopt_2.0'
-addpath(genpath('Manopt_2.0'))
+% generating path for contents of folder 'Manopt_2.0'
+addpath(genpath('manopt'))
 
-nsim =10;   % number of simulations
+nsim =2;   % number of simulations
 n=50;        % number of observations 
 p=4;         % dimension of theta vector 
 s=19878;     % random number generators
@@ -137,7 +137,7 @@ end
 end
 delete(pool) % shutting down parallel pool 
 
-save Sphere_results_n100_nsim10_p4.mat mreg1 * mspe_hn * msee_hn * mspe_ln * msee_ln * h1 * h2 * Y_true2 * Y_true1
+save Sphere_results_n50_nsim2_p4.mat mreg1 * mspe_hn * msee_hn * mspe_ln * msee_ln * h1 * h2 * Y_true2 * Y_true1
 
 %the following are some computation necessary for further analyses~
 
@@ -227,16 +227,16 @@ distvs = distv(:,1:2);
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Sphere simulations n=50, p=3
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Sphere simulations n=50, p=3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % adding path to the 'Manopt_2.0' folder
-addpath(genpath('Manopt_2.0'))
+addpath(genpath('manopt'))
 
 % For beta in circumference of a unit circle;
 
-nsim = 200;  % number of simulations
+nsim = 188;  % number of simulations
 n=50;        % number of observations 
 p=3;         % dimension of theta vector 
 s=19878;     % random number generators
@@ -262,13 +262,13 @@ X3 = sin(S2);          % creating third coordinate
 
 beta = [X1(:), X2(:), X3(:)]; % creating the grid
 
-beta = beta(beta(:,1)>0.05,:);   %choosing the first coordinate to be positive
-beta = beta(beta(:,1)<0.95,:);   %choosing the first coordinate not on boundary
+beta = beta(beta(:,1)>0.02,:);   %choosing the first coordinate to be positive
+beta = beta(beta(:,1)<0.98,:);   %choosing the first coordinate not on boundary
 
 size(beta)
 
-%h1=0.46:0.01:0.7;   % possible bandwidths on a grid for low noise data
-h2=0.5:0.02:0.75;
+h1= exp(log(0.46):0.02:log(0.7));   % possible bandwidths on a grid for low noise data
+h2= exp(log(0.5):0.02:log(0.75));   % possible bandwidths on a grid for high noise data
 pm = struct('s', s, 'nsim', nsim, 'n', n, 'tau1', tau1,'tau2', tau2, 'h2', h2, 'beta', beta);
 
 % Generating the data from fixed theta value, here we assume that the
@@ -367,7 +367,7 @@ end
 end
 delete(pool) % shutting down parallel pool 
 
-save Sphere_results_n50_nsim200_p3_HN0.6.mat mreg1 * h2 * mspe_hn * msee_hn * Y_true2
+save Sphere_results_n50_nsim2_p3.mat mreg1 * h2 * mspe_hn * msee_hn * Y_true2
 
 %the following are some computation necessary for further analyses~
 
@@ -461,9 +461,9 @@ distvs = distv(:,1:2);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %Adding path to files and folder
-addpath(genpath('Manopt_2.0'))
+addpath(genpath('manopt'))
 
-nsim = 4;  % number of simulations
+nsim = 5;  % number of simulations
 n=200;        % number of observations 
 p=2;         % dimension of theta vector 
 s=19878;     % random number generators
@@ -485,8 +485,8 @@ beta = [cos(f)', sin(f)'];
 beta = beta(beta(:,1)>0.02 ,:);  
 beta = beta(beta(:,1)<0.98 ,:);  
 
-h1 = exp(log(0.35):0.02:log(.65));
-h2 = exp(log(0.35):0.02:log(0.85));
+h1 = exp(log(0.5):0.02:log(.85));
+h2 = exp(log(0.65):0.02:log(1.5));
 
 % h_opt_mspe_hn = .8438;   
 % h_opt_mspe_ln = 0.5327;  
@@ -588,7 +588,7 @@ end
 end
 delete(pool) % shutting down parallel pool 
 
-save Sphere_results_n200_nsim4_1_p2.mat mreg1 * mspe_hn * msee_hn * mspe_ln * msee_ln * h1 * h2
+save Sphere_results_n200_nsim5_p2.mat mreg1 * mspe_hn * msee_hn * mspe_ln * msee_ln * h1 * h2
 
 %the following are some computation necessary for further analyses~
 
