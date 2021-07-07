@@ -3,8 +3,9 @@
 %% Sphere simulations n=50, p=4, High Noise
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% generating path for contents of folder 'Manopt_2.0'
+% generating path for files and folders
 addpath(genpath('manopt'))
+addpath(genpath('FMINSEARCHBND'))
 
 nsim =2;   % number of simulations
 n=50;        % number of observations 
@@ -231,8 +232,10 @@ distvs = distv(:,1:2);
 %% Sphere simulations n=50, p=3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% adding path to the 'Manopt_2.0' folder
+% adding path to the folders
 addpath(genpath('manopt'))
+addpath(genpath('FMINSEARCHBND'))
+
 
 % For beta in circumference of a unit circle;
 
@@ -462,6 +465,7 @@ distvs = distv(:,1:2);
 
 %Adding path to files and folder
 addpath(genpath('manopt'))
+addpath(genpath('FMINSEARCHBND'))
 
 nsim = 5;  % number of simulations
 n=200;        % number of observations 
