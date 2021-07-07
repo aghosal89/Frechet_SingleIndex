@@ -5,7 +5,6 @@
 
 % generating path for files and folders
 addpath(genpath('manopt'))
-addpath(genpath('FMINSEARCHBND'))
 
 nsim =2;   % number of simulations
 n=50;        % number of observations 
@@ -234,8 +233,6 @@ distvs = distv(:,1:2);
 
 % adding path to the folders
 addpath(genpath('manopt'))
-addpath(genpath('FMINSEARCHBND'))
-
 
 % For beta in circumference of a unit circle;
 
@@ -465,7 +462,6 @@ distvs = distv(:,1:2);
 
 %Adding path to files and folder
 addpath(genpath('manopt'))
-addpath(genpath('FMINSEARCHBND'))
 
 nsim = 5;  % number of simulations
 n=200;        % number of observations 
