@@ -20,7 +20,7 @@ Running the codes in the 'run_sphere_sim_neldermead.m' requires creating a direc
 
 Once the optimization steps are completed for various simulation settings, the estimates of the index parameter and the choice of bandwidth are computed using codes in:
 
-- sphere_computations.m
+- Sphere_computation.m
 
 And the necessary plots are generated using:
 
