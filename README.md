@@ -18,7 +18,8 @@ Running the codes in the 'run_sphere_sim_neldermead.m' requires creating a direc
 - nm_cost.m
 - fminsearchbnd.m
 
-Once the optimization steps are completed for various simulation settings, the estimates of the index parameter and the choice of bandwidth are computed using codes in:
+Once the optimization steps are completed for various simulation settings, the estimates of the index parameter and the choice of bandwidth are computed. For p=3 covariates, the convergence of the eta estimates was visualized using the 2-D histogram using the 'hist2d.m' function obtained from the link:
+https://www.mathworks.com/matlabcentral/fileexchange/66629-2-d-histogram-plot. The codes can be found in the following script:
 
 - Sphere_computation.m
 
