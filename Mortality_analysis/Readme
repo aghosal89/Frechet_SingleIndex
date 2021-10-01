@@ -6,7 +6,12 @@ To run the FSI model, first we read all the functions from the following scripts
 3) FSIDenReg.R
 4) LocWassRegAMP.R
 
-Then, run the codes in the script 'FSI_model.R' script. We obtain the bandwidth choice, then obtain the estimate the of index parameter using the chosen bandwidth, then obtain the MSPE (Mean Square Prediction Error) for FSI model for various test/train splits of the dataset.
+Then we run the codes in the script 'Data_analyses.R' to build the models Global Fréchet and Local Fréchet models using each covariates considered in the model: 
+Year-on-year percentage change in GDP, Healthcare expenditure as percentage of GDP, CO2 emissions in tonnes per capita, Infant mortality per 1000 births, Human 
+Development Index; all for the year 2013. 
+
+Then, run the codes in the script 'FSI_model.R' script. We obtain the bandwidth choice, then obtain the estimate the of index parameter using the chosen bandwidth, 
+then obtain the MSPE (Mean Square Prediction Error) for FSI model for various test/train splits of the dataset. Apart from the FSI model, . These codes for these models are in the script 'Data_analyses.R'. 
 
 To obtain the fréchet R-squared for various regression models, run the script 'Frechet_Rsquared.R'. 
 
