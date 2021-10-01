@@ -1,2 +1,12 @@
 
-The age-of-death data for 41 countries can be found in https://mortality.org/. 
+To run the FSI model, first we read all the functions from the following scripts:
+
+1) data_functions.R
+2) FSIAuxFunctions.R
+3) FSIDenReg.R
+4) LocWassRegAMP.R
+
+Then, run the codes in the script 'FSI_model.R' script. We obtain the bandwidth choice, then obtain the estimate the of index parameter using the chosen bandwidth, then obtain the MSPE (Mean Square Prediction Error) for FSI model for various test/train splits of the dataset.
+
+To obtain the fréchet R-squared for various regression models, run the script 'Frechet_Rsquared.R'. 
+
