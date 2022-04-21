@@ -14,16 +14,16 @@ a path is generated in the scripts:
 
 4) download from https://github.com/aghosal89/Frechet_SingleIndex/tree/master/Sphere%20Simulation the scripts:
 
-  run_sphere_SIM_neldermead.m
-  run_sphere_SIM_grid.m 
-  add_noise.m
-  cart2polar.m
-  get_cost.m
-  get_egrad.m
-  get_ehess.m
-  get_sphere_fit_FSI.m
-  polar2cart.m
-  nm_cost.m
+  - run_sphere_SIM_neldermead.m
+  - run_sphere_SIM_grid.m 
+  - add_noise.m
+  - cart2polar.m
+  - get_cost.m
+  - get_egrad.m
+  - get_ehess.m
+  - get_sphere_fit_FSI.m
+  - polar2cart.m
+  - nm_cost.m
 
 5)a) run 'run_sphere_SIM_neldermead.m' 
 To simulate the data and produce numbers to fill figures... and tables... in the paper. 
