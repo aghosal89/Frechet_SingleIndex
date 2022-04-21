@@ -12,7 +12,7 @@ Extract the folder 'FMINSEARCHBND' by unzipping 'FMINSEARCHBND.zip' then move it
 3) Open Matlab and set the working directory to the folder containing the folders 'manopt' and 'FMINSEARCHBND'. 
 a path is generated in the scripts:
 
-4) download from github the scripts 
+4) download from https://github.com/aghosal89/Frechet_SingleIndex/tree/master/Sphere%20Simulation the scripts:
 
   run_sphere_SIM_neldermead.m
   run_sphere_SIM_grid.m 
@@ -25,6 +25,10 @@ a path is generated in the scripts:
   polar2cart.m
   nm_cost.m
 
+5)a) run 'run_sphere_SIM_neldermead.m' 
+To simulate the data and produce numbers to fill figures... and tables... in the paper. 
+
+5)b) and 'run_sphere_SIM_grid.m'
 Running the codes in the 'run_sphere_SIM_neldermead.m' requires the following files in the directory folder which also contains folders 'manopt' and 
 'FMINSEARCHBND' mentioned above:
 
