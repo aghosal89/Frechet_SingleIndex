@@ -32,6 +32,4 @@ To simulate the data and produce numbers to fill figures... and tables... in the
 Running the codes in the 'run_sphere_SIM_neldermead.m' requires the following files in the directory folder which also contains folders 'manopt' and 
 'FMINSEARCHBND' mentioned above:
 
-- 
-
 To run the codes in the script 'run_sphere_SIM_grid.m' the above functions are enough as kept in the same working directory.  
