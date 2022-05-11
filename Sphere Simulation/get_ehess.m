@@ -6,11 +6,10 @@ function eh = get_ehess(w, Y, y, M, u)
 	ip = arrayfun(@(k) Y(:, k)'*y, 1:size(Y, 2));
 	
 	for i = 1:size(Y, 2)
-        if(w(i) ~= 0 && abs(ip(i))<1)
+        if(w(i) ~= 0 && abs(ip(i))< 0.999)
     		hi(:, :, i) = 2*w(i)*(sqrt(1 - ip(i)^2) - ip(i)*acos(ip(i)))/((1 - ip(i)^2)^(3/2))*Y(:, i)*Y(:, i)';	
         end
-    end
-		
+    end	
 	tmp = sum(hi, 3);
     eh = tmp*u;
 	
