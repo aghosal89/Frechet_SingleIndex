@@ -15,7 +15,7 @@ a path is generated in the scripts:
 4) download from https://github.com/aghosal89/Frechet_SingleIndex/tree/master/Sphere%20Simulation the scripts:
 
   - run_sphere_SIM_neldermead.m
-  - run_sphere_SIM_grid.m 
+  - run_sphere_SIM_fullgrid.m 
   - add_noise.m
   - cart2polar.m
   - get_cost.m
