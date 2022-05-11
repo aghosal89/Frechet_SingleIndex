@@ -26,10 +26,7 @@ a path is generated in the scripts:
   - nm_cost.m
 
 5)a) run 'run_sphere_SIM_neldermead.m' 
-To simulate the data and produce numbers to fill figures... and tables... in the paper. 
+To simulate the data and produce numbers to fill figures 1 to 6 and tables 1 to 4 in the paper. 
 
 5)b) and 'run_sphere_SIM_grid.m'
-Running the codes in the 'run_sphere_SIM_neldermead.m' requires the following files in the directory folder which also contains folders 'manopt' and 
-'FMINSEARCHBND' mentioned above:
-
-To run the codes in the script 'run_sphere_SIM_grid.m' the above functions are enough as kept in the same working directory.  
+Running the codes in the 'run_sphere_SIM_neldermead.m' requires the same set of files as the 'run_sphere_SIM_neldermead.m' above to be kept in the same working directory. 
