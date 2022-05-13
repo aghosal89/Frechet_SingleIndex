@@ -1,4 +1,21 @@
 
+1) Download the all the files from the folder 'Mortality_analysis' into a folder in you computer and set it as the working directory for operation in R/RStudio.
+
+2) Run the codes in the script 'Covariate_generation.R' to read and generate the covariate data for our model. 
+This script takes as inputs the following files:
+    
+    a) Countries_FSI.csv:    contains list of all 40 countries in order appearing in the covariate data
+    b) GDP_YoY_perc.csv:     contains time seeries data on GDP year-on-year % change for a superset of countries containing 40 countries in our model.
+    c) HC_exp_percGDP.csv:   contains time seeries data on Healthcare expenditure % of GDP for a superset of countries containing 40 countries in our model.
+    d) CO2_emissions_pc.csv: contains time seeries data on CO2 emissions per-capita for a superset of countries containing 40 countries in our model.
+    e) infmort.csv:          contains time seeries data on Infant mortality per 1000 live births for a superset of countries containing 40 countries in our model.
+    f) HumanDevelopmentIndex(HDI).csv: contains time seeries data on Human Development Index for a superset of countries containing 40 countries in our model.
+As outputs it produces:
+    a) X_centerscale.csv, the 40x5 design matrix for our model. 
+
+3) Run the codes in the script 'Response_generation.R' to read and generate the response data in our model. 
+   
+
 To run the FSI model, first we read all the functions from the following scripts:
 
 1) data_functions.R
