@@ -10,12 +10,96 @@ This script takes as inputs the following files:
     d) CO2_emissions_pc.csv: contains time seeries data on CO2 emissions per-capita for a superset of countries containing 40 countries in our model.
     e) infmort.csv:          contains time seeries data on Infant mortality per 1000 live births for a superset of countries containing 40 countries in our model.
     f) HumanDevelopmentIndex(HDI).csv: contains time seeries data on Human Development Index for a superset of countries containing 40 countries in our model.
+
 As outputs it produces:
+
     a) X_centerscale.csv, the 40x5 design matrix for our model. 
 
-3) Run the codes in the script 'Response_generation.R' to read and generate the response data in our model. 
-   
+3) Run the codes in the script 'Response_generation.R' to read and generate the response data in our model. This script takes as inputs the following files:
+    
+    3.1)    lt_australia.csv
+    3.2)    lt_austria.csv
+    3.3)    lt_belarus.csv  
+    3.4)    lt_belgium.csv
+    3.5)    lt_bulgaria.csv
+    3.6)    lt_canada.csv
+    3.7)    lt_chile.csv
+    3.8)    lt_croatia.csv
+    3.9)    lt_czech.csv
+    3.10)   lt_denmark.csv
+    3.11)   lt_estonia.csv 
+    3.12)   lt_finland.csv
+    3.13)   lt_france.csv
+    3.14)   lt_germany.csv
+    3.15)   lt_greece.csv
+    3.16)   lt_hongkong.csv
+    3.17)   lt_hungary.csv
+    3.18)   lt_iceland.csv
+    3.19)   lt_ireland.csv
+    3.20)   lt_israel.csv
+    3.21)   lt_italy.csv
+    3.22)   lt_japan.csv
+    3.23)   lt_latvia.csv
+    3.24)   lt_lithuania.csv
+    3.25)   lt_luxembourg.csv
+    3.26)   lt_netherlands.csv
+    3.27)   lt_newz.csv
+    3.28)   lt_norway.csv
+    3.29)   lt_poland.csv
+    3.30)   lt_portugal.csv
+    3.31)   lt_korea.csv
+    3.32)   lt_russia.csv
+    3.33)   lt_slovakia.csv
+    3.34)   lt_slovenia.csv
+    3.35)   lt_spain.csv
+    3.36)   lt_sweden.csv
+    3.37)   lt_switzerland.csv
+    3.38)   lt_UK.csv
+    3.39)   lt_USA.csv
+    3.40)   lt_Ukraine.csv
+    
+    3.41)   Countries_FSI.csv
 
+the files 3.1 - 3.40 above are life tables for the respective countries above for various years. Each contains columns for age and number of deaths 
+in that age for that country. The file 'Countries_FSI.csv' described above in 2). As outputs it generates the files:
+    
+    a) quant_all.csv  : a 40x101 matrix whose rows are the quantiles on an equidistant grid of length 101 on [0,1] of the mortality distribution of each country.
+    b) density_all.csv : a 40x101 matrix whose rows are the mortality densities on an equidistant grid of age-range [20,110] for each country.
+
+
+4) Run the codes in the script Models_BW_Predictions.R to find the predicted quantiles/densities for all countries using Local Frechet regression using all 
+covariates 'GDPC', 'HCE', 'CO2E', 'IM', 'HDI' and using Global Frechet regression. In the process we also find the best bandwidth choices for each Local Frechet 
+regression models. The inputs for this script are:
+
+    a) X_centerscale.csv
+    b) quant_all.csv
+
+The outputs are:
+
+    a) LF_GDPC_BW.csv
+    b) LF_GDPC_Qpred.csv
+    c) LF_GDPC_Dpred.csv
+    
+    d) LF_HCE_BW.csv
+    e) LF_HCE_Qpred.csv
+    f) LF_HCE_Dpred.csv
+    
+    g) LF_CO2E_BW.csv
+    h) LF_CO2E_Qpred.csv
+    i) LF_CO2E_Dpred.csv
+    
+    j) LF_IM_BW.csv
+    k) LF_IM_Qpred.csv
+    l) LF_IM_Dpred.csv
+    
+    m) LF_HDI_BW.csv
+    n) LF_HDI_Qpred.csv
+    o) LF_HDI_Dpred.csv
+    
+    p) GF_Qpred.csv
+    q) GF_Dpred.csv    
+    
+5) 
 To run the FSI model, first we read all the functions from the following scripts:
 
 1) data_functions.R
