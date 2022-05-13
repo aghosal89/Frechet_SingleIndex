@@ -123,13 +123,13 @@ The outputs are:
     e) LF_IM_folds.csv
     f) LF_HDI_folds.csv
 
-To run the FSI model, first we read all the functions from the following scripts:
+6) To run the FSI model, run the codes in the script FSI_model.R, first we read all the functions from the following scripts from your working directory:
 
-1) data_functions.R
-2) FSIAuxFunctions.R
-3) FSIDenReg.R
-4) LocWassRegAMP.R
+    a) FSIAuxFunctions.R
+    b) FSIDenReg.R
+    c) LocWassRegAMP.R
 
+The FSI_model.R script takes as input the following files: 
 Then we run the codes in the script 'Data_analyses.R' to build the models Global Fréchet and Local Fréchet models using each covariates considered in the model: 
 Year-on-year percentage change in GDP, Healthcare expenditure as percentage of GDP, CO2 emissions in tonnes per capita, Infant mortality per 1000 births, Human 
 Development Index; all for the year 2013. 
