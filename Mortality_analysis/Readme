@@ -99,7 +99,30 @@ The outputs are:
     p) GF_Qpred.csv
     q) GF_Dpred.csv    
     
-5) 
+5) Run the codes in the script CV_folds_analysis.R. Here we consider 30 folds of training/testing splits in data. In each fold we picked randomly 
+without replacement 1/4 observations to be in testing split while rest 3/4 observations to be in the training split. Then the respective Local Frechet
+or Global Frechet models are built on the training split and used for predicting the response on the testing set. The Mean Square Prediction Error is
+measured on the testing set. The best bandwidths obtained by running the script Models_BW_Predictions.R are used here. The inputs are:
+
+    a) X_centerscale.csv
+    b) quant_all.csv
+    c) Folds.csv 
+    
+    d) LF_GDPC_BW.csv
+    e) LF_HCE_BW.csv
+    f) LF_CO2E_BW.csv
+    g) LF_IM_BW.csv
+    h) LF_HDI_BW.csv
+    
+The outputs are:
+
+    a) GF_folds.csv
+    b) LF_GDPC_folds.csv
+    c) LF_HCE_folds.csv
+    d) LF_CO2E_folds.csv
+    e) LF_IM_folds.csv
+    f) LF_HDI_folds.csv
+
 To run the FSI model, first we read all the functions from the following scripts:
 
 1) data_functions.R
