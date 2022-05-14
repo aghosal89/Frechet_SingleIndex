@@ -1,6 +1,3 @@
-############
-# Script #3
-############
 
 ## In this script we select bandwidth for each covariate and generate predictions
 ## using Local Frechet regression. Also we generate predictions from Global Frechet
