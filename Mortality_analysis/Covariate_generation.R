@@ -1,6 +1,3 @@
-############
-# script #1
-############
 
 ## Setting up the covariate data 
 
