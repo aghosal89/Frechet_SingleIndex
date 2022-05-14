@@ -1,6 +1,3 @@
-############
-# Script #4
-############
 
 ## This script divides the dataset into various folds then
 ## computes MSPE across folds for all models with Local Frechet regression with the 
