@@ -1,7 +1,3 @@
-############
-# Script #2
-############
-
 ## In this script we set up the response data
 
 # In the following segment we create the response data as objects in L^2-Wasserstein space to 
