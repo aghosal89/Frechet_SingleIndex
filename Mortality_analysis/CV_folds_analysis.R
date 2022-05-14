@@ -31,10 +31,10 @@ m<-ncol(quant_all)
 # define the number of observations
 n<- nrow(X_ctr)
 
-# grid of support for mortality densities 
+# grid of support for densities 
 dSup = seq(20, 110, length.out = m)
 
-# grid of support for mortality quantiles
+# grid of support for quantiles
 qSup = seq(0, 1, length.out = m)
 
 ###################################
@@ -114,7 +114,7 @@ write.csv(lf_hdi_folds, 'LF_HDI_folds.csv')
 
 
 # Healthcare expenditure as percentage of GDP
-h_hce <- read.csv("LF_HCE_BW.csv", header =  T)
+h_hce <- read.csv("LF_HCE_BW.csv", header =  T)[,2]
 lf_hce_folds <- matrix(NA, 30, 1)
 for (i in 1:nrow(fold)) {
   
@@ -124,7 +124,7 @@ for (i in 1:nrow(fold)) {
   x_in <- as.matrix(X_ctr[-as.numeric(as.numeric(fold[i,])), "HCE"])
   x_out <- as.matrix(X_ctr[as.numeric(as.numeric(fold[i,])),"HCE"])
   fr <- LocWassRegAMP(xin = as.matrix(x_in), qin= q_in, xout= x_out, 
-                  optns= list(bwReg=h_hce[,2], qSup = qSup, dSup=dSup, lower=20, upper=110))
+                  optns= list(bwReg=h_hce, qSup = qSup, dSup=dSup, lower=20, upper=110))
   
   pe <- matrix(NA, length(as.numeric(fold[i,])))
   for(s in 1:length(fold[i,])) {
@@ -169,7 +169,7 @@ for (i in 1:nrow(fold)) {
   x_in <- as.matrix(X_ctr[-as.numeric(as.numeric(fold[i,])), "IM"])
   x_out <- as.matrix(X_ctr[as.numeric(as.numeric(fold[i,])), "IM"])
   fr <- LocWassRegAMP(xin = as.matrix(x_in), qin= q_in, xout= x_out, 
-                  optns= list(bwReg=h_im, qSup = qSup, lower=20, upper=110))
+                  optns= list(bwReg=h_im, qSup = qSup, dSup=dSup, lower=20, upper=110))
   
   pe <- matrix(NA, length(fold[i,]))
   for(s in 1:length(fold[i,])) {
