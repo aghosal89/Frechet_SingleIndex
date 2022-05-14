@@ -1,4 +1,3 @@
-
 ############
 # script #1
 ############
@@ -15,6 +14,9 @@
 # 4) Infant mortality rate per 1000 live births (IM)
 # 5) Human Development Index (HDI)
 
+# Aritra's working directory
+setwd("~/Library/Mobile Documents/com~apple~CloudDocs/Documents/FSI/Mortality_all")
+
 # the following are the list of 40 countries for which mortality is considered in our model.
 country_ <- read.csv("Countries_FSI.csv", header = T)[,-1]
 
@@ -23,9 +25,6 @@ n<- length(country_)
 
 # the year for which we analyze mortality
 Yr <-2013
-
-# Aritra's working directory
-setwd("~/Library/Mobile Documents/com~apple~CloudDocs/Documents/FSI/Mortality_all")
 
 # getting covariate data~
 # GDP year-on-year percentage change~
