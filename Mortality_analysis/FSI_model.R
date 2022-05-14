@@ -55,6 +55,7 @@ qSup<- seq(0,1, length.out = m)
 library('numbers')
 library('frechet')
 library('fdadensity')
+library('pracma')
 
 #######################################################
 ## Choosing bandwidth by leave-one-out Cross-Validation
