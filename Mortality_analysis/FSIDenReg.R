@@ -1,12 +1,12 @@
 
 ## This function fits the FSI index model in the case of distributional responses 
-## for a given bandwidth and kernel function.  See file FISAUXFunctions.R for 
+## for a given bandwidth and kernel function.  See file FSIAUXFunctions.R for 
 ## auxiliary functions used within this script.  This file must be sourced prior
 ## to using FSIDenReg.  The frechet and pracma packages must also be loaded
 ##
 ## Inputs:
 ##
-## X       - nxp matrix of predictors, observations correspond to rows, variables to columns
+## X       - nxp matrix of predictors, n observations correspond to rows, p variables to columns
 ## tt      - length m grid spanning [0, 1], used as grid for quantile functions
 ## Y       - nxm matrix of "observed" quantile functions on grid tt
 ## h       - bandwidth for smoothing
@@ -37,7 +37,7 @@
 
 FSIDenReg <- function(X = NULL, tt = NULL, Y = NULL, h = NULL, kern = 'gauss', 
                       Xout = NULL, nsp = 3, L = 0){
-  
+    
     # Perform checks
     if(is.null(X) | !is.matrix(X)){
       stop('Must provide covariates as a matrix X')
@@ -71,25 +71,29 @@ FSIDenReg <- function(X = NULL, tt = NULL, Y = NULL, h = NULL, kern = 'gauss',
   
     # Create grid of starting values for optimization
 
-    p <- ncol(X)   # dimension of covariate
-    spc <- pi/nsp  # specified spacing between staring points in each coordinate
-    f <- lapply(1:(p - 1), function(j) seq(-pi/2 + spc/2, pi/2 - spc/2, by = spc))  # equally spaced starting points in polar coordinates
-    etaStart <- as.matrix(expand.grid(f))  # create grid of starting values 
+    # compute dimension of covariate
+    p <- ncol(X)
+    # specified spacing between staring points in each coordinate
+    spc <- pi/nsp  
+    # equally spaced starting points in polar coordinates
+    f <- lapply(1:(p - 1), function(j) seq(-pi/2 + spc/2, pi/2 - spc/2, by = spc)) 
+    # create grid of starting values
+    etaStart <- as.matrix(expand.grid(f))   
     if(L != 0) {
       smp <- sample.int(nrow(etaStart), min(L, nrow(etaStart)))
       etaStart <- etaStart[smp,]
     }
     
-    #### To provide information about optimization as output
+    ## To provide information about optimization as output
     optInf <- list()
-    ####
     
-    optim_optns = list(factr = 1e11, maxit = 100)
+    # provide criteria for termination of the algorithm
+    optim_optns <- list(factr = 1e11, maxit = 100)
+    
     WnMin <- rep(NA, nrow(etaStart))
     etaMin <- matrix(NA, nrow = nrow(etaStart), ncol = p - 1)
     
-    
-    
+    # main optimization loop over starting values
     for (k in 1:nrow(etaStart)) {
       WnOpt <- optim(par = etaStart[k, ], fn = WnCost, method = "L-BFGS-B",
                      lower = -pi/2, upper = pi/2, control = optim_optns,
@@ -101,14 +105,14 @@ FSIDenReg <- function(X = NULL, tt = NULL, Y = NULL, h = NULL, kern = 'gauss',
       etaMin[k, ] <- WnOpt$par
     }
     
-    # the optimizer, i.e. thetaHat    
+    # the op etimizer, i.e. thetaHat    
     thetaHat <- polar2cart(etaMin[which.min(WnMin),], 1)
     
     optvalue <- min(WnMin)  # updated to find the minimized Wn in training set
     
     # Lastly, if Xout is not empty, compute predictions using LocDenReg
     Yout <- NA
-    if(!is.null(Xout)){
+    if(!is.null(Xout)) {
       Yout <- LocWassRegAMP(xin = X%*%thetaHat, qin = as.matrix(Y), 
                      xout = Xout%*%thetaHat, 
                   optns = list(bwReg = h, kernelReg= kern, lower = 20, 
@@ -119,5 +123,6 @@ FSIDenReg <- function(X = NULL, tt = NULL, Y = NULL, h = NULL, kern = 'gauss',
                 etaStart <- etaStart, optInf = optInf))
     
 }
+
 
 
