@@ -114,6 +114,8 @@ measured on the testing set. The best bandwidths obtained by running the script 
     g) LF_IM_BW.csv
     h) LF_HDI_BW.csv
     
+To run the codes read the function 'LocWassRegAMP' from the script 'LocWassRegAMP.R'.
+
 The outputs are:
 
     a) GF_folds.csv
@@ -123,7 +125,7 @@ The outputs are:
     e) LF_IM_folds.csv
     f) LF_HDI_folds.csv
 
-6) To run the FSI model, run the codes in the script 'FSI_model.R', first we read all the functions from the following scripts from your working directory:
+6) To run the FSI model, run the codes in the script 'FSI_model.R', first we read the functions from the following scripts in your working directory:
 
     a) FSIAuxFunctions.R
     b) FSIDenReg.R
