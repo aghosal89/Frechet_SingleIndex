@@ -1,29 +1,37 @@
-############
-# Script #
-############
 
 
-###########################################
+#######################################
 # Computations for Table 5
-# getting Frechet R-squared for the models
-###########################################
+# get Frechet R-squared for the models
+#######################################
 
 # set working directory~
-setwd("~/Library/Mobile Documents/com~apple~CloudDocs/Documents/LocalFrechetSpherical/Mortality_all")
+setwd("~/Library/Mobile Documents/com~apple~CloudDocs/Documents/FSI/Mortality_all")
 
-library('frechet')
+# read the list of countries for our model~
+country_<- read.csv("Countries_FSI.csv", header = T)[,2]
 
-# reading the response data
-Y <- read.csv("quant_all.csv", header = T)
-Y<- as.matrix(Y[,-1])
+# read the covariate data:
+X_ctr<- read.csv("X_centerscale.csv", header = T)
+X_ctr <- as.matrix(X_ctr[,-1])
+rownames(X_ctr)<- country_
 
-# read covariate data
-X<- read.csv("X_centerscale.csv", header = T)
-X<- as.matrix(X[,-1])
+# number of observations
+n <- nrow(X_ctr)
 
+# Read the response data as quantiles
+quant_all <- read.csv("quant_all.csv", header = T)
+rownames(quant_all)<- country_
+quant_all <- as.matrix(quant_all[,-1])
 
-qSup <- seq(0,1, length.out=101)
+# length of quantiles 
+m <- ncol(quant_all)
 
+# support for quantiles
+qSup <- seq(0,1, length.out=m)
+
+# support for densities
+dSup <- seq(20, 110, length.out=m)
 
 # function to produce the R_oplus_squared for Wasserstein space
 
@@ -80,28 +88,28 @@ library("frechet")
 library("fdadensity")
 
 # For Global Frechet
-frechet_Rsquared(Y=Y, X=X, tt=qSup, model="GF")*100
+frechet_Rsquared(Y=quant_all, X=X_ctr, tt=qSup, model="GF")*100
 
 # For Local Frechet: HDI
 h_hdi<- read.csv("LF_HDI_BW.csv", header = T)[,2]
-frechet_Rsquared(Y=Y, X=(X[,"HDI"]), tt= qSup, h=h_hdi, model="LF")*100
+frechet_Rsquared(Y=quant_all, X=(X_ctr[,"HDI"]), tt= qSup, h=h_hdi, model="LF")*100
 
 # For Local Frechet: Healthcare Expenditure as percentage of GDP
 h_hce<- read.csv("LF_HCE_BW.csv", header = T)[,2]
-frechet_Rsquared(Y=Y, X=(X[,"HCE"]), tt= qSup, h=h_hce, model="LF")*100
+frechet_Rsquared(Y=quant_all, X=(X_ctr[,"HCE"]), tt= qSup, h=h_hce, model="LF")*100
 
 # For Local Frechet: GDP
 h_gdpc<- read.csv("LF_GDPC_BW.csv", header = T)[,2]
-frechet_Rsquared(Y=Y, X=(X[,"GDPC"]), tt= qSup, h=h_gdpc, model="LF")*100
+frechet_Rsquared(Y=quant_all, X=(X_ctr[,"GDPC"]), tt= qSup, h=h_gdpc, model="LF")*100
 
 # For Local Frechet: Infant Mortality
 h_im<- read.csv("LF_IM_BW.csv", header = T)[,2]
-frechet_Rsquared(Y=Y, X=(X[,"IM"]), tt= qSup, h=h_im, model="LF")*100
+frechet_Rsquared(Y=quant_all, X=(X_ctr[,"IM"]), tt= qSup, h=h_im, model="LF")*100
 
 
 # For Local Frechet: CO2em
 h_co2e<- read.csv("LF_CO2E_BW.csv", header = T)[,2]
-frechet_Rsquared(Y=Y, X=(X[,"CO2E"]), tt= qSup, h=h_co2e, model="LF")*100
+frechet_Rsquared(Y=quant_all, X=(X_ctr[,"CO2E"]), tt= qSup, h=h_co2e, model="LF")*100
 
 
 # For Frechet Single Index
@@ -111,7 +119,7 @@ h_fsi<- read.csv("FSI_bw.csv", header = T)[,2]
 # read the theta hat for the model 
 theta <- read.csv("Theta_Hat.csv", header = T)[,2]
 
-frechet_Rsquared(Y=Y, X=(X%*%theta), tt= qSup, h=h_fsi, model="LF")*100
+frechet_Rsquared(Y=quant_all, X=(X_ctr%*%theta), tt= qSup, h=h_fsi, model="LF")*100
 
 
 
@@ -134,7 +142,7 @@ fsi_folds <- read.csv("FSI_MSPE_folds.csv", header = T)
 
 # creating and saving dataset for MSPE variation across folds~
 
-df_mspe_fold <- rbind(data.frame(Model= 'GF',MSPE =gf_folds[,2]), data.frame(Model='LF(GDPC)', MSPE=lf_gdpc_folds[,2]),
+df_mspe_folds <- rbind(data.frame(Model= 'GF',MSPE =gf_folds[,2]), data.frame(Model='LF(GDPC)', MSPE=lf_gdpc_folds[,2]),
                       data.frame(Model= 'LF(HCE)',MSPE=lf_hce_folds[,2]),
                       data.frame(Model= 'LF(CO2E)', MSPE=lf_co2e_folds[,2]), 
                       data.frame(Model= 'LF(IM)', MSPE=lf_im_folds[,2]), 
@@ -179,9 +187,6 @@ sd(subset(df_mspe_folds, df_mspe_folds[,'Model'] == "FSI")[,2])
 
 # save the MSPE distributions across folds for the models
 write.csv( df_mspe_fold,"MSPE_folds.csv")
-
-
-
 
 
 
