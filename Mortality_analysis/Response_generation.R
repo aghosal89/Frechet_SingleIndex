@@ -14,16 +14,14 @@
 # where the age is repeated as many times as the number of deaths in the dataset, and finally
 # create quantile an array of quatiles of the vector of a given length, say m.
 
+#Setting working directory
+setwd("~/Library/Mobile Documents/com~apple~CloudDocs/Documents/FSI/Mortality_all")
+
 # define m, number of support points for quantiles/densities.
 m<- 101
 
 # the year for which we analyze mortality.
 Yr <- 2013
-
-#Setting working directory
-setwd("~/Library/Mobile Documents/com~apple~CloudDocs/Documents/FSI/Mortality_all")
-
-# We create some functions for our analysis:
 
 # this function computes the euclidean norm of the vector x:
 e_norm <- function(x) sqrt(sum(x^2))
@@ -419,8 +417,11 @@ lt_ukraine<- subset(lt_ukraine, lt_ukraine[,1] %in% Yr)
 
 myls_ukraine<- data_vec(lt_ukraine[,"Age"], lt_ukraine[,"dx"])  
 
-qSup <- seq(0,1, length.out=m)  # the grid of quantiles for mortality distribution 
-dSup <- seq(20,110, length.out=m) # the grid on the support of mortality distribution 
+# the grid of quantiles 
+qSup <- seq(0,1, length.out=m)   
+
+# the grid on the densities
+dSup <- seq(20,110, length.out=m)  
 
 
 #################################
@@ -485,4 +486,3 @@ rownames(quant_all) <- country_
 
 # save the quantiles for further use 
 write.csv(quant_all, "quant_all.csv")
-
