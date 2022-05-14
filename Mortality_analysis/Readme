@@ -67,7 +67,7 @@ in that age for that country. The file 'Countries_FSI.csv' described above in 2)
     b) density_all.csv : a 40x101 matrix whose rows are the mortality densities on an equidistant grid of age-range [20,110] for each country.
 
 
-4) Run the codes in the script Models_BW_Predictions.R to find the predicted quantiles/densities for all countries using Local Frechet regression using all 
+4) Run the codes in the script 'Models_BW_Predictions.R' to find the predicted quantiles/densities for all countries using Local Frechet regression using all 
 covariates 'GDPC', 'HCE', 'CO2E', 'IM', 'HDI' and using Global Frechet regression. In the process we also find the best bandwidth choices for each Local Frechet 
 regression models. The inputs for this script are:
 
@@ -99,7 +99,7 @@ The outputs are:
     p) GF_Qpred.csv
     q) GF_Dpred.csv    
     
-5) Run the codes in the script CV_folds_analysis.R. Here we consider 30 folds of training/testing splits in data. In each fold we picked randomly 
+5) Run the codes in the script 'CV_folds_analysis.R'. Here we consider 30 folds of training/testing splits in data. In each fold we picked randomly 
 without replacement 1/4 observations to be in testing split while rest 3/4 observations to be in the training split. Then the respective Local Frechet
 or Global Frechet models are built on the training split and used for predicting the response on the testing set. The Mean Square Prediction Error is
 measured on the testing set. The best bandwidths obtained by running the script Models_BW_Predictions.R are used here. The inputs are:
@@ -123,7 +123,7 @@ The outputs are:
     e) LF_IM_folds.csv
     f) LF_HDI_folds.csv
 
-6) To run the FSI model, run the codes in the script FSI_model.R, first we read all the functions from the following scripts from your working directory:
+6) To run the FSI model, run the codes in the script 'FSI_model.R', first we read all the functions from the following scripts from your working directory:
 
     a) FSIAuxFunctions.R
     b) FSIDenReg.R
