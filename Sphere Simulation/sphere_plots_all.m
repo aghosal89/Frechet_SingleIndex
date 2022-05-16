@@ -1298,31 +1298,31 @@ saveas(gca,'msee_boxplots_ln','epsc')
 % Plot of Boxplots for MSEE, high noise
 
 load NM_Sphere_results_n50_nsim200_p2_HN.mat
-dv_2_50= mean(msee_lfp_sum(:,:,c3));
+dv_2_50= mean(mspe_lfp_sum(:,:,c3), 1);
 
 load NM_Sphere_results_n100_nsim200_p2_HN.mat
-dv_2_100= msee;
+dv_2_100=mean(mspe_lfp_sum(:,:,c3), 1);
 
 load NM_Sphere_results_n200_nsim200_p2_HN.mat
-dv_2_200= msee;
+dv_2_200= mean(mspe_lfp_sum(:,:,c3), 1);
 
 load NM_Sphere_results_n50_nsim200_p3_HN.mat
-dv_3_50= msee;
+dv_3_50= mean(mspe_lfp_sum(:,:,c3), 1);
 
 load NM_Sphere_results_n100_nsim200_p3_HN.mat
-dv_3_100= msee;
+dv_3_100= mean(mspe_lfp_sum(:,:,c3), 1);
 
 load NM_Sphere_results_n200_nsim200_p3_HN.mat
-dv_3_200= msee;
+dv_3_200= mean(mspe_lfp_sum(:,:,c3), 1);
 
 load NM_Sphere_results_n50_nsim200_p4_HN.mat
-dv_4_50= msee;
+dv_4_50= mean(mspe_lfp_sum(:,:,c3), 1);
 
 load NM_Sphere_results_n100_nsim200_p4_HN.mat
-dv_4_100= msee;
+dv_4_100= mean(mspe_lfp_sum(:,:,c3), 1);
 
 load NM_Sphere_results_n200_nsim200_p4_HN.mat
-dv_4_200= msee;
+dv_4_200= mean(mspe_lfp_sum(:,:,c3), 1);
 
 
 % Creating multiple boxplots for comparing MSEE distributions
@@ -1365,31 +1365,31 @@ saveas(gca,'msee_boxplots_hn','epsc')
 % For low noise
 
 load NM_Sphere_results_n50_nsim200_p2_LN.mat
-dv_2_50= msee;
+dv_2_50= mean(mspe_lfp_sum(:,:,c3), 1);
 
 load NM_Sphere_results_n100_nsim200_p2_LN.mat
-dv_2_100= msee;
+dv_2_100= mean(mspe_lfp_sum(:,:,c3), 1);
 
 load NM_Sphere_results_n200_nsim200_p2_LN.mat
-dv_2_200= msee;
+dv_2_200= mean(mspe_lfp_sum(:,:,c3), 1);
 
 load NM_Sphere_results_n50_nsim200_p3_LN.mat
-dv_3_50= msee;
+dv_3_50= mean(mspe_lfp_sum(:,:,c3), 1);
 
 load NM_Sphere_results_n100_nsim200_p3_LN.mat
-dv_3_100= msee;
+dv_3_100= mean(mspe_lfp_sum(:,:,c3), 1);
 
 load NM_Sphere_results_n200_nsim200_p3_LN.mat
-dv_3_200= msee;
+dv_3_200= mean(mspe_lfp_sum(:,:,c3), 1);
 
 load NM_Sphere_results_n50_nsim200_p4_LN.mat
-dv_4_50= msee;
+dv_4_50= mean(mspe_lfp_sum(:,:,c3), 1);
 
 load NM_Sphere_results_n100_nsim200_p4_LN.mat
-dv_4_100= msee;
+dv_4_100= mean(mspe_lfp_sum(:,:,c3), 1);
 
 load NM_Sphere_results_n200_nsim200_p4_LN.mat
-dv_4_200= msee;
+dv_4_200= mean(mspe_lfp_sum(:,:,c3), 1);
 
 % Creating multiple boxplots for comparing MSEE distributions
 
