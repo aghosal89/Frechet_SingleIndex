@@ -114,7 +114,7 @@ measured on the testing set. The best bandwidths obtained by running the script 
     g) LF_IM_BW.csv
     h) LF_HDI_BW.csv
     
-To run the codes read the function 'LocWassRegAMP' from the script 'LocWassRegAMP.R'.
+To run the codes source the function from the script 'LocWassRegAMP.R'.
 
 The outputs are:
 
