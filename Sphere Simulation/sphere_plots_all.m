@@ -1,8 +1,8 @@
 
-% addpath gridfitdir
-% addpath mySphere
-
 %% Code to create the figure 1 in the document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 clear all
 addpath(genpath('manopt'))
 
@@ -394,6 +394,8 @@ saveas(gcf,'lownoise_n200_p4','epsc')
 
 
 %% Codes to generate figure 2 in document:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % Plotting the W_n function
 % for p=2
 
@@ -600,6 +602,7 @@ saveas(gcf,'Wn_variation','epsc')
 
 
 %% Codes to create figure 3 in document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 fig=figure;
 
@@ -844,6 +847,7 @@ saveas(gcf,'eta_hat_histogram_p2','epsc')
 
 
 %% Codes to generate figure 4 in document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 addpath hist2d
 fig = figure;
@@ -1151,6 +1155,7 @@ saveas(gcf,'eta_hat_distribution_p3','epsc')
 
 
 %% Codes to generate figure 5 in the document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Plot of Boxplots for MSEE, high noise
 
@@ -1288,11 +1293,12 @@ saveas(gca,'msee_boxplots_ln','epsc')
 
 
 %% Codes to generate figure 6 in the document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Plot of Boxplots for MSEE, high noise
 
 load NM_Sphere_results_n50_nsim200_p2_HN.mat
-dv_2_50= mean(msee_lfp_sum);
+dv_2_50= mean(msee_lfp_sum(:,:,c3));
 
 load NM_Sphere_results_n100_nsim200_p2_HN.mat
 dv_2_100= msee;
