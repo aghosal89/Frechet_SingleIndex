@@ -18,12 +18,19 @@ As outputs it produces:
 3) Run the codes in the script 'Response_generation.R' to read and generate the response data in our model. This script takes as inputs the following files:
     
     3.1)    lt_australia.csv
+    
     3.2)    lt_austria.csv
+    
     3.3)    lt_belarus.csv  
+    
     3.4)    lt_belgium.csv
+    
     3.5)    lt_bulgaria.csv
+    
     3.6)    lt_canada.csv
+    
     3.7)    lt_chile.csv
+    
     3.8)    lt_croatia.csv
     3.9)    lt_czech.csv
     3.10)   lt_denmark.csv
@@ -61,7 +68,7 @@ As outputs it produces:
     3.41)   Countries_FSI.csv
 
 the files 3.1 - 3.40 above are life tables for the respective countries above for various years. Each contains columns for age and number of deaths 
-in that age for that country. The file 'Countries_FSI.csv' described above in 2). As outputs it generates the files:
+in that age for that country. The file 'Countries_FSI.csv' is described above in 2). As outputs it generates the files:
     
     a) quant_all.csv  : a 40x101 matrix whose rows are the quantiles on an equidistant grid of length 101 on [0,1] of the mortality distribution of each country.
     b) density_all.csv : a 40x101 matrix whose rows are the mortality densities on an equidistant grid of age-range [20,110] for each country.
