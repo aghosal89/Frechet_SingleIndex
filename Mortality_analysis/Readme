@@ -133,6 +133,6 @@ The outputs are:
 
 The FSI_model.R script takes as input the following files: 
 
-7) To run the computations for the table 5 in the paper run the codes in the script 'Table5_computation.R'
+7) To run the computations for the table 5 in the paper run the codes in the script 'Table5_computation.R'. Need to source the function 'frechet_Rsquared.R'.
 
 8) To generate the figures 7 - 10 in the paper run the codes in the script 'Plots.R'. 
