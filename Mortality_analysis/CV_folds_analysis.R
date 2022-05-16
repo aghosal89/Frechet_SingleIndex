@@ -28,10 +28,10 @@ m<-ncol(quant_all)
 # define the number of observations
 n<- nrow(X_ctr)
 
-# grid of support for densities 
+# grid of support for mortality densities 
 dSup = seq(20, 110, length.out = m)
 
-# grid of support for quantiles
+# grid of support for mortality quantiles
 qSup = seq(0, 1, length.out = m)
 
 ###################################
@@ -61,6 +61,9 @@ for (i in 1:nrow(fold)) {
 }
 
 write.csv(gf_folds, "GF_folds.csv")
+
+######### souce the function 'LocWassRegAMP'
+source("LocWassRegAMP.R")
 
 
 # GDP Year-on-Year
@@ -166,7 +169,7 @@ for (i in 1:nrow(fold)) {
   x_in <- as.matrix(X_ctr[-as.numeric(as.numeric(fold[i,])), "IM"])
   x_out <- as.matrix(X_ctr[as.numeric(as.numeric(fold[i,])), "IM"])
   fr <- LocWassRegAMP(xin = as.matrix(x_in), qin= q_in, xout= x_out, 
-                  optns= list(bwReg=h_im, qSup = qSup, dSup=dSup, lower=20, upper=110))
+                  optns= list(bwReg=h_im, qSup = qSup, lower=20, upper=110))
   
   pe <- matrix(NA, length(fold[i,]))
   for(s in 1:length(fold[i,])) {
