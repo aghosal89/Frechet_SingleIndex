@@ -74,14 +74,12 @@ in that age for that country. The file 'Countries_FSI.csv' is described above in
     b) density_all.csv : a 40x101 matrix whose rows are the mortality densities on an equidistant grid of age-range [20,110] for each country.
 
 
-4) Run the codes in the script 'Models_BW_Predictions.R' to find the predicted quantiles/densities for all countries using Local Frechet regression using all 
-covariates 'GDPC', 'HCE', 'CO2E', 'IM', 'HDI' and using Global Frechet regression. In the process we also find the best bandwidth choices for each Local Frechet 
-regression models. The inputs for this script are:
+4) Run the codes in the script 'Models_BW_Predictions.R' to find the predicted quantiles/densities for all countries using Local Frechet regression using each of the covariates 'GDPC', 'HCE', 'CO2E', 'IM', 'HDI'; and also running Global Frechet regression using all of these 5 covariates. In the process we also find the best bandwidth choices for each Local Frechet regression model (i.e. for Local Fréchet regression with each of the covariates). The inputs for this script are:
 
     a) X_centerscale.csv
     b) quant_all.csv
 
-The outputs are:
+The outputs are: (add a desciption for LF and GF output files)
 
     a) LF_GDPC_BW.csv
     b) LF_GDPC_Qpred.csv
@@ -106,14 +104,11 @@ The outputs are:
     p) GF_Qpred.csv
     q) GF_Dpred.csv    
     
-5) Run the codes in the script 'CV_folds_analysis.R'. Here we consider 30 folds of training/testing splits in data. In each fold we picked randomly 
-without replacement 1/4 observations to be in testing split while rest 3/4 observations to be in the training split. Then the respective Local Frechet
-or Global Frechet models are built on the training split and used for predicting the response on the testing set. The Mean Square Prediction Error is
-measured on the testing set. The best bandwidths obtained by running the script Models_BW_Predictions.R are used here. The inputs are:
+5) Run the codes in the script 'CV_folds_analysis.R', (mention what it is doing). Here we consider 30 folds of training/testing splits in data. In each fold we picked randomly without replacement 1/4 observations to be in testing split while rest 3/4 observations to be in the training split. Then the respective Local Frechet and Global Frechet models are built on the training split and used for predicting the response on the testing set. The Mean Square Prediction Error is calculated on the testing set. The best bandwidths obtained by running the script Models_BW_Predictions.R are used here. The inputs are:
 
     a) X_centerscale.csv
     b) quant_all.csv
-    c) Folds.csv 
+    c) Folds.csv (describe, add codes to create Folds)
     
     d) LF_GDPC_BW.csv
     e) LF_HCE_BW.csv
@@ -123,7 +118,7 @@ measured on the testing set. The best bandwidths obtained by running the script 
     
 To run the codes source the function from the script 'LocWassRegAMP.R'.
 
-The outputs are:
+The outputs are: (describe, structure)
 
     a) GF_folds.csv
     b) LF_GDPC_folds.csv
@@ -132,14 +127,14 @@ The outputs are:
     e) LF_IM_folds.csv
     f) LF_HDI_folds.csv
 
-6) To run the FSI model, run the codes in the script 'FSI_model.R', first we read the functions from the following scripts in your working directory:
+6) To run the FSI model, run the codes in the script 'FSI_model.R', which begins by sourcing the functions from the following scripts in your working directory:
 
     a) FSIAuxFunctions.R
     b) FSIDenReg.R
     c) LocWassRegAMP.R
 
-The FSI_model.R script takes as input the following files: 
+The FSI_model.R script takes as input the following files: (add the files.)
 
-7) To run the computations for the table 5 in the paper run the codes in the script 'Table5_computation.R'. Need to source the function 'frechet_Rsquared.R'.
+7) To run the computations for the table 5 in the paper run the codes in the script 'Table5_computation.R', that sources the function 'frechet_Rsquared.R'.
 
 8) To generate the figures 7 - 10 in the paper run the codes in the script 'Plots.R'. 
