@@ -1,7 +1,8 @@
 
-#################################
+
+############################
 ## Codes to Build FSI model
-#################################
+############################
 
 # set working directory~
 setwd("~/Library/Mobile Documents/com~apple~CloudDocs/Documents/FSI/Mortality_all")
@@ -56,6 +57,11 @@ library('numbers')
 library('frechet')
 library('fdadensity')
 library('pracma')
+
+## source the following scripts
+source("LocWassRegAMP.R")
+source("FSIDenReg.R")
+source("FSIAuxFunctions.R")
 
 #######################################################
 ## Choosing bandwidth by leave-one-out Cross-Validation
