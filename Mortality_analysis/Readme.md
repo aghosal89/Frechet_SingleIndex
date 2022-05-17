@@ -22,55 +22,48 @@ As outputs it produces:
 
 3) Run the codes in the script 'Response_generation.R' to read and generate the response data in our model. This script takes as inputs the following files:
     
-    3.1)    lt_australia.csv
+    1.   lt_australia.csv
+    2.   lt_austria.csv
+    3.   lt_belarus.csv  
+    4.   lt_belgium.csv
+    5.   lt_bulgaria.csv
+    6.   lt_canada.csv
+    7.   lt_chile.csv
+    8.   lt_croatia.csv
+    9.   lt_czech.csv
+    10.  lt_denmark.csv
+    11.  lt_estonia.csv 
+    12.  lt_finland.csv
+    13.  lt_france.csv
+    14.  lt_germany.csv
+    15.  lt_greece.csv
+    16.  lt_hongkong.csv
+    17.  lt_hungary.csv
+    18.  lt_iceland.csv
+    19.  lt_ireland.csv
+    20.  lt_israel.csv
+    21.  lt_italy.csv
+    22.  lt_japan.csv
+    23.  lt_latvia.csv
+    24.  lt_lithuania.csv
+    25.  lt_luxembourg.csv
+    26.  lt_netherlands.csv
+    27.  lt_newz.csv
+    28.  lt_norway.csv
+    29.  lt_poland.csv
+    30.  lt_portugal.csv
+    31.  lt_korea.csv
+    32.  lt_russia.csv
+    33.  lt_slovakia.csv
+    34.  lt_slovenia.csv
+    35.  lt_spain.csv
+    36.  lt_sweden.csv
+    37.  lt_switzerland.csv
+    38.  lt_UK.csv
+    39.  lt_USA.csv
+    40.  lt_Ukraine.csv
     
-    3.2)    lt_austria.csv
-    
-    3.3)    lt_belarus.csv  
-    
-    3.4)    lt_belgium.csv
-    
-    3.5)    lt_bulgaria.csv
-    
-    3.6)    lt_canada.csv
-    
-    3.7)    lt_chile.csv
-    
-    3.8)    lt_croatia.csv
-    3.9)    lt_czech.csv
-    3.10)   lt_denmark.csv
-    3.11)   lt_estonia.csv 
-    3.12)   lt_finland.csv
-    3.13)   lt_france.csv
-    3.14)   lt_germany.csv
-    3.15)   lt_greece.csv
-    3.16)   lt_hongkong.csv
-    3.17)   lt_hungary.csv
-    3.18)   lt_iceland.csv
-    3.19)   lt_ireland.csv
-    3.20)   lt_israel.csv
-    3.21)   lt_italy.csv
-    3.22)   lt_japan.csv
-    3.23)   lt_latvia.csv
-    3.24)   lt_lithuania.csv
-    3.25)   lt_luxembourg.csv
-    3.26)   lt_netherlands.csv
-    3.27)   lt_newz.csv
-    3.28)   lt_norway.csv
-    3.29)   lt_poland.csv
-    3.30)   lt_portugal.csv
-    3.31)   lt_korea.csv
-    3.32)   lt_russia.csv
-    3.33)   lt_slovakia.csv
-    3.34)   lt_slovenia.csv
-    3.35)   lt_spain.csv
-    3.36)   lt_sweden.csv
-    3.37)   lt_switzerland.csv
-    3.38)   lt_UK.csv
-    3.39)   lt_USA.csv
-    3.40)   lt_Ukraine.csv
-    
-    3.41)   Countries_FSI.csv
+    41)   Countries_FSI.csv
 
 the files 3.1 - 3.40 above are life tables for the respective countries above for various years. Each contains columns for age and number of deaths 
 in that age for that country. The file 'Countries_FSI.csv' is described above in 2). As outputs it generates the files:
