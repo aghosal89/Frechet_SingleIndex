@@ -128,7 +128,9 @@ The outputs are: (describe, structure)
 6) To run the FSI model, run the codes in the script 'FSI_model.R', which begins by sourcing the functions from the following scripts in your working directory:
 
     a) FSIAuxFunctions.R
+    
     b) FSIDenReg.R
+    
     c) LocWassRegAMP.R
 
 The FSI_model.R script takes as input the following files: (add the files.)
