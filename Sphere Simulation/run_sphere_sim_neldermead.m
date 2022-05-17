@@ -176,11 +176,11 @@ for j=1:size(start,1)
     % running the main optimization algorithm for starting points 
     
     if(p==2)
-        [eta_opt1, fval] = fminsearchbnd(cost_fun, X(j,:), -pi/2, pi/2);
+        [eta_opt_temp, fval] = fminsearchbnd(cost_fun, X(j,:), -pi/2, pi/2);
     elseif(p==3)
-        [eta_opt1, fval] = fminsearchbnd(cost_fun, X(j,:), [-pi/2,-pi/2],[pi/2, pi/2]);
+        [eta_opt_temp, fval] = fminsearchbnd(cost_fun, X(j,:), [-pi/2,-pi/2],[pi/2, pi/2]);
     elseif(p==4)
-        [eta_opt1, fval] = fminsearchbnd(cost_fun, X(j,:), [-pi/2,-pi/2,-pi/2],[pi/2, pi/2,pi/2]);
+        [eta_opt_temp, fval] = fminsearchbnd(cost_fun, X(j,:), [-pi/2,-pi/2,-pi/2],[pi/2, pi/2,pi/2]);
     end
     
     mspe{i}(l, j) = fval;           % storing minimum cost function
