@@ -119,10 +119,15 @@ To run the codes source the function from the script 'LocWassRegAMP.R'.
 The outputs are: (describe, structure)
 
     a) GF_folds.csv
+    
     b) LF_GDPC_folds.csv
+    
     c) LF_HCE_folds.csv
+    
     d) LF_CO2E_folds.csv
+    
     e) LF_IM_folds.csv
+    
     f) LF_HDI_folds.csv
 
 6) To run the FSI model, run the codes in the script 'FSI_model.R', which begins by sourcing the functions from the following scripts in your working directory:
