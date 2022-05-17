@@ -1,38 +1,74 @@
-%% Get sphere fits for simulations for general p covariates
+%% Gets conditional Frechet mean estimates using local Frechet regression for spherical response data, generalized for vector predictors
 
-function lfr_fit = get_sphere_fit_pcov(Y, x, x0, h)
+% This implementation uses a product Gaussian kernel with a single bandwidth for
+% simplicity
+%
+% Inputs: Y = response data 3xn 
+%         x = nxp vector of predictors corresponding to observations in Y
+%         h = bandwidth
+%         xout = mxp vector of predictors to be used for computing fitted
+%                values (if missing, set xout = x so m = n)
+
+% Output: lfr_fit = 3xm matrix of fitted values using local Frechet
+%                  regression for the predictor values in xout
+
+function lfr_fit = get_sphere_fit_pcov(Y, x, h, xout)
+ 
+%% Check Inputs
+
+    if(nargin < 3 || any([isempty(Y) isempty(x) isempty(h)))
+        error('Must provide Y, x and a bandwidth')
+    end
     
-    n = size(x,1); 
+    if(length(h) > 1)
+        warning('Only one bandwidth supported - taking first element')
+        h = h(1);
+    end
+    
+    if(size(Y, 2) ~= size(x, 1))
+        error('Dimensions of x and Y do not match')
+    end
+
+    n = size(Y, 2); p = size(x, 2);
+
+    if(nargin < 4)
+        xout = x;
+    end
+    
+    m = size(xout, 1);
+
+%% Set up for estimation
+
     lfr_fit = zeros(3, 1);
     M = spherefactory(3);
     ops.verbosity = 0;
     fr.M = M;
     
-    w = getLFRweights(x, x0, h);
-    
-    % compute the nadaraya watson smoothed mean
-    y0 = sum(cell2mat(arrayfun(@(k) w(k)*Y(:, k), 1:n, 'UniformOutput', false))')'; 
-    % compute the NW smoother with norm = 1, so that it is on the unit sphere surface 
-    y0 = y0./norm(y0); % use it as initial guess for trustregion algorithm below~
+    % Get Weights
+    w = getLFRweights(x, xout, h);
+    Kmat = K((x - repmat(xout', n, 1)), h*ones(1, p));
+    KmatLO = Kmat - diag(diag(Kmat));
+  
+  for j = 1:m
 
-    %Compute cost and Euclidean gradient
+    y0 = sum(cell2mat(arrayfun(@(k) KmatLO(k, j)*Y(:, k), 1:n, 'UniformOutput', false))')'; y0 = y0/norm(y0); % Initial guess (leave-one-out NW)
 
-    if(length(find(w)) < 2) % if number of nonzero elements in the array in < 2, then return the j-th column 
-        % as NaN values
-        
-      lfr_fit = repmat(NaN, 1, 3);
-    
+    if(length(find(w(:, j))) < 2) % if there are less than two points, the fitted value cannot be computed
+
+      lfr_fit(:, j) = repmat(NaN, 1, 3); 
+
     else
-        
-      % run the main algorithm to obtain frechet mean ~
-      fr.cost = @(y) get_cost(w, Y, y, M);
-      fr.egrad = @(y) get_egrad(w, Y, y, M);
-      fr.ehess = @(y, u) get_ehess(w, Y, y, M, u);
 
-      lfr_fit = trustregions(fr, y0, ops);
+      % Compute cost and Euclidean gradient
 
-      %[x, fgradx, cost, info, options]= trustregions(fr, y0, ops);
-      
+      fr.cost = @(y) get_cost(w(:, j)', Y, y, M);
+      fr.egrad = @(y) get_egrad(w(:, j)', Y, y, M);
+      fr.ehess = @(y, u) get_ehess(w(:, j)', Y, y, M, u);
+
+      lfr_fit(:, j) = trustregions(fr, y0, ops);
+
     end
+
+  end
 
 end

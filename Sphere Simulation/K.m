@@ -1,4 +1,4 @@
-%% Kernel function to compute weights for LFR when p>1. This function is to used in 'getLFRweights.m' function.
+%% Gaussian kernel function to compute weights for LFR when p>1. This function is to used in 'getLFRweights.m' function.
 
 % Inputs:  1) x : an nxp matrix, n being the number of observations, p
 %                 being number of covariates.

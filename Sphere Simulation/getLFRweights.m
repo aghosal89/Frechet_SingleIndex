@@ -2,12 +2,11 @@
 
 % Inputs:  1) xin    - a nxp matrix of covariates
 %          2) x0     - a px1 vector of arbitrary covariate point 
-%          3) h      - the vector of bandwidths used for the kernel
-%                      regression.
+%          3) h      - a scalar bandwidth used for product kernel
 
-function esL = getLFRweights(xin, x0, h)
+function w = getLFRweights(xin, x0, h)
       n = size(xin, 1);
-    aux = K((xin - repmat(x0', n, 1)), h);
+    aux = K((xin - repmat(x0', n, 1)), h*ones(1, p));
     mu0 = mean(aux);
     mu1 = mean(aux .* (xin - repmat(x0', n, 1)));
     mu2 = 0;
@@ -21,7 +20,7 @@ function esL = getLFRweights(xin, x0, h)
     end
     
     s = sum(sL);
-    esL =sL./s;
+    w =sL./s;
 
 end
 
