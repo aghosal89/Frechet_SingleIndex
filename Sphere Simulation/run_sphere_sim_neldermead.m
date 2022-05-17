@@ -165,10 +165,10 @@ for j=1:size(start,1)
 
     for l = 1:length(h) % bandwidth range for high noise scenario
         
-    % display the current observation, bandwidth, starting value for
+    % display the current simulation, bandwidth, starting value for
     % Nelder-Mead algorithm etc. This helps with debugging. 
     
-    disp(['NM_nsim200_n200_p2_HN' '_' 'nsim' '_' num2str(i, '%03d') '_' 'start' '_' num2str(j, '%03d') '_' 'bandwidth' '_' num2str(l, '%02d')])
+    disp(['NM_n200_p2_HN' '_' 'nsim' '_' num2str(i, '%03d') '_' 'start' '_' num2str(j, '%03d') '_' 'bandwidth' '_' num2str(l, '%02d')])
     
     % define cost function for the inputs:
     cost_fun = @(eta) nm_cost(Y_temp, eta, h(l), xtemp);  
