@@ -5,10 +5,15 @@
 This script takes as inputs the following files:
     
     a) Countries_FSI.csv:    contains list of all 40 countries in order appearing in the covariate data
+    
     b) GDP_YoY_perc.csv:     contains time seeries data on GDP year-on-year % change for a superset of countries containing 40 countries in our model.
+    
     c) HC_exp_percGDP.csv:   contains time seeries data on Healthcare expenditure % of GDP for a superset of countries containing 40 countries in our model.
+    
     d) CO2_emissions_pc.csv: contains time seeries data on CO2 emissions per-capita for a superset of countries containing 40 countries in our model.
-    e) infmort.csv:          contains time seeries data on Infant mortality per 1000 live births for a superset of countries containing 40 countries in our model.
+    
+    e) infmort.csv:   contains time seeries data on Infant mortality per 1000 live births for a superset of countries containing 40 countries in our model.
+    
     f) HumanDevelopmentIndex(HDI).csv: contains time seeries data on Human Development Index for a superset of countries containing 40 countries in our model.
 
 As outputs it produces:
