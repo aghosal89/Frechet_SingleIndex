@@ -5,7 +5,7 @@
 %          3) h      - a scalar bandwidth used for product kernel
 
 function w = getLFRweights(xin, x0, h)
-      n = size(xin, 1);
+    n = size(xin, 1); p = size(xin , 2);
     aux = K((xin - repmat(x0', n, 1)), h*ones(1, p));
     mu0 = mean(aux);
     mu1 = mean(aux .* (xin - repmat(x0', n, 1)));

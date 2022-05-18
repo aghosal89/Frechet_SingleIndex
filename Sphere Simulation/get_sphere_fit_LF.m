@@ -62,9 +62,9 @@ function fr_fit = get_sphere_fit_LF(Y, x, h, xout)
 
       % Compute cost and Euclidean gradient
 
-      fr.cost = @(y) get_cost(w(:, j)', Y, y, M);
-      fr.egrad = @(y) get_egrad(w(:, j)', Y, y, M);
-      fr.ehess = @(y, u) get_ehess(w(:, j)', Y, y, M, u);
+      fr.cost = @(y) get_cost(w(:, j), Y, y, M);
+      fr.egrad = @(y) get_egrad(w(:, j), Y, y, M);
+      fr.ehess = @(y, u) get_ehess(w(:, j), Y, y, M, u);
 
       lf_fit(:, j) = trustregions(fr, y0, ops);
 

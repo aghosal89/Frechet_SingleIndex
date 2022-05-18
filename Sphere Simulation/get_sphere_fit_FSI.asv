@@ -45,7 +45,7 @@ function fsi_fit = get_sphere_fit_FSI(Y, x, h, xout, theta_init, optRet)
     
     m = size(xout, 1);
        
-    if(nargin < 5 || isempty(theta_init) || (length(theta_init) ~= 1 && size(theta_init, 1) ~= p))
+    if(nargin < 5 || isempty(theta_init) || (length(theta_init ~= 1) && size(theta_init, 1) ~= p))
         warning('Initial values are missing are invalid - randomly generating 10 initial values')
         eta_init = pi*rand(p - 1, 10) - pi/2;
         theta_init = cell2mat(arrayfun(@(j) polar2cartGen(eta_init(:, j)), 1:10, 'UniformOutput', false));
@@ -54,6 +54,8 @@ function fsi_fit = get_sphere_fit_FSI(Y, x, h, xout, theta_init, optRet)
         clear theta_init; % remove, then replace with actual theta values
         eta_init = pi*rand(p - 1, q) - pi/2;
         theta_init = cell2mat(arrayfun(@(j) polar2cartGen(eta_init(:, j)), 1:q, 'UniformOutput', false));
+    elseif(size(theta_init, 1) ~= p)
+        
     end
     
     q = size(theta_init, 2);

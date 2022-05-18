@@ -2,7 +2,7 @@
 
 function eh = get_ehess(w, Y, y, M, u, thresh)
 
-    if(nargin < 5 || isempty(thresh))
+    if(nargin < 6 || isempty(thresh))
         thresh = 0.999;
     end
 
