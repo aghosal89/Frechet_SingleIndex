@@ -5,6 +5,7 @@
 clear all; close all;
 usePar = 0; % should simulations be run in parallel? (1 = yes, 0 = no)
 numWk = 6; % if usePar = 1, how many workers should be used.
+optRet = 0; % if 0, optimization notes for FSI estimation will not be returned; set to 1 if such notes are desired.
 
 % Adding path to access files in 'manopt' folder
 addpath(genpath('manopt'))
@@ -22,7 +23,7 @@ H = 5; % length of bandwidth that will be created
 
 % Parameters used to initialize the optimization for theta
 initType = 'fixed'; % 'random' or 'fixed' - how should the initialization grid be chosen?
-nsp = 3; % number of starting points to be used in each angular component, if initType == 'fixed'
+nsp = 4; % number of starting points to be used in each angular component, if initType == 'fixed'
 nrnd = 4; %number of random starting points to generate, if initType == 'random'
 
 s_pm = 19878;  % seed for generating true theta parameter (should be same across all sims/batches sharing same p)
@@ -108,14 +109,14 @@ for k = 1:nsim
 
     normMat = zeros(n, n);
     for i = 1:(n - 1)
-        for j = (n + 1):n
-            normMat(i, j) = norm(squeeze(x(i, :, k) - x(j, :, k)));
+        for j = (i + 1):n
+            normMat(i, j) = norm(squeeze(x(i, k, :) - x(j, k, :)));
             normMat(j, i) = normMat(i, j);
         end
     end
 
     normSt = sort(normMat, 2);
-    bw_min = max(bw_min, max(normSt(:, 4))); hMax = max(bw_max, max(normSt(:, n)));
+    bw_min = max(bw_min, max(normSt(:, 4))); bw_max = max(bw_max, max(normSt(:, n)));
 
 end    
 
@@ -133,7 +134,7 @@ if(usePar == 1)
 
     parfor i = 1:nsim
 
-        fsiFitAll{i} = get_sphere_fit_FSI(Y{i}, squeeze(x(:, i, :)), h, [], theta_init);
+        fsiFitAll{i} = get_sphere_fit_FSI(Y{i}, squeeze(x(:, i, :)), h, [], theta_init, optRet);
         LFpcovFitAll{i} = get_sphere_fit_LFpcov(Y{i}, squeeze(x(:, i, :)), h, []);
 
     end
@@ -144,10 +145,10 @@ else
 
     for i = 1:nsim
         
-        disp(strcat('Running estimation for dataset\ ', num2str(i), ' of ', num2str(nsim), ' total simulations'))
+        disp(['Running estimation for dataset ', num2str(i), ' of ', num2str(nsim), ' total simulations'])
 
-        fsiFitAll{i} = get_sphere_fit_FSI(Y{i}, squeeze(x(:, i, :)), h, [], theta_init);
-        LFpcovFitAll{i} = get_sphere_fit_pcov(Y{i}, squeeze(x(:, i, :)), h, []);
+        fsiFitAll{i} = get_sphere_fit_FSI(Y{i}, squeeze(x(:, i, :)), h, [], theta_init, optRet);
+        LFpcovFitAll{i} = get_sphere_fit_LFpcov(Y{i}, squeeze(x(:, i, :)), h, []);
 
     end
 

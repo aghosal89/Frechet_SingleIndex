@@ -51,7 +51,7 @@ for l = 1:H
     x0 = xout(j, :)';
     % Get Weights
     w = getLFRweights(x, x0, hh);
-    Kvec = K((x - repmat(x0', n, 1)), h*ones(1, p));
+    Kvec = K((x - repmat(x0', n, 1)), hh*ones(1, p));
     Kvec(j) = 0;
 
     y0 = sum(cell2mat(arrayfun(@(k) Kvec(k)*Y(:, k), 1:n, 'UniformOutput', false))')'; y0 = y0/norm(y0); % Initial guess (leave-one-out NW)

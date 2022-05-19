@@ -5,6 +5,7 @@
 clear all; close all;
 usePar = 0; % should simulations be run in parallel? (1 = yes, 0 = no)
 numWk = 6; % if usePar = 1, how many workers should be used.
+optRet = 0; % if 0, optimization notes for FSI estimation will not be returned; set to 1 if such notes are desired.
 
 % Adding path to access files in 'manopt' folder
 addpath(genpath('manopt'))
@@ -44,7 +45,7 @@ reg_curve = @(t) [sqrt(1-t.^2).*cos(pi*t), sqrt(1-t.^2).*sin(pi*t), t];
 rng(s_pm);      % setting seed for generating index parameter
 
 tmp = 2*rand(p, 1) - 1; % p uniform rvs between -1 and 1
-b = tmp/norm(tmp); % normalize to have norm 1 (this is theta_0 in the paper)
+theta0 = tmp/norm(tmp); % normalize to have norm 1 (this is theta_0 in the paper)
 
 %% Generate Data
 
@@ -60,7 +61,7 @@ rng(s_dt);      % setting seed for generating data
   % gives us the matrix of dimension n x nsim , we divide by sqrt(p) so that all elements of z 
   % are in the range (-1,1), as required by the function mreg below.  
   
-  z = cell2mat(arrayfun(@(j) squeeze(x(:, j, :))*b, 1:nsim, 'UniformOutput', false))/sqrt(p);
+  z = cell2mat(arrayfun(@(j) squeeze(x(:, j, :))*theta0, 1:nsim, 'UniformOutput', false))/sqrt(p);
   
 % Generating the data (x,Y) from fixed index parameter value above for a given p, we assume that the
 % parameter space is a proper subset of a p-dimensional unit sphere with
@@ -108,14 +109,14 @@ for k = 1:nsim
 
     normMat = zeros(n, n);
     for i = 1:(n - 1)
-        for j = (n + 1):n
-            normMat(i, j) = norm(squeeze(x(i, :, k) - x(j, :, k)));
+        for j = (i + 1):n
+            normMat(i, j) = norm(squeeze(x(i, k, :) - x(j, k, :)));
             normMat(j, i) = normMat(i, j);
         end
     end
 
     normSt = sort(normMat, 2);
-    bw_min = max(bw_min, max(normSt(:, 4))); hMax = max(bw_max, max(normSt(:, n)));
+    bw_min = max(bw_min, max(normSt(:, 4))); bw_max = max(bw_max, max(normSt(:, n)));
 
 end    
 
@@ -133,7 +134,7 @@ if(usePar == 1)
 
     parfor i = 1:nsim
 
-        fsiFitAll{i} = get_sphere_fit_FSI(Y{i}, squeeze(x(:, i, :)), h, [], theta_init);
+        fsiFitAll{i} = get_sphere_fit_FSI(Y{i}, squeeze(x(:, i, :)), h, [], theta_init, optRet);
         LFpcovFitAll{i} = get_sphere_fit_LFpcov(Y{i}, squeeze(x(:, i, :)), h, []);
 
     end
@@ -144,11 +145,11 @@ else
 
     for i = 1:nsim
 
-        disp(strcat('Running estimation for dataset ', num2str(i), 'of ', num2str(nsim), ' total simulations'))
+        disp(['Running estimation for dataset ', num2str(i), ' of ', num2str(nsim), ' total simulations'])
 
         
-        fsiFitAll{i} = get_sphere_fit_FSI(Y{i}, squeeze(x(:, i, :)), h, [], theta_init);
-        LFpcovFitAll{i} = get_sphere_fit_pcov(Y{i}, squeeze(x(:, i, :)), h, []);
+        fsiFitAll{i} = get_sphere_fit_FSI(Y{i}, squeeze(x(:, i, :)), h, [], theta_init, optRet);
+        LFpcovFitAll{i} = get_sphere_fit_LFpcov(Y{i}, squeeze(x(:, i, :)), h, []);
 
     end
 
@@ -218,9 +219,9 @@ mean(msee)
 std(msee)
 %}
 
-fnm = strcat('NM_Sphere_results_n', num2str(n), '_nsim', num2str(nsim), '_p', num2str(p), '_noise', noise, '_', init_Type, '.mat');
+fnm = strcat('NM_Sphere_results_n', num2str(n), '_nsim', num2str(nsim), '_p', num2str(p), '_noise', noise, '_', initType, '.mat');
 
-save(fnm, 'fsiFitAll', 'LFpcovFitAll', 'n', 'p', 'nsim', 'tau', 's_pm', 's_dt', 'nsp', 'b', 'h_FSI', 'h_LFpcov', 'theta_init', 'usePar', 'numWk')
+save(fnm, 'fsiFitAll', 'LFpcovFitAll', 'n', 'p', 'nsim', 'tau', 's_pm', 's_dt', 'theta0', 'h', 'theta_init', 'usePar', 'numWk')
 
 
 

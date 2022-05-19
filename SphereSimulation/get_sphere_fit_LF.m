@@ -9,7 +9,7 @@
 % Output: lf_fit = 3xm matrix of fitted values using local Frechet
 %                  regression for the predictor values in xout
 
-function fr_fit = get_sphere_fit_LF(Y, x, h, xout)
+function lf_fit = get_sphere_fit_LF(Y, x, h, xout)
 
 %% Check Inputs
 
