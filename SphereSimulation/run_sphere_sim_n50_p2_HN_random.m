@@ -3,7 +3,7 @@
 % estimator generalized to p covariates
 
 clear all; close all;
-usePar = 1; % should simulations be run in parallel? (1 = yes, 0 = no)
+usePar = 0; % should simulations be run in parallel? (1 = yes, 0 = no)
 numWk = 6; % if usePar = 1, how many workers should be used.
 
 % Adding path to access files in 'manopt' folder
@@ -18,10 +18,10 @@ nsim = 5;    % number of simulations
 n = 50;        % number of observations 
 p = 2;         % dimension of index parameter 
 noise = 'High'; % High or low noise setting
-H = 10; % length of bandwidth that will be created
+H = 5; % length of bandwidth that will be created
 
 % Parameters used to initialize the optimization for theta
-initType = 'fixed'; % 'random' or 'fixed' - how should the initialization grid be chosen?
+initType = 'random'; % 'random' or 'fixed' - how should the initialization grid be chosen?
 nsp = 3; % number of starting points to be used in each angular component, if initType == 'fixed'
 nrnd = 4; %number of random starting points to generate, if initType == 'random'
 
@@ -133,8 +133,8 @@ if(usePar == 1)
 
     parfor i = 1:nsim
 
-        fsiFitAll{i} = get_sphere_fit_FSI(Y{i}, squeeze(x(:, i, :)), h_FSI, [], theta_init);
-        LFpcovFitAll{i} = get_sphere_fit_LFpcov(Y{i}, squeeze(x(:, i, :)), h_LFpcov, []);
+        fsiFitAll{i} = get_sphere_fit_FSI(Y{i}, squeeze(x(:, i, :)), h, [], theta_init);
+        LFpcovFitAll{i} = get_sphere_fit_LFpcov(Y{i}, squeeze(x(:, i, :)), h, []);
 
     end
 
@@ -144,8 +144,11 @@ else
 
     for i = 1:nsim
 
-        fsiFitAll{i} = get_sphere_fit_FSI(Y{i}, squeeze(x(:, i, :)), h_FSI, [], theta_init);
-        LFpcovFitAll{i} = get_sphere_fit_pcov(Y{i}, squeeze(x(:, i, :)), h_LFpcov, []);
+        disp(strcat('Running estimation for dataset ', num2str(i), 'of ', num2str(nsim), ' total simulations'))
+
+        
+        fsiFitAll{i} = get_sphere_fit_FSI(Y{i}, squeeze(x(:, i, :)), h, [], theta_init);
+        LFpcovFitAll{i} = get_sphere_fit_pcov(Y{i}, squeeze(x(:, i, :)), h, []);
 
     end
 
@@ -218,8 +221,6 @@ std(msee)
 fnm = strcat('NM_Sphere_results_n', num2str(n), '_nsim', num2str(nsim), '_p', num2str(p), '_noise', noise, '_', init_Type, '.mat');
 
 save(fnm, 'fsiFitAll', 'LFpcovFitAll', 'n', 'p', 'nsim', 'tau', 's_pm', 's_dt', 'nsp', 'b', 'h_FSI', 'h_LFpcov', 'theta_init', 'usePar', 'numWk')
-
-
 
 
 
