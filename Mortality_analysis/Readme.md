@@ -162,6 +162,29 @@ The outputs:
     
     5. FSI_MSPE_folds.csv : Mean Square Prediction Error in 30 folds by the FSI model using the best bandwidth above. 
 
-7) To run the computations for the table 5 in the paper run the codes in the script 'Table5_computation.R', that sources the function 'frechet_Rsquared.R'.
+7) To run the computations for the table 5 in the paper run the codes in the script 'Table5_computation.R'. It sources the function 'frechet_Rsquared.R'. The inputs are:
+
+    1. Countries_FSI.csv
+    2. X_centerscale.csv
+    3. quant_all.csv
+    
+    4. LF_HDI_BW.csv
+    5. LF_HCE_BW.csv
+    6. LF_GDPC_BW.csv
+    7. LF_IM_BW.csv
+    8. LF_CO2E_BW.csv
+    9. FSI_bw.csv
+    10. Theta_Hat.csv
+    
+    11. GF_folds.csv
+    12. LF_HDI_folds.csv
+    13. LF_HCE_folds.csv
+    14. LF_GDPC_folds.csv
+    15. LF_IM_folds.csv
+    16. LF_CO2E_folds.csv
+
+    17. FSI_MSPE_folds.csv
+
+Outputs: This script does not produce outputs to be saved for further use. It is used to compute the numbers in table 5 of the paper. 
 
 8) To generate the figures 7 - 10 in the paper run the codes in the script 'Plots.R'. 
