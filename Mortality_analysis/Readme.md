@@ -187,4 +187,4 @@ The outputs:
 
 Outputs: This script does not produce outputs to be saved for further use. It is used to compute the numbers in table 5 of the paper. 
 
-8) To generate the figures 7 - 10 in the paper run the codes in the script 'Plots.R'. 
+8) To generate the figures 7 - 10 in the paper run the codes in the script 'Plots.R'.
