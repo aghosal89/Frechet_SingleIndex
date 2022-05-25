@@ -152,16 +152,15 @@ The FSI_model.R script takes as inputs the following files:
     
 The outputs:
 
-    1. FSI_bw.csv
+    1. FSI_bw.csv       : the best chosen bandwidth for FSI model.
     
-    2. Theta_Hat.csv
+    2. Theta_Hat.csv    : Estimate of the index parameter using the best bandwidth above.
     
-    3. FSI_Qpred.csv
+    3. FSI_Qpred.csv    : Predicted quantiles by FSI model by best bandwidth and estimated index parameter above. 
     
-    4. FSI_Dpred.csv
+    4. FSI_Dpred.csv    : Predicted densities by FSI model by best bandwidth and estimated index parameter above.
     
-    5. FSI_MSPE_folds.csv
-
+    5. FSI_MSPE_folds.csv : Mean Square Prediction Error in 30 folds by the FSI model using the best bandwidth above. 
 
 7) To run the computations for the table 5 in the paper run the codes in the script 'Table5_computation.R', that sources the function 'frechet_Rsquared.R'.
 
