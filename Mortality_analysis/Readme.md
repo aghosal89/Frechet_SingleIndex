@@ -190,18 +190,28 @@ Outputs: This script does not produce outputs to be saved for further use. It is
 8) To generate the figures 7 - 10 in the paper run the codes in the script 'Plots.R'. The following are the inputs:
 
     a) density_all.csv
+    
     b) GF_Dpred.csv
+    
     c) LF_HDI_Dpred.csv
+    
     d) FSI_Dpred.csv
     
     e) MSPE_folds.csv
+    
     f) LF_HDI_folds.csv
+    
     g) LF_HCE_folds.csv
+    
     h) FSI_MSPE_folds.csv
+    
     i) GF_folds.csv
     
     j) X_centerscale.csv
+    
     j) quant_all.csv
+    
     k) Theta_Hat.csv
+    
     l) FSI_bw.csv
     
