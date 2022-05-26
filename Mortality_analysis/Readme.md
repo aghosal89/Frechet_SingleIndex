@@ -215,3 +215,8 @@ Outputs: This script does not produce outputs to be saved for further use. It is
     
     l) FSI_bw.csv
     
+
+9)  To prepare a similar file as Folds.csv, run the codes in the script Folds_generate.csv. The test/train partition of folds will not be identical to
+    the one used in our analysis. As output it produces:
+    
+    Folds_new.csv
