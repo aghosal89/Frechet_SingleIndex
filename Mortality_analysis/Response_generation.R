@@ -11,7 +11,7 @@
 # create quantile an array of quatiles of the vector of a given length, say m.
 
 #Setting working directory
-setwd("~/Library/Mobile Documents/com~apple~CloudDocs/Documents/FSI/Mortality_all")
+
 
 # define m, number of support points for quantiles/densities.
 m<- 101
