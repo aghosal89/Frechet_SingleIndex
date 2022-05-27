@@ -5,8 +5,7 @@
 
 # The performance of the FSI model is described in the script 'FSI_model.R'.
 
-# Aritra's working directory~
-setwd("~/Library/Mobile Documents/com~apple~CloudDocs/Documents/FSI/Mortality_all")
+# Set working directory~
 
 # read the covariate data:
 X_ctr<- read.csv("X_centerscale.csv", header = T)
