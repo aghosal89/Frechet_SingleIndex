@@ -7,7 +7,7 @@
 ## further analysis.
 
 # set working directory~
-setwd("~/Library/Mobile Documents/com~apple~CloudDocs/Documents/FSI/Mortality_all")
+
 
 # read the covariate data:
 X_ctr<- read.csv("X_centerscale.csv", header = T)
