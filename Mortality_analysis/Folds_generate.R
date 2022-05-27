@@ -19,7 +19,6 @@ for(i in 1:30) {
 }
 
 # set working directory
-setwd("~/Documents/FSI/Mortality_all")
 
 # save the data on folds
 write.csv(Folds_new, "Folds_new.csv")
