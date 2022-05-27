@@ -1,7 +1,7 @@
 ## This script contains the codes to generate figures 7 - 10 in the paper. 
 
 # set working directory~
-setwd("~/Library/Mobile Documents/com~apple~CloudDocs/Documents/FSI/Mortality_all")
+
 
 ## Codes for producing figure 7 in the document
 ###################################################
