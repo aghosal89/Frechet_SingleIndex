@@ -6,7 +6,7 @@
 #######################################
 
 # set working directory~
-setwd("~/Library/Mobile Documents/com~apple~CloudDocs/Documents/FSI/Mortality_all")
+
 
 # read the list of countries for our model~
 country_<- read.csv("Countries_FSI.csv", header = T)[,2]
