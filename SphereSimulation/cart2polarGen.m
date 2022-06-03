@@ -4,7 +4,7 @@
 % Outputs:  r  : radius of polar coordinate
 %           eta: Angle of polar coordinate
 
-function [eta,r] = cart2polar(x)
+function [eta,r] = cart2polarGen(x)
     r = norm(x);        % find the norm
     p = length(x);      % dimension of the euclidean space
     

@@ -42,19 +42,18 @@ function lf_fit = get_sphere_fit_LF(Y, x, h, xout)
   fr.M = M;
 
   % Get weights
-  xdiff = repmat(x, 1, length(xout)) - repmat(xout', n, 1);
-  Kmat = 0.75*(1 - (xdiff/h.^2)).*(abs(xdiff)<= h);
-  mu0 = mean(Kmat);  mu1 = mean(Kmat.*xdiff); mu2 = mean(Kmat.*(xdiff.^2));
-  sig2 = mu0.*mu2 - mu1.^2;
-  w = Kmat.*(repmat(mu2, n, 1) - repmat(mu1, n, 1).*xdiff)./repmat(sig2, n, 1);
-
-  KmatLO = Kmat - diag(diag(Kmat));
   
   for j = 1:m
+      
+    x0 = xout(j, :)';
+    % Get Weights
+    w = getLFRweights(x, x0, h);
+    Kvec = K((x - repmat(x0', n, 1)), h);
+    Kvec(j) = 0;
 
-    y0 = sum(cell2mat(arrayfun(@(k) KmatLO(k, j)*Y(:, k), 1:n, 'UniformOutput', false))')'; y0 = y0/norm(y0); % Initial guess (leave-one-out NW)
+    y0 = sum(cell2mat(arrayfun(@(k) Kvec(k)*Y(:, k), 1:n, 'UniformOutput', false))')'; y0 = y0/norm(y0); % Initial guess (leave-one-out NW)
 
-    if(length(find(w(:, j))) < 2) % if there are less than two points, the fitted value cannot be computed
+    if(length(find(w)) < 2) % if there are less than two points, the fitted value cannot be computed
 
       lf_fit(:, j) = NaN(1, 3); 
 
@@ -62,9 +61,9 @@ function lf_fit = get_sphere_fit_LF(Y, x, h, xout)
 
       % Compute cost and Euclidean gradient
 
-      fr.cost = @(y) get_cost(w(:, j), Y, y, M);
-      fr.egrad = @(y) get_egrad(w(:, j), Y, y, M);
-      fr.ehess = @(y, u) get_ehess(w(:, j), Y, y, M, u);
+      fr.cost = @(y) get_cost(w, Y, y, M);
+      fr.egrad = @(y) get_egrad(w, Y, y, M);
+      fr.ehess = @(y, u) get_ehess(w, Y, y, M, u);
 
       lf_fit(:, j) = trustregions(fr, y0, ops);
 

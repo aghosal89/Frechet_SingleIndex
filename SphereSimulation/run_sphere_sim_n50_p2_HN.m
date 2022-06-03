@@ -4,7 +4,7 @@
 
 clear all; close all;
 usePar = 1; % should simulations be run in parallel? (1 = yes, 0 = no)
-numWk = 6; % if usePar = 1, how many workers should be used.
+numWk = 8; % if usePar = 1, how many workers should be used.
 
 % Adding path to access files in 'manopt' folder
 addpath(genpath('manopt'))
@@ -14,7 +14,7 @@ addpath(genpath('FMINSEARCHBND'))
 
 %% Simulation Settings
 % These first 4 variables will appear in the filename of the results
-nsim = 5;    % number of simulations
+nsim = 50;    % number of simulations
 n = 50;        % number of observations 
 p = 2;         % dimension of index parameter 
 noise = 'High'; % High or low noise setting
@@ -23,8 +23,21 @@ H = 10; % length of bandwidth that will be created
 % Parameters used to initialize the optimization for theta
 initType = 'random'; % 'random' or 'fixed' - how should the initialization grid be chosen?
 nsp = 3; % number of starting points to be used in each angular component, if initType == 'fixed'
-nrnd = 4; %number of random starting points to generate, if initType == 'random'
+nrnd = 4; % number of random starting points to generate, if initType == 'random'
 
+
+% Optimization options -  If optType = 'TR', runs trust region (fmincon)
+% with analytic gradient/Hessian of approximate 
+% cost function using local linear instead of local Frechet estimates to
+% increase speed.  Otherwise, Nelder-Mead (fminsearchbnd) is used
+optType = 'TR'; 
+if(strcmp(optType, 'TR'))
+    optns = struct('Algorithm', 'TR', 'Ret', 1, 'useAltGrad', 1, 'useAltHess', 1, 'maxIter', 100); % TR with gradient and Hessian approximation and max of 100 iterations per starting value
+else
+    optns = struct('Algorithm', 'NM', 'Ret', 1, 'maxIter', 100); % NM with max of 100 iterations per starting value
+end
+
+% Define random seeds
 s_pm = 19878;  % seed for generating true theta parameter (should be same across all sims/batches sharing same p)
 s_dt = 285720;  % seed for generating random data (different values for different sims/batches)
 
@@ -44,7 +57,7 @@ reg_curve = @(t) [sqrt(1-t.^2).*cos(pi*t), sqrt(1-t.^2).*sin(pi*t), t];
 rng(s_pm);      % setting seed for generating index parameter
 
 tmp = 2*rand(p, 1) - 1; % p uniform rvs between -1 and 1
-b = tmp/norm(tmp); % normalize to have norm 1 (this is theta_0 in the paper)
+theta0 = tmp/norm(tmp); % normalize to have norm 1
 
 %% Generate Data
 
@@ -60,13 +73,13 @@ rng(s_dt);      % setting seed for generating data
   % gives us the matrix of dimension n x nsim , we divide by sqrt(p) so that all elements of z 
   % are in the range (-1,1), as required by the function mreg below.  
   
-  z = cell2mat(arrayfun(@(j) squeeze(x(:, j, :))*b, 1:nsim, 'UniformOutput', false))/sqrt(p);
+  z = cell2mat(arrayfun(@(j) squeeze(x(:, j, :))*theta0, 1:nsim, 'UniformOutput', false))/sqrt(p);
   
 % Generating the data (x,Y) from fixed index parameter value above for a given p, we assume that the
 % parameter space is a proper subset of a p-dimensional unit sphere with
 % center at origin and first component positive. 
 
-  % Map the point in (-1,1) on to the circumference of unit sphere, this
+  % Map the point in (-1,1) onto the unit sphere, this
   % gives us the conditional expectation of Y given x
   mreg = arrayfun(@(j) reg_curve(z(:, j))', 1:nsim, 'UniformOutput', false); 
 
@@ -120,7 +133,7 @@ for k = 1:nsim
 end    
 
 % make bandwidth grid that is linear on the log scale
-h = exp(linspace(log(bw_min*1.25), log(bw_max), H));
+h = exp(linspace(log(bw_min*1.05), log(bw_max), H));
 
 %% Perform Model Fitting
 
@@ -133,7 +146,7 @@ if(usePar == 1)
 
     parfor i = 1:nsim
 
-        fsiFitAll{i} = get_sphere_fit_FSI(Y{i}, squeeze(x(:, i, :)), h_FSI, [], theta_init);
+        fsiFitAll{i} = get_sphere_fit_FSI(Y{i}, squeeze(x(:, i, :)), h_FSI, [], theta_init, optns);
         LFpcovFitAll{i} = get_sphere_fit_LFpcov(Y{i}, squeeze(x(:, i, :)), h_LFpcov, []);
 
     end
@@ -144,80 +157,16 @@ else
 
     for i = 1:nsim
 
-        fsiFitAll{i} = get_sphere_fit_FSI(Y{i}, squeeze(x(:, i, :)), h_FSI, [], theta_init);
+        fsiFitAll{i} = get_sphere_fit_FSI(Y{i}, squeeze(x(:, i, :)), h_FSI, [], theta_init, optns);
         LFpcovFitAll{i} = get_sphere_fit_pcov(Y{i}, squeeze(x(:, i, :)), h_LFpcov, []);
 
     end
 
 end
 
-%{
-% the MSPE and eta hats corresponding to each simulation are stored as
-% matrices instead of struct array for further analyses.
-mspe_nm = NaN(length(h), nsim);
-eta_hat = NaN(length(h), p-1, nsim);
-
-for i=1:nsim
-    for j=1:length(h)
-        [~, a2] = find(mspe{i}(j,:)== min(mspe{i}(j,:))); 
-        eta_hat(j,:,i) = eta_opt{i}(j, :, a2);
-        mspe_nm(j,i) = mspe{i}(j, a2);
-    end
-end
-
-% to find the average and standard deviation of the MSPE over simulations
-% we find the best bandwidth over all the simulated data. 
-mspe_nm_sum = sum(mspe_nm, 2);
-h_opt=h(find(mspe_nm_sum == min(mspe_nm_sum(:))));
-
-% mean and standard deviation of the MSPE over simulations at the best bandwidth~
-mean(mspe_nm(find(mspe_nm_sum == min(mspe_nm_sum(:))), :));
-std(mspe_nm(find(mspe_nm_sum == min(mspe_nm_sum(:))), :));
-
-% to obtain distribution of beta estimates we convert the etas to from
-% polar to cartesian coordinates 
-
-eta_opt_s  = zeros(nsim, p-1);
-beta_opt_s = zeros(nsim, p);
-for i=1:nsim
-    eta_opt_s(i,:) = eta_hat(find(mspe_nm_sum == min(mspe_nm_sum(:))),:,i);
-    beta_opt_s(i,:)= polar2cart(eta_opt_s(i,:),1);
-end
-
-
-% MSE of the estimator over simulations, their mean and standard deviation
-mean(acos(beta_opt_s*b'))
-std(acos(beta_opt_s*b'))
- 
-% computing MSEE from the estimated parameters~
-zt = zeros(n, nsim);
-Yhat = arrayfun(@(l) zeros(3, size(z,1)), 1:nsim, 'UniformOutput', false);
-msee = zeros(200, 1);
-
-for i=1:nsim
-    disp(i)
-    if(p==2)
-    zt(:,i) = [x(:,i,1), x(:,i,2)]*beta_opt_s(i,:)';
-    
-    elseif(p==3)
-    zt(:,i) = [x(:,i,1), x(:,i,2), x(:,i,3)]*beta_opt_s(i,:)';
-   
-    elseif(p==4)
-    zt(:,i) = [x(:,i,1), x(:,i,2), x(:,i,3), x(:,i,4)]*beta_opt_s(i,:)';
-    
-    end
-    Yhat{i}= get_sphere_fit_FSI(Y{i}, zt(:,i), h_opt);
-    msee(i)= mean((arrayfun(@(g) acos(mreg{i}(:, g)'*Yhat{i}(:,g)),1:n)).^2);
-end
-
-% find the mean and standard deviation of MSEE
-mean(msee)
-std(msee)
-%}
-
 fnm = strcat('NM_Sphere_results_n', num2str(n), '_nsim', num2str(nsim), '_p', num2str(p), '_noise', noise, '_', init_Type, '.mat');
 
-save(fnm, 'fsiFitAll', 'LFpcovFitAll', 'n', 'p', 'nsim', 'tau', 's_pm', 's_dt', 'nsp', 'b', 'h_FSI', 'h_LFpcov', 'theta_init', 'usePar', 'numWk')
+save(fnm, 'fsiFitAll', 'LFpcovFitAll', 'n', 'p', 'nsim', 'tau', 's_pm', 's_dt', 'nsp', 'theta0', 'h_FSI', 'h_LFpcov', 'theta_init', 'usePar', 'numWk')
 
 
 

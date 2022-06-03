@@ -1,35 +1,27 @@
-%% The following function computes cartesian coordinates from polar coordinates
+%% The following function computes cartesian coordinates from polar coordinates in general dimensions
 % Inputs:  eta: angles in radian
-%            r: radius
+%            r: radius (default = 1)
 
 % Output is the cartesian coordinates.
 
 function theta = polar2cart(eta, r)
+
+  if nargin < 2 % assume unit sphere if radius is not provided
+      r = 1;
+  end
+
   s = length(eta);
   theta = zeros(s+1,1);
+
+  theta(1) = r*prod(cos(eta));
+  theta(end) = r*sin(eta(1));
   
-  if(s==1)
-    theta(1)= r*cos(eta(1));
-    theta(2)= r*sin(eta(1));
-    
-  elseif(s==2)
-    theta(1) = r*cos(eta(1))*cos(eta(2));
-    theta(2) = r*cos(eta(1))*sin(eta(2));
-    theta(3) = r*sin(eta(1));
-  
-  elseif(s==3) 
-    theta(1)= r*cos(eta(1))*cos(eta(2))*cos(eta(3));
-    theta(2)= r*cos(eta(1))*cos(eta(2))*sin(eta(3));
-    theta(3)= r*cos(eta(1))*sin(eta(2));
-    theta(4)= r*sin(eta(1));
-  
-  elseif(s==4) 
-    theta(1)= r*cos(eta(1))*cos(eta(2))*cos(eta(3))*cos(eta(4));
-    theta(2)= r*cos(eta(1))*cos(eta(2))*cos(eta(3))*sin(eta(4));
-    theta(3)= r*cos(eta(1))*cos(eta(2))*sin(eta(3));
-    theta(4)= r*cos(eta(1))*sin(eta(2));
-    theta(5)= r*sin(eta(1));
-  
+  if s > 2
+      for j = 2:s
+      
+          theta(j) = r*prod(cos(eta(1:(s-j+1))))*sin(eta(s-j+2));
+      
+      end
   end
   
 end

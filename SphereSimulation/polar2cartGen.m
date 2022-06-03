@@ -15,10 +15,13 @@ function theta = polar2cartGen(eta, r)
 
   theta(1) = r*prod(cos(eta));
   theta(end) = r*sin(eta(1));
-  for j = 2:s
+  
+  if s > 2
+      for j = 2:s
       
-      theta(j) = r*prod(cos(eta(1:(s-j+1))))*sin(eta(s-j+2));
+          theta(j) = r*prod(cos(eta(1:(s-j+1))))*sin(eta(s-j+2));
       
+      end
   end
   
 end

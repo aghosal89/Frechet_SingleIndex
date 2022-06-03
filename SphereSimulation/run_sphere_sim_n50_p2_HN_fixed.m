@@ -45,7 +45,7 @@ reg_curve = @(t) [sqrt(1-t.^2).*cos(pi*t), sqrt(1-t.^2).*sin(pi*t), t];
 rng(s_pm);      % setting seed for generating index parameter
 
 tmp = 2*rand(p, 1) - 1; % p uniform rvs between -1 and 1
-b = tmp/norm(tmp); % normalize to have norm 1 (this is theta_0 in the paper)
+theta0 = tmp/norm(tmp); % normalize to have norm 1 (this is theta_0 in the paper)
 
 %% Generate Data
 
@@ -61,7 +61,7 @@ rng(s_dt);      % setting seed for generating data
   % gives us the matrix of dimension n x nsim , we divide by sqrt(p) so that all elements of z 
   % are in the range (-1,1), as required by the function mreg below.  
   
-  z = cell2mat(arrayfun(@(j) squeeze(x(:, j, :))*b, 1:nsim, 'UniformOutput', false))/sqrt(p);
+  z = cell2mat(arrayfun(@(j) squeeze(x(:, j, :))*theta0, 1:nsim, 'UniformOutput', false))/sqrt(p);
   
 % Generating the data (x,Y) from fixed index parameter value above for a given p, we assume that the
 % parameter space is a proper subset of a p-dimensional unit sphere with
@@ -218,9 +218,9 @@ mean(msee)
 std(msee)
 %}
 
-fnm = strcat('NM_Sphere_results_n', num2str(n), '_nsim', num2str(nsim), '_p', num2str(p), '_noise', noise, '_', init_Type, '.mat');
+fnm = strcat('NM_Sphere_results_n', num2str(n), '_nsim', num2str(nsim), '_p', num2str(p), '_noise', noise, '_', initType, '.mat');
 
-save(fnm, 'fsiFitAll', 'LFpcovFitAll', 'n', 'p', 'nsim', 'tau', 's_pm', 's_dt', 'nsp', 'b', 'h_FSI', 'h_LFpcov', 'theta_init', 'usePar', 'numWk')
+save(fnm, 'fsiFitAll', 'LFpcovFitAll', 'n', 'p', 'nsim', 'tau', 's_pm', 's_dt', 'theta0', 'h', 'theta_init', 'usePar', 'numWk')
 
 
 
