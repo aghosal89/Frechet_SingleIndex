@@ -1,21 +1,29 @@
 
 1) Download all the files from the folder 'Mortality_analysis' into a folder in you computer and set it as the working directory for operation in R/RStudio.
 
+
 2) Run the codes in the script 'Covariate_generation.R' to read and process the covariate data for our model. 
 This script takes as inputs the following files:
     
+    
     a) Countries_FSI.csv:  contains list of all 40 countries in order appearing in the covariate data.
+    
     
     b) GDP_YoY_perc.csv:  contains time seeries data on GDP year-on-year % change for a superset of countries containing 40 countries in our model.
     
+    
     c) HC_exp_percGDP.csv:  contains time seeries data on Healthcare expenditure % of GDP for a superset of countries containing 40 countries in our model.
+    
     
     d) CO2_emissions_pc.csv: contains time series data on CO2 emissions per-capita for a superset of countries containing 40 countries in our model.
     
+    
     e) infmort.csv:   contains time series data on Infant mortality per 1000 live births for a superset of countries containing 40 countries in our model.
+    
     
     f) HumanDevelopmentIndex(HDI).csv: contains time series data on Human Development Index for a superset of countries containing 40 countries in our model.
     
+
 Sources:
 The data on GDP year-on-year % change, Healthcare expenditure percentage of GDP, CO2 emissions in tonnes per capita, Infant mortality per 1000 live births are obtained from world bank website (https://data.worldbank.org/). The data on Human Development Index (HDI) is obtained from (https://hdr.undp.org/en/data). The data and the list of countries considered in our mortality analysis are obtained from the website 'mortality.org' (https://www.mortality.org/).
 
