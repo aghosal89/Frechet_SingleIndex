@@ -5,24 +5,17 @@
 2) Run the codes in the script 'Covariate_generation.R' to read and process the covariate data for our model. 
 This script takes as inputs the following files:
     
-   
+    a) Countries_FSI.csv:  contains list of all 39 countries in order appearing in the covariate data from link: https://mortality.org/ .
     
-    a) Countries_FSI.csv:  contains list of all 39 countries in order appearing in the covariate data from link: https://mortality.org/.
+    b) API_NY.GDP.MKTP.KD.ZG_DS2_en_csv_v2_4498512.csv:  contains time seeries data on GDP year-on-year % change for a superset of countries containing 39 countries in our model. Download link: https://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG .
     
+    c) API_SH.XPD.CHEX.GD.ZS_DS2_en_csv_v2_4499032.csv:  contains time series data on Current healthcare expenditure % of GDP for a superset of countries containing 39 countries in our model. Download link: https://data.worldbank.org/indicator/SH.XPD.CHEX.GD.ZS .
     
-    b) API_NY.GDP.MKTP.KD.ZG_DS2_en_csv_v2_4498512.csv:  contains time seeries data on GDP year-on-year % change for a superset of countries containing 39 countries in our model. Download link: https://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG
+    d) CO2_emissions_pc.csv: contains time series data on CO2 emissions per-capita for a superset of countries containing 39 countries in our model. Download link: https://data.worldbank.org/indicator/EN.ATM.CO2E.PC?name_desc=false .
     
-  
-    c) API_SH.XPD.CHEX.GD.ZS_DS2_en_csv_v2_4499032.csv:  contains time series data on Current healthcare expenditure % of GDP for a superset of countries containing 39 countries in our model. Download link: https://data.worldbank.org/indicator/SH.XPD.CHEX.GD.ZS
+    e) UNICEF-CME_DF_2021_WQ-1.0-download.csv:   contains time series data on Infant mortality per 1000 live births for a superset of countries containing 39 countries in our model. Download link: https://childmortality.org/data .
     
-    
-    d) CO2_emissions_pc.csv: contains time series data on CO2 emissions per-capita for a superset of countries containing 39 countries in our model. Download link: https://data.worldbank.org/indicator/EN.ATM.CO2E.PC?name_desc=false
-    
-    
-    e) infmort.csv:   contains time series data on Infant mortality per 1000 live births for a superset of countries containing 39 countries in our model.
-    
-    
-    f) HumanDevelopmentIndex(HDI).csv: contains time series data on Human Development Index for a superset of countries containing 39 countries in our model. Download link: https://hdr.undp.org/data-center/documentation-and-downloads
+    f) HDR21-22_Composite_indices_complete_time_series.csv: contains time series data on Human Development Index for a superset of countries containing 39 countries in our model. Download link: https://hdr.undp.org/data-center/documentation-and-downloads .
     
 
 Sources:
