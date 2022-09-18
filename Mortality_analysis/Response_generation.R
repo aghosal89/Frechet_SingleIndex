@@ -1,3 +1,7 @@
+############
+# Script #2
+############
+
 ## In this script we set up the response data
 
 # In the following segment we create the response data as objects in L^2-Wasserstein space to 
@@ -11,7 +15,7 @@
 # create quantile an array of quatiles of the vector of a given length, say m.
 
 #Setting working directory
-
+setwd("~/Library/Mobile Documents/com~apple~CloudDocs/Documents/FSI/Mortality_all")
 
 # define m, number of support points for quantiles/densities.
 m<- 101
@@ -482,3 +486,4 @@ rownames(quant_all) <- country_
 
 # save the quantiles for further use 
 write.csv(quant_all, "quant_all.csv")
+
