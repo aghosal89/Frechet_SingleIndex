@@ -1,12 +1,10 @@
 
-
 #######################################
 # Computations for Table 5
 # get Frechet R-squared for the models
 #######################################
 
 # set working directory~
-
 
 # read the list of countries for our model~
 country_<- read.csv("Countries_FSI.csv", header = T)[,2]
@@ -73,14 +71,11 @@ theta <- read.csv("Theta_Hat.csv", header = T)[,2]
 frechet_Rsquared(Y=quant_all, X=(X_ctr%*%theta), tt= qSup, h=h_fsi, model="LF")*100
 
 
-
-
-
-
-
 ######################################################################
 ## Computing the mean and standard deviation of the MSPE across folds 
 ######################################################################
+
+# creating and saving dataset for MSPE variation across folds~
 
 gf_folds<- read.csv("GF_folds.csv", header = T)
 lf_hdi_folds <- read.csv("LF_HDI_folds.csv", header= T)
@@ -89,7 +84,6 @@ lf_gdpc_folds <- read.csv("LF_GDPC_folds.csv",header=T)
 lf_im_folds <- read.csv("LF_IM_folds.csv", header = T)
 lf_co2e_folds <- read.csv("LF_CO2E_folds.csv", header = T)
 fsi_folds <- read.csv("FSI_MSPE_folds.csv", header = T)
-
 
 # creating and saving dataset for MSPE variation across folds~
 
@@ -138,7 +132,6 @@ sd(subset(df_mspe_folds, df_mspe_folds[,'Model'] == "FSI")[,2])
 
 # save the MSPE distributions across folds for the models
 write.csv( df_mspe_folds,"MSPE_folds.csv")
-
 
 
 
