@@ -6,22 +6,22 @@
 This script takes as inputs the following files:
     
     
-    a) Countries_FSI.csv:  contains list of all 40 countries in order appearing in the covariate data.
+    a) Countries_FSI.csv:  contains list of all 39 countries in order appearing in the covariate data.
     
     
-    b) GDP_YoY_perc.csv:  contains time seeries data on GDP year-on-year % change for a superset of countries containing 40 countries in our model.
+    b) GDP_YoY_perc.csv:  contains time seeries data on GDP year-on-year % change for a superset of countries containing 39 countries in our model.
     
     
-    c) HC_exp_percGDP.csv:  contains time seeries data on Healthcare expenditure % of GDP for a superset of countries containing 40 countries in our model.
+    c) HC_exp_percGDP.csv:  contains time seeries data on Healthcare expenditure % of GDP for a superset of countries containing 39 countries in our model.
     
     
-    d) CO2_emissions_pc.csv: contains time series data on CO2 emissions per-capita for a superset of countries containing 40 countries in our model.
+    d) CO2_emissions_pc.csv: contains time series data on CO2 emissions per-capita for a superset of countries containing 39 countries in our model.
     
     
-    e) infmort.csv:   contains time series data on Infant mortality per 1000 live births for a superset of countries containing 40 countries in our model.
+    e) infmort.csv:   contains time series data on Infant mortality per 1000 live births for a superset of countries containing 39 countries in our model.
     
     
-    f) HumanDevelopmentIndex(HDI).csv: contains time series data on Human Development Index for a superset of countries containing 40 countries in our model.
+    f) HumanDevelopmentIndex(HDI).csv: contains time series data on Human Development Index for a superset of countries containing 39 countries in our model.
     
 
 Sources:
@@ -29,10 +29,11 @@ The data on GDP year-on-year % change, Healthcare expenditure percentage of GDP,
 
 As output it produces:
 
-    a) X_centerscale.csv, the 40x5 design matrix for our model whose columns are the covariates scaled and centered with each row/observation representing a country. We considered mortality analysis for the year 2013. In our analysis, we refer to these covariates as GDPC, HCE, CO2E, IM, HDI respectively in the order appearing above.
+    a) X_centerscale.csv, the 39x5 design matrix for our model whose columns are the covariates scaled and centered with each row/observation representing a country. We considered mortality analysis for the year 2013. In our analysis, we refer to these covariates as GDPC, HCE, CO2E, IM, HDI respectively in the order appearing above.
 
 
 3) Run the codes in the script 'Response_generation.R' to read and process the response data in our model. This script takes as inputs the following files:
+    
     
     1.   lt_australia.csv
     2.   lt_austria.csv
@@ -49,40 +50,41 @@ As output it produces:
     13.  lt_france.csv
     14.  lt_germany.csv
     15.  lt_greece.csv
-    16.  lt_hongkong.csv
-    17.  lt_hungary.csv
-    18.  lt_iceland.csv
-    19.  lt_ireland.csv
-    20.  lt_israel.csv
-    21.  lt_italy.csv
-    22.  lt_japan.csv
-    23.  lt_latvia.csv
-    24.  lt_lithuania.csv
-    25.  lt_luxembourg.csv
-    26.  lt_netherlands.csv
-    27.  lt_newz.csv
-    28.  lt_norway.csv
-    29.  lt_poland.csv
-    30.  lt_portugal.csv
-    31.  lt_korea.csv
-    32.  lt_russia.csv
-    33.  lt_slovakia.csv
-    34.  lt_slovenia.csv
-    35.  lt_spain.csv
-    36.  lt_sweden.csv
-    37.  lt_switzerland.csv
-    38.  lt_UK.csv
-    39.  lt_USA.csv
-    40.  lt_Ukraine.csv
+    16.  lt_hungary.csv
+    17.  lt_iceland.csv
+    18.  lt_ireland.csv
+    19.  lt_israel.csv
+    20.  lt_italy.csv
+    21.  lt_japan.csv
+    22.  lt_latvia.csv
+    23.  lt_lithuania.csv
+    24.  lt_luxembourg.csv
+    25.  lt_netherlands.csv
+    26.  lt_newz.csv
+    27.  lt_norway.csv
+    28.  lt_poland.csv
+    29.  lt_portugal.csv
+    30.  lt_korea.csv
+    31.  lt_russia.csv
+    32.  lt_slovakia.csv
+    33.  lt_slovenia.csv
+    34.  lt_spain.csv
+    35.  lt_sweden.csv
+    36.  lt_switzerland.csv
+    37.  lt_UK.csv
+    38.  lt_USA.csv
+    39.  lt_Ukraine.csv  
     
-    41)   Countries_FSI.csv
+    and finally,
+    
+    40.   Countries_FSI.csv
 
-the files 1 - 40 above are life tables for the respective countries above for various years. The data obtained from (https://www.mortality.org/). Each contains columns for age and number of deaths in that age for that country. The file 'Countries_FSI.csv' is described above in 2). 
+the files 1 - 39 above are life tables for the respective countries above for various years. The data obtained from (https://www.mortality.org/). Each contains columns for age and number of deaths in that age for that country. The file 'Countries_FSI.csv' is described above in 2). 
 
 As outputs it generates the files:
     
-    a) quant_all.csv  :  a 40x101 matrix whose rows are the quantiles on an equidistant grid of length 101 on [0,1] of the mortality distribution of each country.
-    b) density_all.csv : a 40x101 matrix whose rows are the mortality densities on an equidistant grid of age-range [20,110] of length 101 for each country.
+    a) quant_all.csv  :  a 39x101 matrix whose rows are the quantiles on an equidistant grid of length 101 on [0,1] of the mortality distribution of each country.
+    b) density_all.csv : a 39x101 matrix whose rows are the mortality densities on an equidistant grid of age-range [20,110] of length 101 for each country.
 
 4) Run the codes in the script 'Models_BW_Predictions.R' to find the predicted quantiles/densities for all countries using Local Frechet regression using each of the covariates 'GDPC', 'HCE', 'CO2E', 'IM', 'HDI'; and also running Global Fréchet regression using all of these 5 covariates. In the process we also find the best bandwidth choices for each Local Frechet regression model (i.e. for Local Fréchet regression with each of the covariates). The inputs for this script are:
 
