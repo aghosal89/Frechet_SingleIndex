@@ -20,10 +20,10 @@ This script takes as inputs the following files:
 
 As output it produces:
 
-    a) X_centerscale.csv, the 39x5 design matrix for our model whose columns are the covariates scaled and centered with each row/observation representing a country. We considered mortality analysis for the year 2013. In our analysis, we refer to these covariates as GDPC, HCE, CO2E, IM, HDI respectively in the order appearing above.
+    X_centerscale.csv, the 39x5 design matrix for our model whose columns are the covariates scaled and centered with each row/observation representing a country. We considered mortality analysis for the year 2013. In our analysis, we refer to these covariates as GDPC, HCE, CO2E, IM, HDI respectively in the order appearing above.
 
 
-3) Run the codes in the script 'Response_generation.R' to read and process the response data in our model. This script takes as inputs the following files:
+3) Run the codes in the script 'Response_generation_new.R' to read and process the response data in our model. This script takes as inputs the following files:
     
     
     1.   lt_australia.csv
@@ -70,7 +70,7 @@ As output it produces:
     
     40.   Countries_FSI.csv
 
-the files 1 - 39 above are life tables for the respective countries above for various years. The data obtained from (https://www.mortality.org/). Each contains columns for age and number of deaths in that age for that country. The file 'Countries_FSI.csv' is described above in 2). 
+the files 1 - 39 above are life tables for the respective countries above for various years. The data obtained from (https://www.mortality.org/). Each contains columns for age and number of deaths in that age for that country. The file 'Countries_FSI.csv' is described above in 2(a). 
 
 As outputs it generates the files:
     
@@ -107,12 +107,11 @@ The outputs are:
     p) GF_Qpred.csv  : contains the Global Frechet regression predicted quantiles for 2013 for all countries using all the covariates.
     q) GF_Dpred.csv  : contains the Global Frechet regression predicted densities for 2013 for all countries using all the covariates.
     
-5) Run the codes in the script 'CV_folds_analysis.R'. To understand performance of the models better, we split the data into training/testing segments in 30 folds. The training split consists of 30 observation while testing split consists of 10 observations in each fold. The splits of 30 folds were picked randomly without replacement and stored in 'Folds.csv' file to be used for all models repeatedly. Then the respective Local Frechet and Global Frechet models were built on the training split and used for prediction on the testing set. The Mean Square Prediction Error is calculated on the testing set. The best bandwidths obtained by running the script 'Models_BW_Predictions.R' are used here. The inputs are:
+5) Run the codes in the script 'CV_folds_analysis.R'. To understand performance of the models better, we split the data into training/testing segments in 30 folds. The training split consists of 29 observation while testing split consists of 10 observations in each fold. The splits of 30 folds were picked randomly without replacement and stored in 'Folds_new.csv' file to be used for all models repeatedly. Then the respective Local Fréchet and Global Fréchet models were built on the training split and used for prediction on the testing set. The Mean Square Prediction Error is calculated on the testing set. The best bandwidths obtained by running the script 'Models_BW_Predictions.R' are used here. The inputs are:
 
     a) X_centerscale.csv
     b) quant_all.csv
-    c) Folds.csv 
-    
+    c) Folds_new.csv 
     d) LF_GDPC_BW.csv
     e) LF_HCE_BW.csv
     f) LF_CO2E_BW.csv
@@ -163,7 +162,7 @@ The outputs:
     
     5. FSI_MSPE_folds.csv : Mean Square Prediction Error in 30 folds by the FSI model using the best bandwidth above. 
 
-7) To run the computations for the table 5 in the paper run the codes in the script 'Table5_computation.R'. It sources the function 'frechet_Rsquared.R'. The inputs are:
+7) To run the computations for the table 5 in the paper run the codes in the script 'Table5_computation.R'. It sources the function 'Frechet_Rsquared.R'. The inputs are:
 
     1. Countries_FSI.csv
     2. X_centerscale.csv
