@@ -3,8 +3,7 @@
 # Building FSI model
 #####################
 
-# set working directory~
-setwd("~/MATLAB/DistData/Mortality_all")
+# Set working directory~
 
 # read the list of countries for our model~
 country_<- read.csv("Countries_FSI.csv", header = T)
