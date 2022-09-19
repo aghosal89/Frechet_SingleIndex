@@ -14,10 +14,8 @@
 # 4) Infant mortality rate per 1000 live births (IM)
 # 5) Human Development Index (HDI)
 
-# Aritra's working directory
-setwd("~/MATLAB/DistData/Mortality_all")
+# Set working directory
 
-#setwd("~/Library/Mobile Documents/com~apple~CloudDocs/Documents/FSI/Mortality_all")
 
 # the following are the list of 40 countries for which mortality is considered in our model.
 country_ <- read.csv("Countries_FSI.csv", header = T)[,-1]
