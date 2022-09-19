@@ -14,10 +14,7 @@
 # where the age is repeated as many times as the number of deaths in the dataset, and finally
 # create quantile an array of quatiles of the vector of a given length, say m.
 
-#Setting working directory
-#setwd("~/MATLAB/DistData/Mortality_all")
-
-setwd("~/Library/Mobile Documents/com~apple~CloudDocs/Documents/FSI/Mortality_all")
+# Set working directory
 
 # define m, number of support points for quantiles/densities.
 m<- 101
