@@ -9,7 +9,7 @@
 #        5) model: To specify "GF" or "LF" for Global Frechet or Local Frechet respectively.
 
 
-Frechet_Rsquared <- function(Y=NULL, X=NULL, h= NULL, tt=NULL, model=NULL) {
+frechet_Rsquared <- function(Y=NULL, X=NULL, h= NULL, tt=NULL, model=NULL) {
   
   if(model=="LF" & is.null(h)==TRUE) {
     error("For Local Frechet model a bandwidth required.")
