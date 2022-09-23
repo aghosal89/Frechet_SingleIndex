@@ -132,7 +132,7 @@ for (i in 1:nrow(fold)) {
   
   lf_hce_folds[i,] <- mean(pe)
 }
-write.csv(lf_hcexp_folds, 'LF_HCE_folds.csv')
+write.csv(lf_hce_folds, 'LF_HCE_folds.csv')
 
 
 # CO2 emissions in tonnes per capita
