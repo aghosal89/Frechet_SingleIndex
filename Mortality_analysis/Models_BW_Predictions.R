@@ -6,6 +6,9 @@
 ## lastly we save the bandwidths and model predictions as densities/quantiles for
 ## further analysis.
 
+# read necessary libraries
+library('frechet')
+
 # set working directory~
 
 # read the covariate data:
@@ -35,7 +38,6 @@ qSup = seq(0, 1, length.out = m)
 ## Local Frechet on each covariate 
 ###################################
 
-library('frechet')
 set.seed(1233)
 
 # for gdp YoY % change
