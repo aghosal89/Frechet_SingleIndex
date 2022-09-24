@@ -32,9 +32,9 @@ prompt within a Matlab session, e.g.,
 
 >> run_sphere_sim_n50_p2_LN
 
-or via the command line.  For example, to run in the background on a unix system, one can use
+or via the command line.  For example, to run in the background on a Unix system, one can use
 
-nohup matlab -batch "run_sphere_sim_n50_p2_LN" > n50p2LN.out
+nohup matlab -batch "run_sphere_sim_n50_p2_LN" > n50p2LN.out &
 
 which will save the output into the file n50p2LN.out
 
