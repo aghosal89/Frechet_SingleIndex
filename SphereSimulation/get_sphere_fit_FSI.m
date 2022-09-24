@@ -1,40 +1,28 @@
 %% Fits the FSI model for spherical response data
 
-% Inputs: Y = response data 3xn 
+% Inputs: Y = response data 3xn
 %         x = nxp matrix of predictors corresponding to observations in Y
 %         h = 1xH vector of bandwidths
 %         xout = mxp matrix of predictors to be used for computing fitted
 %                values (if missing, set xout = x so m = n)
-%         theta_init = pxq matrix of q starting values for optimizing over the
-%                      index parameter OR an integer indicating the number 
-%                      of random starting points to draw (if missing, 10 random 
-%                      starting points will be drawn)
+%
 %         opts = a structure array with the following fields:
 %
-%           Algorithm = can be either 'NM' (for Nelder-Mead optimization
-%                       using fminsearchbnd) or 'TR' (for trust region
-%                       optimization using fmincon) - default is 'TR'
 %           Ret = binary flag for returning optimizer info (1 = yes [default], 0 = no)
 %           maxIter = integer indicating maximum number of iterations to be
-%                     executed (default is 100)
-%           useAltCost = binary flag indicating whether or not an
-%                        alternative cost function should be used based on 
-%                        normalized local linear estimates (1 = yes, 0 = no
-%                        [default])
-%           useAltGrad = binary flag indicating whether or not the gradient
-%                        for the alternative cost function should be used
-%                        (1 = yes, 0 = no [default]).  This is only
-%                        utilized if Algorithm = 'TR'.  Note that if
-%                        Algorithm = 'TR' and useAltCost = 1, then the
-%                        alternative gradient is the exact gradient for the
-%                        alternative cost.
-%           useAltHess = binary flag indicating whether or not the Hessian
-%                        for the alternative cost function should be used
-%                        (1 = yes, 0 = no [default]).  This is only
-%                        utilized if Algorithm = 'TR'.  Note that if
-%                        Algorithm = 'TR' and useAltCost = 1, then the
-%                        alternative Hessian is the exact Hessian for the
-%                        alternative cost.
+%                     executed [default = 100]
+%           thetaInit = pxq matrix of q starting values for initial optimization over the
+%                      index parameter OR an integer indicating the number
+%                      of random starting points to draw [default = 10]
+%           thetaChoose = integer indicating how many of the values returned in the
+%                          initial optimization step should be used in the final round
+%                          using Nelder-Mead [default = 5]; Note that iterations that
+%                          did not converge in the initial optimization will be discarded
+%           Algorithm = 'IP', 'SQP', or 'NM' [default]; except for 'NM', 
+%                       will use fmincon with interior-point ('IP') or
+%                       sequential quadratic programming ('SQP') algorithms
+%                       in the final optimization; if 'NM', Nelder-Mead 
+%                       will be used (fminsearchbnd)
 
 % Output: fsi_fit = a structure array with the following fields:
 %           thetaHat = pxH vector of the index parameter estimates, each
@@ -42,14 +30,37 @@
 %           Yout = 3xmxH array of fitted values using thetaHat estimates and local Frechet
 %                  regression for the predictor values in xout for all
 %                  bandwidths in h
-%           optInfo = if opts.Ret = 1, then this is a cell array with four
-%                     elements.  The first contains the matrix of starting
-%                     values, the second contains the array of optimum values returned 
-%                     by the algorithm for various h, the third contains the exit flags for each
-%                     starting value, and the fourth contains the additional
-%                     information for each optimization problem
+%           optInfo = if opts.Ret = 1, then this is a cell array with five
+%                     elements.
+%               optInfo{1} = pxq matrix of starting values for the initial optimization
+%               optInfo{2} = 1xH cell array, optInfo{2}{l} is a matrix of starting values
+%                            used in the final optimization for bandwidth h(l)
+%               optInfo{3} = 1xH cell array, optInfo{3}{l} is a matrix of values
+%                            returned by the final optimization corresponding to
+%                             starting values in optInfo{2}{l}
+%               optInfo{4} = 1xH cell array, optInfo{4}{l} contains the exit flags
+%                            for each starting value in the final optimization
+%               optInfo{5} = 1xH cell array, optInfo{5}{l} contains additional information
+%                            for each final optimization problem
+%
+% Details: For each bandwidth, the estimate for theta is produced in two
+% steps.  First, an approximation to the estimation criterion is optimized
+% using starting points specified by opts.thetaInit.  This step uses
+% local linear estimates (normalized to be on the sphere) of the conditional
+% Euclidean mean in lieu of local Frechet estimates of the conditional
+% Frechet mean, and is very fast since these estimates are known in closed
+% form, also allowing for an analytic gradient and Hessian.  Out of the
+% optimizing values from the first step, the best few (determined by
+% opts.thetaChoose) are identified by having the lowest approximate cost.
+% In the second step, this reduced set of theta values
+% are used as starting values to the optimizer using the true cost
+% function.  Depending on opts.Algorithm, this second step optimization,
+% which has no analytic gradient or Hessian, can be conducted by
+% Nelder-Mead or by a trust region algorithm that uses the analytic
+% gradient and Hessian from the approximate cost function instead of
+% approximating the true gradient and Hessian numerically.
 
-function fsi_fit = get_sphere_fit_FSI(Y, x, h, xout, theta_init, opts)
+function fsi_fit = get_sphere_fit_FSI(Y, x, h, xout, opts)
 
 
 %% Check Inputs
@@ -57,7 +68,7 @@ function fsi_fit = get_sphere_fit_FSI(Y, x, h, xout, theta_init, opts)
     if(nargin < 3 || any([isempty(Y) isempty(x) isempty(h)]))
         error('Must provide Y, x and at least one bandwidth')
     end
-    
+
     if(size(Y, 2) ~= size(x, 1))
         error('Dimensions of x and Y do not match')
     end
@@ -67,119 +78,163 @@ function fsi_fit = get_sphere_fit_FSI(Y, x, h, xout, theta_init, opts)
     if(nargin < 4 || isempty(xout))
         xout = x;
     end
-    
+
     m = size(xout, 1);
-    
-    if(nargin < 5 || isempty(theta_init) || (length(theta_init) ~= 1 && size(theta_init, 1) ~= p))
-        warning('Initial values are missing are invalid - randomly generating 10 initial values')
-        eta_init = pi*rand(p - 1, 10) - pi/2;
-        theta_init = cell2mat(arrayfun(@(j) polar2cart(eta_init(:, j)), 1:10, 'UniformOutput', false));
-    elseif(length(theta_init) == 1)
-        q = length(theta_init);
-        clear theta_init; % remove, then replace with actual theta values
-        eta_init = pi*rand(p - 1, q) - pi/2;
-        theta_init = cell2mat(arrayfun(@(j) polar2cart(eta_init(:, j)), 1:q, 'UniformOutput', false));
-    end
-    
-    q = size(theta_init, 2);
-    optsDef = struct('Algorithm', 'NM', 'Ret', 1, 'maxIter', 100, 'useAltCost', 0, 'useAltGrad', 0, 'useAltHess', 0);
-    
-    
-    if(nargin < 6 || isempty(opts) || ~isstruct(opts))
-        warning('Invalid input for opts - using defaults')
-        opts = optsDef;
+
+    optsDef = struct('Ret', 1, 'maxIter', 100, 'thetaInit', 10, 'thetaChoose', 5, 'Algorithm', 'NM');
+
+    if(nargin < 5 || isempty(opts) || ~isstruct(opts))
+      opts = optsDef;
+      clear optsDef;
     else
-        if(isfield(opts, 'Algorithm'))
-            optsDef.Algorithm = opts.Algorithm;
-        end
-        if(isfield(opts, 'Ret'))
-            optsDef.Ret = opts.Ret;
-        end
-        if(isfield(opts, 'maxIter'))
-            optsDef.maxIter = opts.maxIter;
-        end
-        if(isfield(opts, 'useAltCost'))
-            optsDef.useAltCost = opts.useAltCost;
-        end
-        if(isfield(opts, 'useAltGrad'))
-            optsDef.useAltGrad = opts.useAltGrad;
-        end
-        if(isfield(opts, 'useAltHess'))
-            optsDef.useAltHess = opts.useAltHess;
-        end
-        opts = optsDef; clear optsDef; % reset and clear
+      if(~isfield(opts, 'Ret') || isempty(opts.Ret))
+        opts.Ret = optsDef.Ret;
+      end
+      if(~isfield(opts, 'maxIter') || isempty(opts.maxIter))
+        opts.maxIter = optsDef.maxIter;
+      end
+      if(~isfield(opts, 'thetaInit') || isempty(opts.thetaInit))
+        opts.Ret = optsDef.thetaInit;
+      end
+      if(~isfield(opts, 'thetaChoose') || isempty(opts.thetaChoose))
+        opts.maxIter = optsDef.thetaChoose;
+      end
+      if(~isfield(opts, 'Algorithm') || isempty(opts.Algorithm))
+        opts.maxIter = optsDef.Algorithm;
+      end
+      clear optsDef;
     end
+
+    if(length(opts.thetaInit) == 1)
+        q = opts.thetaInit;
+        eta_init = pi*rand(p - 1, q) - pi/2;
+        opts.thetaInit = cell2mat(arrayfun(@(j) polar2cart(eta_init(:, j)), 1:q, 'UniformOutput', false));
+    end
+
+    q = size(opts.thetaInit, 2);
+
+    % Define optimizer options
+
+    optionsPrelim = optimoptions('fmincon', 'Display', 'off', 'Algorithm', 'trust-region-reflective', 'MaxIterations', opts.maxIter, 'SpecifyObjectiveGradient', true, 'HessianFcn', 'objective');
     
-    if(strcmp(opts.Algorithm, 'TR')) % Define options input for fmincon
-        options = optimoptions('fmincon', 'Display', 'off', 'Algorithm', 'trust-region-reflective', 'MaxIterations', opts.maxIter);
-        if(opts.useAltGrad)
-            options = optimoptions(options, 'SpecifyObjectiveGradient', true);
-        end
-        if(opts.useAltHess)
-            options = optimoptions(options, 'HessianFcn', 'objective');
-        end
-    else % define options input for fminsearchbnd
-        options = optimset('Display', 'off', 'MaxIter', opts.maxIter);
+    switch opts.Algorithm
+        
+        case 'NM'
+        
+            optionsFinal = optimset('Display', 'off', 'MaxIter', opts.maxIter);    
+            
+        case 'IP'
+            
+            optionsFinal = optimoptions('fmincon', 'Display', 'off', 'Algorithm', 'interior-point', 'MaxIterations', opts.maxIter);
+    
+        case 'SQP'
+            
+            optionsFinal = optimoptions('fmincon', 'Display', 'off', 'Algorithm', 'sqp', 'MaxIterations', opts.maxIter);
+
+        otherwise
+            
+            error('Invalid choice for Algorithm option')
+            
     end
 
 %% Create objects for storing results
     thetaHat = zeros(p, H); Yout = zeros(3, m, H);
     if(opts.Ret)
-        optInfo = cell(1, 4);
-        optInfo{1} = theta_init;
-        optInfo{2} = zeros(p, q, H); % one p-vector at convergence per starting value per bandwidth
-        optInfo{3} = zeros(q, H); % one flag per staring value per bandwidth
-        optInfo{4} = cell(q, H); % one set of output info per starting value per bandwidth
+        optInfo = cell(1, 5);
+        optInfo{1} = opts.thetaInit;
+        optInfo{2} = cell(1, H); % each element will contain the starting values for final optimization, which may differ by bandwidth
+        optInfo{3} = cell(1, H); % each element will contain the values returned by the final optimization, which may differ by bandwidth
+        optInfo{4} = cell(1, H); % one flag per starting value per bandwidth
+        optInfo{5} = cell(1, H); % one set of output info per starting value per bandwidth
     else
         optInfo = [];
     end
 
-    
+
 
 %% Execute Estimation
 
     for l = 1:H
-
-        % Define cost function for optimization
-        hh = h(l);
         
-            
-        cost_fun = @(eta) WnCost(eta, Y, x, hh, opts.useAltCost);
-            
-        WnVec = zeros(1, q); % for storing the criterion value
+%        disp(['Bandwidth ' num2str(l) ' of ' num2str(H)])
+        % Define cost function for initial optimization
+        hh = h(l);
+        costFunAlt = @(eta) WnCost(eta, Y, x, hh, 1);
+
+        WnAltVec = zeros(1, q); % for storing the criterion value
         thetaMat = zeros(p, q);
 
         for j = 1:q
 
-            etaCur = cart2polar(theta_init(:, j));
-            if(strcmp(opts.Algorithm, 'NM'))
-                
-                [etaOpt, WnVal, fl, op] = fminsearchbnd(cost_fun, etaCur, -pi/2*ones(1, p - 1), pi/2*ones(1, p - 1), options);
-    
-            else
-                
-                [etaOpt, WnVal, fl, op] = fmincon(cost_fun, etaCur, [], [], [], [], -pi/2*ones(1, p - 1), pi/2*ones(1, p - 1), [], options);
-            
-            end
-            
+            etaCur = cart2polar(opts.thetaInit(:, j));
+            [etaOpt, WnVal, fl] = fmincon(costFunAlt, etaCur, [], [], [], [], -pi/2*ones(1, p - 1), pi/2*ones(1, p - 1), [], optionsPrelim);
+
             % Store current optimizer and optimum
             thetaMat(:, j) = polar2cart(etaOpt);
-            WnVec(j) = WnVal;
+            if(ismember(fl, [0, -1, -2]))
+              WnAltVec(j) = Inf; % if optimization fails to converge, set cost to infinity to avoid selecting this value
+            else
+              WnAltVec(j) = WnVal;
+            end
+
+        end
+
+        [~, ind] = sort(WnAltVec);
+        ind = ind(1:min(size(thetaMat, 2), opts.thetaChoose));
+
+        thetaMat = round(thetaMat, 4); % round to pool together nearby convergent points
+        thetaInit2 = unique(thetaMat(:, ind)', 'rows')'; % Starting values for final optimization
+        qq = size(thetaInit2, 2);
+
+        if(opts.Ret)
+          optInfo{2}{l} = thetaInit2;
+          optInfo{3}{l} = zeros(p, qq);
+          optInfo{4}{l} = zeros(1, qq);
+          optInfo{5}{l} = cell(1, qq);
+        end
+
+        % Execute final optimization on reduced set of starting values
+
+        costFun = @(eta) WnCost(eta, Y, x, hh);
+        WnVec = zeros(1, qq);
+        thetaMat = zeros(p, qq);
+
+        for j = 1:qq
+%            disp(['Starting Value ' num2str(j) ' of ' num2str(qq)])
+
+            etaCur = cart2polar(thetaInit2(:, j)/norm(thetaInit2(:, j)));
+            if(strcmp(opts.Algorithm, 'NM'))
+              [etaOpt, WnVal, fl, op] = fminsearchbnd(costFun, etaCur, -pi/2*ones(1, p - 1), pi/2*ones(1, p - 1), optionsFinal);
+            else
+              [etaOpt, WnVal, fl, op] = fmincon(costFun, etaCur, [], [], [], [], -pi/2*ones(1, p - 1), pi/2*ones(1, p - 1), [], optionsFinal);
+            end
+
+            % Store current optimizer and optimum
+            thetaMat(:, j) = polar2cart(etaOpt);
+            if(ismember(fl, [-2, -1]))
+              WnVec(j) = Inf; % if optimization fails, set cost to infinity to avoid selecting this value
+            else
+              WnVec(j) = WnVal;
+            end
 
             if(opts.Ret)
-        
-                optInfo{2}(:, j, l) = thetaMat(:, j);
-                optInfo{3}(j, l) = fl;
-                optInfo{4}{j, l} = op;
+
+                optInfo{3}{l}(:, j) = thetaMat(:, j);
+                optInfo{4}{l}(j) = fl;
+                optInfo{5}{l}{j} = op;
 
             end
 
         end
 
-        [~, ind] = min(WnVec);
-        thetaHat(:, l) = thetaMat(:, ind);
-        Yout(:, :, l) = get_sphere_fit_LF(Y, x*thetaHat(:, l), hh, xout*thetaHat(:, l));
-
+        if(any(WnVec < Inf))
+          [~, ind] = min(WnVec);
+          thetaHat(:, l) = thetaMat(:, ind);
+          Yout(:, :, l) = get_sphere_fit_LF(Y, x*thetaHat(:, l), hh, xout*thetaHat(:, l));
+        else
+          thetaHat(:, l) = NaN(p, 1);
+          Yout(:, :, l) = NaN(3, n);
+        end
     end
 
     fsi_fit = struct('thetaHat', thetaHat, 'Yout', Yout, 'optInfo', {optInfo});

@@ -16,8 +16,13 @@ function [eta,r] = cart2polar(x)
   
   for j = 1:(p-1)
   
-    eta(j) = atan(x(p-j+1)/norm(x(1:p-j)));
-  
+    tmp = norm(x(1:(p-j)));
+    if(tmp == 0)
+       eta(j) = sign(x(p-j+1))*pi/2;
+    else
+        eta(j) = atan(x(p-j+1)/norm(x(1:(p-j))));
+    end
+    
   end
   
 end

@@ -5,17 +5,31 @@
 %          2) h : a vector of length p of bandwidths.
 %          3) kern : a string indicating the kernel choice ('gauss' or
 %          'epan') are the only options currently accepted. If missing,
-%          'epan' is used
-
+%          'gauss' is used
+%
+% Outputs: 1) k: the value of the scaled kernel evaluated at xtemp
+%          
+%   Also, ONLY IF p = 1 AND nargin > 1,
+%
+%          2) kder1: the derivative of the scaled kernel evaluated at xtemp
+%          3) kder2: the second derivative of the scaled kernel evaluated
+%          at xtemp
+% 
 
 function [k, kder1, kder2] = K(xtemp, h, kern)
 
     if(nargin < 3)
-        kern = 'epan';
+        kern = 'gauss';
     elseif(~strcmp(kern, 'gauss') && ~ strcmp(kern, 'epan'))
         error("Invalid kernel choice");
     end
 
+    p = size(xtemp,2);
+
+    if(nargout > 1 && p > 1)
+        error('This function does not compute derivatives when p > 1')
+    end
+    
     k=1; 
     if(nargout > 1)
         kder1=1; 
@@ -24,33 +38,33 @@ function [k, kder1, kder2] = K(xtemp, h, kern)
         kder2=1;
     end
     
-    p = size(xtemp,2);
     for i=1:p
         
         switch kern
             
             case 'gauss'
                 
-                kcur = normpdf(xtemp(:, i)./h(i))/h(i);
+                xh = xtemp(:, i)./h(i);
+                kcur = normpdf(xh)./h(i);
                 k = k .* kcur;
                 
                 if(nargout > 1)
-                    kcur1 = ((-xtemp(:, i)/h(i)) .* kcur);
-                    kder1 = kder1 .* kcur1 / (h(i)^2);
+                    kder1 = kder1 .* (-xh.*kcur)./h(i);
                 end
                 if(nargout > 2)
-                    kder2 = kder2 .* -(kcur + (xtemp(:, i)/h(i)).*kcur1) /(h(i)^3); 
+                    kder2 = kder2 .* (xh.^2 - 1).*kcur./(h(i)^2); 
                 end
                 
             otherwise
                 
-                k = k .* 0.75 .* (1 - (xtemp(:, i)/h(i)).^2)/h(i) .* (abs(xtemp(:, i)) <= h(i));
+                xh = xtemp(:, i)./h(i);
+                k = k .* 0.75 .* (1 - xh.^2)./h(i) .* (abs(xh) <= 1);
                 
                 if(nargout > 1)
-                    kder1 = kder1 .*(-1.5).*(xtemp(:, i)/h(i))/(h(i)^2) .* (abs(xtemp(:, i)) <= h(i));
+                    kder1 = kder1 .*(-1.5).* xh .* (abs(xh) <= 1) ./ (h(i)^2);
                 end
                 if(nargout > 2)
-                    kder2 = (-1.5)*(abs(xtemp(:, i)) <= h(i))/(h(i)^3);
+                    kder2 = (-1.5)*(abs(xh) <= 1)/(h(i)^3);
                 end
         end
     end    
