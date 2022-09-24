@@ -39,5 +39,5 @@ nohup matlab -batch "run_sphere_sim_n50_p2_LN" > n50p2LN.out &
 which will save the output into the file n50p2LN.out
 
 NOTE: For larger sample sizes and dimension, the code can take a very long time
-to execute and require a lot of memory.  The cases with n = 50 and p = 20, however,
+to execute and require a lot of memory.  The cases with n = 50 and p = 2, however,
 should be doable on a decent laptop or desktop.
