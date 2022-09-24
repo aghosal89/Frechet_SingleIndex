@@ -1,5 +1,9 @@
 ## This script contains the codes to generate figures 7 - 10 in the paper. 
 
+# load necessary libraries 
+library('frechet')
+library('ggplot2')
+
 # set working directory~
 
 ################################################
@@ -122,9 +126,6 @@ dev.off()
 ################################################
 
 
-# load library for frechet regression
-library('frechet')
-
 # read predicted densities from Global Frechet regression
 gf_dpred<- read.csv("GF_Dpred.csv", header = T)[,-1]
 
@@ -188,6 +189,15 @@ my.bp <- ggplot(data =df_mspe_fold, aes(y=log.MSPE, x=Model, fill=Model))
 my.bp <- my.bp + geom_boxplot()
 #my.bp <- my.bp + ggtitle('Distribution of MSPE for various models')
 my.bp <- my.bp+ylab('log MSPE')+xlab("Models")
+#my.bp <- my.bp + scale_fill_brewer(palette="Dark2")
+my.bp <- my.bp+scale_fill_manual(values=c("red3",
+                                             "purple3",
+                                             "green3",
+                                             "pink3",
+                                             "skyblue2",
+                                             "grey","yellow3"))
+
+
 my.bp + theme(axis.title.x=element_blank(),
               axis.text.x=element_blank(),
               axis.ticks.x=element_blank()) +
@@ -214,6 +224,8 @@ my.bp1 <- ggplot(data = log_ratio_df, aes(y=MSPE.Ratio, x=Comparison, fill= Comp
 my.bp1 <- my.bp1 + geom_boxplot()
 #my.bp <- my.bp + ggtitle('Distribution of MSPE for various models')
 my.bp1 <- my.bp1 + ylab('log Ratio')+xlab("Models")
+my.bp1 <- my.bp1 + scale_fill_manual(values=c("purple3", "skyblue2", "grey"))
+
 my.bp1 + theme(axis.title.x=element_blank(),
               axis.text.x=element_blank(),
               axis.ticks.x=element_blank()) + geom_hline(yintercept=0, linetype="dashed")+
