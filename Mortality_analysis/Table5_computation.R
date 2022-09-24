@@ -6,6 +6,13 @@
 
 # set working directory~
 
+# files to be sourced~
+source("frechet_Rsquared.R")
+
+# read libraries~
+library("frechet")
+library("fdadensity")
+
 # read the list of countries for our model~
 country_<- read.csv("Countries_FSI.csv", header = T)[,2]
 
@@ -30,11 +37,6 @@ qSup <- seq(0,1, length.out=m)
 
 # support for densities
 dSup <- seq(20, 110, length.out=m)
-
-source("frechet_Rsquared.R")
-
-library("frechet")
-library("fdadensity")
 
 # For Global Frechet
 frechet_Rsquared(Y=quant_all, X=X_ctr, tt=qSup, model="GF")*100
