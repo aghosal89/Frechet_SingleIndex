@@ -5,6 +5,14 @@
 
 # The performance of the FSI model is described in the script 'FSI_model.R'.
 
+# read libraries~
+library('frechet')
+
+
+# souce necessary functions
+source("LocWassRegAMP.R")
+
+
 # Set working directory~
 
 # read the covariate data:
@@ -37,8 +45,6 @@ qSup = seq(0, 1, length.out = m)
 ## Global Frechet on all covariates
 ###################################
 
-library('frechet')
-
 # creating matrix to store the mspe across folds
 gf_folds <- matrix(NA, 30, 1) 
 for (i in 1:nrow(fold)) {
@@ -60,9 +66,6 @@ for (i in 1:nrow(fold)) {
 }
 
 write.csv(gf_folds, "GF_folds.csv")
-
-######### souce the function 'LocWassRegAMP'
-source("LocWassRegAMP.R")
 
 
 # GDP Year-on-Year
