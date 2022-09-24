@@ -5,6 +5,9 @@
 
 # Set working directory~
 
+# read library
+library('numbers')
+
 # read the list of countries for our model~
 country_<- read.csv("Countries_FSI.csv", header = T)
 country_ <- country_[,2]
@@ -45,7 +48,6 @@ h_min <- min(metric_v_temp)*1.5
 h = exp(seq(log(h_min),log(h_max), length.out = 10))
 
 qSup<- seq(0,1, length.out = 101)
-library('numbers')
 
 #######################################################
 # Choosing bandwidth by leave-one-out Cross-Validation
