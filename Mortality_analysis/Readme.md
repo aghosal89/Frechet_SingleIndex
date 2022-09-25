@@ -11,7 +11,7 @@ This script takes as inputs the following files:
     
     c) API_SH.XPD.CHEX.GD.ZS_DS2_en_csv_v2_4499032.csv:  contains time series data on Current healthcare expenditure % of GDP for a superset of countries containing 39 countries in our model. Download link: https://data.worldbank.org/indicator/SH.XPD.CHEX.GD.ZS .
     
-    d) CO2_emissions_pc.csv: contains time series data on CO2 emissions per-capita for a superset of countries containing 39 countries in our model. Download link: https://data.worldbank.org/indicator/EN.ATM.CO2E.PC?name_desc=false .
+    d) API_EN.ATM.CO2E.PC_DS2_en_csv_v2_4498382.csv: contains time series data on CO2 emissions per-capita for a superset of countries containing 39 countries in our model. Download link: https://data.worldbank.org/indicator/EN.ATM.CO2E.PC?name_desc=false .
     
     e) UNICEF-CME_DF_2021_WQ-1.0-download.csv:   contains time series data on Infant mortality per 1000 live births for a superset of countries containing 39 countries in our model. Download link: https://childmortality.org/data .
     
