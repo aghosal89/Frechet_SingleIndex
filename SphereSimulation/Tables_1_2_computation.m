@@ -80,9 +80,6 @@ h(xh_LFp_MSEE) % report best bandwidth
 
 LFpMSEE_sim = LFp_MSEE_h_sim(:,xh_LFp_MSEE);
 
-mean(LFpMSEE_sim)
-std(LFpMSEE_sim)
-
 % mean and standard deviation of MSEE values
 disp(['The average and standard deviation of the squared mLF regression estimation error when p = ' num2str(p) ', n = ' num2str(n), ' and under ' ...
     noise ' noise are:'])
