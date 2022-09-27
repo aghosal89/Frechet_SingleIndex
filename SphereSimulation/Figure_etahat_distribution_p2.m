@@ -1,5 +1,5 @@
 
-%% Codes to create figure 3 in document
+%% Codes to create histograms of eta hats for p=2 for various sample sizes and noise levels
 
 fig=figure;
 
