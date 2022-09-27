@@ -49,7 +49,8 @@ The outputs are:
     p) GF_Qpred.csv  : contains the Global Frechet regression predicted quantiles for 2013 for all countries using all the covariates.
     q) GF_Dpred.csv  : contains the Global Frechet regression predicted densities for 2013 for all countries using all the covariates.
     
-5) Run the codes in the script 'CV_folds_analysis.R'. To understand performance of the models better, we split the data into training/testing segments in 30 folds. The training split consists of 29 observation while testing split consists of 10 observations in each fold. The splits of 30 folds were picked randomly without replacement and stored in 'Folds_new.csv' file to be used for all models repeatedly. Then the respective Local Fréchet and Global Fréchet models were built on the training split and used for prediction on the testing set. The Mean Square Prediction Error is calculated on the testing set. The best bandwidths obtained by running the script 'Models_BW_Predictions.R' are used here. The inputs are:
+
+3) Run the codes in the script 'CV_folds_analysis.R'. To understand performance of the models better, we split the data into training/testing segments in 30 folds. The training split consists of 29 observation while testing split consists of 10 observations in each fold. The splits of 30 folds were picked randomly without replacement and stored in 'Folds_new.csv' file to be used for all models repeatedly. Then the respective Local Fréchet and Global Fréchet models were built on the training split and used for prediction on the testing set. The Mean Square Prediction Error is calculated on the testing set. The best bandwidths obtained by running the script 'Models_BW_Predictions.R' are used here. The inputs are:
 
     
     a) X_centerscale.csv
