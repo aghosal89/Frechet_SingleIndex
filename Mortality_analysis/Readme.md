@@ -23,53 +23,6 @@ As output it produces:
     X_centerscale.csv, the 39x5 design matrix for our model whose columns are the covariates scaled and centered with each row/observation representing a country. We considered mortality analysis for the year 2013. In our analysis, we refer to these covariates as GDPC, HCE, CO2E, IM, HDI respectively in the order appearing above.
 
 
-3) Run the codes in the script 'Response_generation_new.R' to read and process the response data in our model. This script takes as inputs the following files:
-    
-    
-    1.   lt_australia.csv
-    2.   lt_austria.csv
-    3.   lt_belarus.csv  
-    4.   lt_belgium.csv
-    5.   lt_bulgaria.csv
-    6.   lt_canada.csv
-    7.   lt_chile.csv
-    8.   lt_croatia.csv
-    9.   lt_czech.csv
-    10.  lt_denmark.csv
-    11.  lt_estonia.csv 
-    12.  lt_finland.csv
-    13.  lt_france.csv
-    14.  lt_germany.csv
-    15.  lt_greece.csv
-    16.  lt_hungary.csv
-    17.  lt_iceland.csv
-    18.  lt_ireland.csv
-    19.  lt_israel.csv
-    20.  lt_italy.csv
-    21.  lt_japan.csv
-    22.  lt_latvia.csv
-    23.  lt_lithuania.csv
-    24.  lt_luxembourg.csv
-    25.  lt_netherlands.csv
-    26.  lt_newz.csv
-    27.  lt_norway.csv
-    28.  lt_poland.csv
-    29.  lt_portugal.csv
-    30.  lt_korea.csv
-    31.  lt_russia.csv
-    32.  lt_slovakia.csv
-    33.  lt_slovenia.csv
-    34.  lt_spain.csv
-    35.  lt_sweden.csv
-    36.  lt_switzerland.csv
-    37.  lt_UK.csv
-    38.  lt_USA.csv
-    39.  lt_Ukraine.csv  
-    
-    and finally,
-    
-    40.   Countries_FSI.csv
-
 the files 1 - 39 above are life tables for the respective countries above for various years. The data obtained from (https://www.mortality.org/). Each contains columns for age and number of deaths in that age for that country. The file 'Countries_FSI.csv' is described above in 2(a). 
 
 As outputs it generates the files:
