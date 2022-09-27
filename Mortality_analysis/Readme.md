@@ -5,9 +5,13 @@
     * Generation of Covariates: The covariate data used in the model was created using the script 'Covariate_generation.csv'. The output file 'X_centerscale.csv' is a 39x5 dataset whose columns are the standardized covariates for year 2013 in the follwoing order:
          
          i.  GDP year-on-year % change: download link: https://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG .
+         
          ii. Current healthcare expenditure % GDP: download link: https://data.worldbank.org/indicator/SH.XPD.CHEX.GD.ZS .
+         
          iii.Carbon-dioxide emission in metric tonnes per capita: download link: https://data.worldbank.org/indicator/EN.ATM.CO2E.PC?name_desc=false.
+         
          iv. Infant mortality per 1000 live births: download link: https://childmortality.org/data.
+         
          v.  Human Development Index: download link: https://hdr.undp.org/data-center/documentation-and-downloads.
     
     
