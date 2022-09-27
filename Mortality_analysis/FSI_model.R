@@ -1,12 +1,14 @@
+# this function computes the euclidean norm of the vector x:
+e_norm <- function(x) sqrt(sum(x^2))
+
+source("FSIDenReg.R")         ### WM
+source("FSIAuxFunctions.R")   ### WM
 
 #####################
 # Building FSI model
 #####################
 
 # Set working directory~
-
-# read library
-library('numbers')
 
 # read the list of countries for our model~
 country_<- read.csv("Countries_FSI.csv", header = T)
@@ -31,9 +33,12 @@ n<- nrow(quant_all)
 
 ## to find the lowest possible value for bandwidth h
 metric_v_temp <- matrix(NA, n ,1) 
-mv <-matrix(NA, n ,1)
+
 
 for (j in 1:n) {
+  
+  mv <-matrix(NA, n ,1)   
+  
   for (i in 1:n) {
     if(i!=j)
       # computing the euclidean distance between rows the standardized X matrix
@@ -48,19 +53,24 @@ h_min <- min(metric_v_temp)*1.5
 h = exp(seq(log(h_min),log(h_max), length.out = 10))
 
 qSup<- seq(0,1, length.out = 101)
+library('numbers')
 
 #######################################################
 # Choosing bandwidth by leave-one-out Cross-Validation
 #######################################################
 
 mspe_l1ocv <- matrix(NA, length(h), 1) 
-pe_temp <- matrix(0, 40, 1)
+
+#> n  # 39
 
 for (k in 1:length(h)) {
+  
+  pe_temp <- matrix(NA, n, 1)   
+  
   print(k)
   for (i in 1:n) {
     print(i)
-    # select the quentiles in train and test splits of fold
+    # select the quantiles in train and test splits of fold
     q_in <- quant_all[-i,] # training split
     q_out<- quant_all[i,]  # testing split
     
@@ -73,7 +83,8 @@ for (k in 1:length(h)) {
                             kern="gauss", Xout= as.matrix(x_out), 2)
     
     # computing MSPE on out-sample
-    pe_temp[i]<- fdadensity:::trapzRcpp(X = qSup, Y = (as.vector(tempMatrix$Yout) - as.numeric(q_out))^2)
+    pe_temp[i]<- fdadensity:::trapzRcpp(X = qSup, 
+                                        Y = (as.vector(tempMatrix$Yout) - as.numeric(q_out))^2)
   }
   
   mspe_l1ocv[k,] <- mean(pe_temp)
@@ -83,6 +94,7 @@ h_fsi <- h[which.min(mspe_l1ocv)]
 
 write.csv(h_fsi, 'FSI_bw.csv') 
 
+write.csv(mspe_l1ocv, "FSI_MSPE_LOOCV.csv")
 
 
 ####################################
@@ -95,7 +107,10 @@ tempMatrix <- FSIDenReg(as.matrix(X_ctr), qSup, as.matrix(quant_all),
 
 theta_hat <- tempMatrix$thetaHat
 
+theta_hat_names = colnames(X_ctr)
+
 write.csv(theta_hat, "Theta_Hat.csv")
+write.csv(theta_hat_names, "Theta_Hat_Names.csv")
 
 # Generation of densities & quantiles for FSI
 fsi_model<- LocDenReg(xin=as.matrix(X_ctr)%*%theta_hat, qin=as.matrix(quant_all), 
@@ -105,15 +120,16 @@ write.csv(fsi_model$dout, "FSI_Dpred.csv")
 write.csv(fsi_model$qout, "FSI_Qpred.csv")
 
 ###################################
-# Cross-Validation across 30 folds 
+# Test-training out of sample prediction across 30 folds 
 ###################################
 
 fold <- read.csv("Folds_new.csv", header = T)
 
 mspe_kfcv <- matrix(NA, nrow(fold), 1)
-pe_outfold  <- matrix(0, 30, 1) # to store the Wn for testing set after theta optimization
-pe_infold   <- matrix(0, 30, 1)   # to store minimized Wn for training set theta optimization
-thetahat_fold <- matrix(0, 30, 5) # store the theta estimate for each training split
+
+pe_outfold  <- matrix(NA, nrow(fold), 1) # to store the Wn for testing set after theta optimization
+pe_infold   <- matrix(NA, nrow(fold), 1)   # to store minimized Wn for training set theta optimization
+thetahat_fold <- matrix(NA, nrow(fold), length(theta_hat)) # store the theta estimate for each training split
 
 
 for (j in 1:nrow(fold)) {
@@ -130,7 +146,8 @@ for (j in 1:nrow(fold)) {
   pe_infold[j] <- tempMatrix$fnvalue
   
   pe_outfold[j]<- mean(sapply(1:nrow(tempMatrix$Yout), 
-                     function(i) fdadensity:::trapzRcpp(X= qSup, Y = (tempMatrix$Yout[i, ]- as.numeric(q_out[i, ]))^2)))
+                     function(i) fdadensity:::trapzRcpp(X= qSup, 
+                                                        Y = (tempMatrix$Yout[i, ]- as.numeric(q_out[i, ]))^2)))
   
 }
 

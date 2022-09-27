@@ -1,16 +1,19 @@
-## This script contains the codes to generate figures 7 - 10 in the paper. 
+## This script contains the codes to generate figures 4 - 7 in the paper. 
 
 # load necessary libraries 
 library('frechet')
 library('ggplot2')
 
-# set working directory~
+## You need csv files created by "Table3_computation.R" for Fig 6/9,
+## so rerunning here in case not previously done.
+
+source("Table3_computation.R")
 
 ################################################
-## Codes for producing figure 7 in the document
+## Codes for producing figure 4 in the document
 ################################################
 
-# plot all densities with top 6 and bottom 6 modes
+# plot all densities with highest six and lowest six density-modes
 
 # This function computes the mode age of the mortality density over a grid
 # Inputs:  1) dSup     : An equispaced grid of points of length m on the support of densities
@@ -57,7 +60,8 @@ head(mdf[order(-mdf$Mode_Age),])
 png(file = "Rplot_density_all_r1.png", height = 433, width = 615)
 
 # Create plot
-plot(dSup, density_all[2,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey', ylim = c(0, 0.045))
+plot(dSup, density_all[2,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey', 
+     ylim = c(0, 0.045))
 lines(dSup, density_all[3,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
 lines(dSup, density_all[8,], lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
 lines(dSup, density_all[9,],  xlab='Age',lwd=2, ylab='Density', type='l',col='lightgrey')
@@ -122,7 +126,7 @@ grid(nx = NULL, ny = NULL, col = "lightgray", lty = "dotted",
 dev.off()
 
 ################################################
-## Codes for producing figure 8 in the document
+## Codes for producing figure 5 in the document
 ################################################
 
 
@@ -159,7 +163,6 @@ df_all_actual <- data.frame(Age=rep(dSup, n), Method= rep('Actual Mortality', n*
 
 df_pred_plot<- rbind(df_all_actual, df_gf, df_lf_hdi, df_fsi)
 
-library("ggplot2")
 ggplot(data = df_pred_plot, aes(x=Age, y=Density, fill=Country )) +
   geom_path(aes(colour=(Mode_Age)), size=.6, alpha=1) +
   facet_wrap(~Method)+
@@ -173,17 +176,14 @@ ggsave(file="Rplot_models_predictions_r1.eps")
 
 
 ################################################
-## Codes for producing figure 9 in the document
+## Codes for producing figure 6 in the document
 ################################################
 
 df_mspe_fold <- read.csv("MSPE_folds.csv", header = T)[,-1]
-#mvlf_fold<- read.csv("MVLF_MSPE_folds.csv", header=T)[,-1]
 
-#mvlf_fold<- data.frame(Model =rep("MVLF", 30), MSPE= mvlf_fold)
-#df_mspe_fold<- rbind(df_mspe_fold, mvlf_fold)
-df_mspe_fold$Model <- factor(df_mspe_fold$Model)
+df_mspe_fold$Model <- factor(df_mspe_fold$Model, 
+               levels=c("GF", "LF(HDI)", "LF(HCE)", "LF(GDPC)", "LF(IM)", "LF(CO2E)", "FSI"))
 df_mspe_fold$log.MSPE <- log(df_mspe_fold$MSPE)
-df_mspe_fold$sqrt.MSPE <- sqrt(df_mspe_fold$MSPE)
 
 my.bp <- ggplot(data =df_mspe_fold, aes(y=log.MSPE, x=Model, fill=Model))
 my.bp <- my.bp + geom_boxplot()
@@ -224,7 +224,9 @@ my.bp1 <- ggplot(data = log_ratio_df, aes(y=MSPE.Ratio, x=Comparison, fill= Comp
 my.bp1 <- my.bp1 + geom_boxplot()
 #my.bp <- my.bp + ggtitle('Distribution of MSPE for various models')
 my.bp1 <- my.bp1 + ylab('log Ratio')+xlab("Models")
-my.bp1 <- my.bp1 + scale_fill_manual(values=c("purple3", "skyblue2", "grey"))
+my.bp1 <- my.bp1 + scale_fill_manual(values=c("red3",
+                                              "purple3",
+                                              "green3"))
 
 my.bp1 + theme(axis.title.x=element_blank(),
               axis.text.x=element_blank(),
@@ -237,7 +239,7 @@ ggsave(file="Rplot_mspe_compare_hdi_hce_fsi_r1.eps")
 
 
 #################################################
-## Codes for producing figure 10 in the document
+## Codes for producing figure 7 in the document
 #################################################
 
 
