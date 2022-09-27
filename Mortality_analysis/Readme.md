@@ -1,8 +1,11 @@
 
 1) Download all the files from the folder 'Mortality_analysis' into a folder in you computer and set it as the working directory for operation in R/RStudio.
 
-
-2) Run the codes in the script 'Covariate_generation.R' to read and process the covariate data for our model. 
+    
+    - Generation of Covariates:
+    
+    
+Run the codes in the script 'Covariate_generation.R' to read and process the covariate data for our model. 
 This script takes as inputs the following files:
     
     a) Countries_FSI.csv:  contains list of all 39 countries in order appearing in the covariate data from link: https://mortality.org/ .
