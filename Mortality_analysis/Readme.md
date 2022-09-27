@@ -13,10 +13,11 @@
          iv. Infant mortality per 1000 live births: download link: https://childmortality.org/data.
          
          v.  Human Development Index: download link: https://hdr.undp.org/data-center/documentation-and-downloads.
+         
+      The script 'Covariate_generation.R' uses as inputs the files 'Countries_FSI.csv' along with .csv files downloaded from the links above. 
     
-    
-Run the codes in the script 'Covariate_generation.R' to read and process the covariate data for our model. 
-This script takes as inputs the following files:
+    * Generation of Response data: 
+
     
     a) Countries_FSI.csv:  contains list of all 39 countries in order appearing in the covariate data from link: https://mortality.org/ .
     
