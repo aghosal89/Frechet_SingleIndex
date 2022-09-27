@@ -17,23 +17,7 @@
       The script 'Covariate_generation.R' uses as inputs the files 'Countries_FSI.csv' along with .csv files downloaded from the links above. The covariate data were downloaded on September 12, 2022.  
     
    * Generation of Response data: The age-at-death data used to create the pdfs and quantiles for 39 countries were downloaded from https://www.mortality.org/ on August 18, 2020. The codes in the script 'Response_generation_new.csv' file was used to construct the output files 'quant_all.csv' and 'density_all.csv' which are both 39x101 data frames whose rows represent the contries in the file 'Countries_FSI.csv'. The columns of 'quant_all.csv' represent the equidistant quantiles on the grid [0,1]. The columns of 'density_all.csv' represent the equidistant points on the support [20,110] for mortality distributions.
-   * 
-   *  
 
-    
-        
-
-As output it produces:
-
-    X_centerscale.csv, the 39x5 design matrix for our model whose columns are the covariates scaled and centered with each row/observation representing a country. We considered mortality analysis for the year 2013. In our analysis, we refer to these covariates as GDPC, HCE, CO2E, IM, HDI respectively in the order appearing above.
-
-
-the files 1 - 39 above are life tables for the respective countries above for various years. The data obtained from (https://www.mortality.org/). Each contains columns for age and number of deaths in that age for that country. The file 'Countries_FSI.csv' is described above in 2(a). 
-
-As outputs it generates the files:
-    
-    a) quant_all.csv  :  a 39x101 matrix whose rows are the quantiles on an equidistant grid of length 101 on [0,1] of the mortality distribution of each country.
-    b) density_all.csv : a 39x101 matrix whose rows are the mortality densities on an equidistant grid of age-range [20,110] of length 101 for each country.
 
 4) Run the codes in the script 'Models_BW_Predictions.R' to find the predicted quantiles/densities for all countries using Local Frechet regression using each of the covariates 'GDPC', 'HCE', 'CO2E', 'IM', 'HDI'; and also running Global Fréchet regression using all of these 5 covariates. In the process we also find the best bandwidth choices for each Local Frechet regression model (i.e. for Local Fréchet regression with each of the covariates). The inputs for this script are:
 
