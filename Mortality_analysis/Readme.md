@@ -1,8 +1,8 @@
 
 1) Download all the files from the folder 'Mortality_analysis' into a folder in you computer and set it as the working directory for operation in R/RStudio.
 
-    * List of countries considered: The file 'Countries_FSI.csv' 
-    * Generation of Covariates:
+    * List of countries: The file 'Countries_FSI.csv' contains the list of 39 countries considered in the mortality analysis 
+    * Generation of Covariates: The covariate data used in the model was created using the script 'Covariate_generation.csv' which creates the only file 'X_centerscale.csv' a 39x5 dataset whose columns are the standardized covariates 
     
     
 Run the codes in the script 'Covariate_generation.R' to read and process the covariate data for our model. 
