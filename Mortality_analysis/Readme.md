@@ -14,7 +14,7 @@
          
          v.  Human Development Index: download link: https://hdr.undp.org/data-center/documentation-and-downloads.
          
-      The script 'Covariate_generation.R' uses as inputs the files 'Countries_FSI.csv' along with .csv files downloaded from the links above. The covariate data were downloaded on September 12, 2022. The covariates in the data above are referred to as 'GDPC', 'HCE', 'CO2E', 'IM' and 'HDI' for analyses.
+      The script 'Covariate_generation.R' uses as inputs the files 'Countries_FSI.csv' and other .csv files downloaded from the links above (the names of the raw datasets used are mentioned in the code). The covariate data were downloaded on September 12, 2022. The covariates in the data above are referred to as 'GDPC', 'HCE', 'CO2E', 'IM' and 'HDI' respectively for analyses.
     
    * Generation of Response data: The age-at-death data used to create the pdfs and quantiles for 39 countries were downloaded from https://www.mortality.org/ on August 18, 2020. The codes in the script 'Response_generation_new.csv' file was used to construct the output files 'quant_all.csv' and 'density_all.csv' which are both 39x101 data frames whose rows represent the contries in the file 'Countries_FSI.csv'. The columns of 'quant_all.csv' represent the equidistant quantiles on the grid [0,1]. The columns of 'density_all.csv' represent the equidistant points on the support [20,110] for mortality distributions.
 
