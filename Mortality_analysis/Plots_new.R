@@ -185,24 +185,28 @@ df_mspe_fold$Model <- factor(df_mspe_fold$Model,
                levels=c("GF", "LF(HDI)", "LF(HCE)", "LF(GDPC)", "LF(IM)", "LF(CO2E)", "FSI"))
 df_mspe_fold$log.MSPE <- log(df_mspe_fold$MSPE)
 
-my.bp <- ggplot(data =df_mspe_fold, aes(y=log.MSPE, x=Model, fill=Model))
-my.bp <- my.bp + geom_boxplot()
-#my.bp <- my.bp + ggtitle('Distribution of MSPE for various models')
-my.bp <- my.bp+ylab('log MSPE')+xlab("Models")
-#my.bp <- my.bp + scale_fill_brewer(palette="Dark2")
-my.bp <- my.bp+scale_fill_manual(values=c("red3",
-                                             "purple3",
-                                             "green3",
-                                             "pink3",
-                                             "skyblue2",
-                                             "grey","yellow3"))
-
-
-my.bp + theme(axis.title.x=element_blank(),
-              axis.text.x=element_blank(),
-              axis.ticks.x=element_blank()) +
-  theme(text=element_text(size=18))
-ggsave(file="Rplot_mspe_models_compare_log_r1.eps")
+setEPS()
+postscript(file = "Rplot_mpse_models_compare_log_r1.eps", width = 8, height = 5, paper = 'special')
+my.bp <- ggplot(data =df_mspe_fold) + 
+  geom_boxplot(aes(y=log.MSPE, x=Model, fill=Model), size = 0.3, outlier.size = 0.4) + 
+  ylab('log MSPE') + 
+  scale_fill_manual(values=c("red3",
+                             "purple3",
+                             "green3",
+                             "pink3",
+                             "skyblue2",
+                             "grey",
+                             "yellow3")) + 
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
+  theme(axis.text.y=element_text(size=16),
+        axis.title.y=element_text(size=18),
+        legend.text=element_text(size=18),
+        legend.title=element_text(size=18))
+my.bp
+dev.off()
+#ggsave(file="Rplot_mspe_models_compare_log_r1.eps")
 
 
 # plots to compare MSPE of LF(HDI) FSI
@@ -220,19 +224,27 @@ log_ratio_df <- rbind(data.frame(Comparison = "LF(HDI):FSI",MSPE.Ratio = hdi_fsi
                       data.frame(Comparison = "LF(HCE):FSI", MSPE.Ratio = hce_fsi_ratio_log),
                       data.frame(Comparison = "GF:FSI", MSPE.Ratio = gf_fsi_ratio_log))
 
-my.bp1 <- ggplot(data = log_ratio_df, aes(y=MSPE.Ratio, x=Comparison, fill= Comparison))
-my.bp1 <- my.bp1 + geom_boxplot()
-#my.bp <- my.bp + ggtitle('Distribution of MSPE for various models')
-my.bp1 <- my.bp1 + ylab('log Ratio')+xlab("Models")
-my.bp1 <- my.bp1 + scale_fill_manual(values=c("red3",
-                                              "purple3",
-                                              "green3"))
-
-my.bp1 + theme(axis.title.x=element_blank(),
-              axis.text.x=element_blank(),
-              axis.ticks.x=element_blank()) + geom_hline(yintercept=0, linetype="dashed")+
-  theme(text=element_text(size=18))
-ggsave(file="Rplot_mspe_compare_hdi_hce_fsi_r1.eps")
+postscript(file = "Rplot_mpse_compare_hdi_hce_fsi_r1.eps", width = 4, height = 5, paper = 'special')
+my.bp1 <- ggplot(data = log_ratio_df) + 
+  geom_boxplot(aes(y=MSPE.Ratio, x=Comparison, fill= Comparison), size = 0.3, outlier.size = 0.4) + 
+  ylab('log Ratio') + 
+  scale_fill_manual(values=c("red3",
+                             "purple3",
+                             "green3")) + 
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) + 
+  geom_hline(yintercept = 0, linetype="dashed") +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
+  theme(axis.text.y=element_text(size=16),
+        axis.title.y=element_text(size=18),
+        legend.text=element_text(size=18),
+        legend.title=element_text(size=18))
+my.bp1
+dev.off()
+#ggsave(file="Rplot_mspe_compare_hdi_hce_fsi_r1.eps")
 
 
 

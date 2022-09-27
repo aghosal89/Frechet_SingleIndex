@@ -5,6 +5,8 @@ given data set consisting of pairs (X_i, Y_i), with Y_i being an element of the
 two-dimensional sphere.  Multivariate local Fréchet regression is also implemented
 in the file "get_sphere_fit_LFpcov.m" as a competitor.
 
+#### Running the simulation scripts ###
+
 There are many simulation scripts with file names of the form "run_sphere_sim_nN_pP_NOISE*.m",
 where N denotes the sample size (50, 100, 200), P the dimension (2, 5, 10), and NOISE
 the noise level (low = LN, high = HN).  Some filenames end in "_batchM" to indicate
@@ -41,3 +43,20 @@ which will save the output into the file n50p2LN.out
 NOTE: For larger sample sizes and dimension, the code can take a very long time
 to execute and require a lot of memory.  The cases with n = 50 and p = 2, however,
 should be doable on a decent laptop or desktop.
+
+### Analyzing Simulation Results
+
+The compiled data sets are all contained in the directory 'FinalSimResults', one
+.mat file for each of the 18 simulation settings.  The numeric and graphical
+summaries in the text can be reproduced as follows.
+
+1) To reproduce the panels in Figure 1, run the script "Figure_sphereplots.m".
+
+2) To reproduce Tables 1 and 2, the script "Tables_1_2_computation.m" can be used.  As
+lines 4-5 of this script indicate, a result file from 'FinalSimResults' must first
+be read into the Matlab workspace, then the corresponding summaries are computed for
+that particular simulation setting.
+
+3) To reproduce the histograms in Figure 2, run the script "Figure_etahat_distribution_p2.m"
+
+4) To reproduce the boxplots in Figure 3, run the script "Figures_MSEE_boxplots.m"
