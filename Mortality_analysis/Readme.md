@@ -14,23 +14,13 @@
          
          v.  Human Development Index: download link: https://hdr.undp.org/data-center/documentation-and-downloads.
          
-      The script 'Covariate_generation.R' uses as inputs the files 'Countries_FSI.csv' along with .csv files downloaded from the links above. 
+      The script 'Covariate_generation.R' uses as inputs the files 'Countries_FSI.csv' along with .csv files downloaded from the links above. The covariate data were downloaded on September 12, 2022.  
     
-    * Generation of Response data: 
+   * Generation of Response data: The age-at-death data used to create the pdfs and quantiles for 39 countries were downloaded from https://www.mortality.org/. The codes in the script 'Response_generation_new.csv' file was used to construct the output files 'quant_all.csv' and 'density_all.csv' which are both 39x101 data frames whose rows represent the contries in the file 'Countries_FSI.csv' appearing in the same order.
+   *  
 
     
-    a) Countries_FSI.csv:  contains list of all 39 countries in order appearing in the covariate data from link: https://mortality.org/ .
-    
-    b) API_NY.GDP.MKTP.KD.ZG_DS2_en_csv_v2_4498512.csv:  contains time seeries data on GDP year-on-year % change for a superset of countries containing 39 countries in our model. Download link: https://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG .
-    
-    c) API_SH.XPD.CHEX.GD.ZS_DS2_en_csv_v2_4499032.csv:  contains time series data on Current healthcare expenditure % of GDP for a superset of countries containing 39 countries in our model. Download link: https://data.worldbank.org/indicator/SH.XPD.CHEX.GD.ZS .
-    
-    d) API_EN.ATM.CO2E.PC_DS2_en_csv_v2_4498382.csv: contains time series data on CO2 emissions per-capita for a superset of countries containing 39 countries in our model. Download link: https://data.worldbank.org/indicator/EN.ATM.CO2E.PC?name_desc=false .
-    
-    e) UNICEF-CME_DF_2021_WQ-1.0-download.csv:   contains time series data on Infant mortality per 1000 live births for a superset of countries containing 39 countries in our model. Download link: https://childmortality.org/data .
-    
-    f) HDR21-22_Composite_indices_complete_time_series.csv: contains time series data on Human Development Index for a superset of countries containing 39 countries in our model. Download link: https://hdr.undp.org/data-center/documentation-and-downloads .
-    
+        
 
 As output it produces:
 
