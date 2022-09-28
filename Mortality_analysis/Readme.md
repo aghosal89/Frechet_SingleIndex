@@ -2,7 +2,7 @@
 1) Download all the files from the folder 'Mortality_analysis' into a folder in you computer and set it as the working directory for operation in R/RStudio.
 
     * List of countries: The file 'Countries_FSI.csv' contains the list of 39 countries considered in the mortality analysis.
-    * Generation of Covariates: For reproducibility we provide standardized covariate data used in the model for 2013 in the file 'X_centerscale.csv'. For the latest raw data we refer the reader to original sources listed below. The file 'X_centerscale.csv' was created using the script 'Covariate_generation.csv'. The output file 'X_centerscale.csv' is a 39x5 dataset whose columns are the standardized covariates for year 2013 in the follwoing order:
+    * Generation of Covariates: For reproducibility we provide standardized covariate data used in the model for 2013 in the file 'X_centerscale.csv'. For the latest raw data we refer the reader to original sources listed below. The file 'X_centerscale.csv' was created using the script 'Covariate_generation.csv'. In the output file 'X_centerscale.csv', the covariates appear in the follwoing order:
          
          
          i.  GDP year-on-year % change: download link: https://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG.
