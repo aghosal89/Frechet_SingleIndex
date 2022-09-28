@@ -4,7 +4,7 @@
     * List of countries: The file 'Countries_FSI.csv' contains the list of 39 countries considered in the mortality analysis.
     * Generation of Covariates: The covariate data used in the model was created using the script 'Covariate_generation.csv'. The output file 'X_centerscale.csv' is a 39x5 dataset whose columns are the standardized covariates for year 2013 in the follwoing order:
          
-         i.  GDP year-on-year % change: download link: https://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG. In script it is read as ''
+         i.  GDP year-on-year % change: download link: https://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG.
          
          ii. Current healthcare expenditure % GDP: download link: https://data.worldbank.org/indicator/SH.XPD.CHEX.GD.ZS .
          
