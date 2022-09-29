@@ -25,7 +25,7 @@
       - The code calls for the raw data on life tables, e.g. for Belarus, the life table is obtained by downloading life tables for Belarus for both sexes by period, using 1 year increments in age, for one year 2013, and then we removed the data for the rest of the years and made it available as 'lt_belarus.csv' which is then read into 'Response_generation_new.csv' for further analysis.
 
 
-2) Run the codes in the script 'Models_BW_Predictions.R' to find the predicted quantiles/densities for all countries using Local Frechet regression using each of the covariates 'GDPC', 'HCE', 'CO2E', 'IM', 'HDI'; and also running Global Fréchet regression using all of these 5 covariates. In the process we also find the best bandwidth choices for each Local Frechet regression model (i.e. for Local Fréchet regression with each of the covariates). The inputs for this script are:
+2) Run the codes in the script 'Models_BW_Predictions.R' to find the predicted quantiles/densities for all countries using Local Frechet regression using each of the covariates 'GDPC', 'HCE', 'CO2E', 'IM', 'HDI'; and also running Global Fréchet regression using all of these 5 covariates. Our code for fitting the FSI model starts with leave-one-out cross-validation to find the best bandwidth, followed by estimation of the index parameter. Subsequently the Mean Square Prediction Error is calculated for each of the 30 folds, and then averaged. To calculate the FSI model results, run the codes in the script 'FSI_model.R', which works by sourcing the functions from the following scripts in your working directory:
 
     a) X_centerscale.csv
     b) quant_all.csv
