@@ -57,63 +57,29 @@ head(mdf[order(mdf$Mode_Age),])
 head(mdf[order(-mdf$Mode_Age),]) 
 
 
+# create the plot
+
 png(file = "Rplot_density_all_r1.png", height = 433, width = 615)
 
-# Create plot
+ind_ls<- list()
+ind_ls<- list(Blank=c(2,3,8,9,10,11,13,14,16,17,18,20,21,22,23,25,26,27,29,30,31,32,33,36,37,39),
+              Red = c(4,5,19,34,35,38), Blue = c(1,6,7,12,15,24))
+
 plot(dSup, density_all[2,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey', 
      ylim = c(0, 0.045))
-lines(dSup, density_all[3,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[8,], lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[9,],  xlab='Age',lwd=2, ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[10,], xlab='Age',lwd=2, ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[11,], xlab='Age',lwd=2, ylab='Density', type='l',col='lightgrey')
+for (j in ind_ls$Blank) {
+  lines(dSup, density_all[j,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
+}
 
-lines(dSup, density_all[13,], xlab='Age',lwd=2, ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[14,], xlab='Age',lwd=2, ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[16,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[17,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[18,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[20,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[21,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[22,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[23,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[25,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[26,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[27,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[29,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[30,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[31,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[32,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[33,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[36,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[37,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[39,],lwd=2, xlab='Age', ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[1,], 
-      xlab='Age', ylab='Density', type='l', lwd=2, col=rgb(red = 0, green=0, blue = 1, alpha = 0.5))
-lines(dSup, density_all[4,], lwd=2,
-      xlab='Age', ylab='Density', type='l',col=rgb(red = 1, green = 0, blue = 0, alpha = 0.5))
-lines(dSup, density_all[5,], lwd=2,
-      xlab='Age', ylab='Density', type='l',col=rgb(red = 1, green = 0, blue = 0, alpha = 0.5))
-lines(dSup, density_all[6,], lwd=2,
-      xlab='Age', ylab='Density', type='l',col=rgb(red = 0, green = 0, blue = 1, alpha = 0.5))
-lines(dSup, density_all[7,], lwd=2,
-      xlab='Age', ylab='Density', type='l',col=rgb(red = 0, green = 0, blue = 1, alpha = 0.5))
-lines(dSup, density_all[15,], lwd=2,
-      xlab='Age', ylab='Density', type='l',col=rgb(red = 0, green = 0, blue = 1, alpha = 0.5))
-lines(dSup, density_all[12,], lwd=2,
-      xlab='Age', ylab='Density', type='l',col=rgb(red = 0, green = 0, blue = 1, alpha = 0.5))
-lines(dSup, density_all[19,], lwd=2,
-      xlab='Age', ylab='Density', type='l',col=rgb(red = 1, green = 0, blue = 0, alpha = 0.5))
-lines(dSup, density_all[24,], lwd=2,
-      xlab='Age', ylab='Density', type='l',col=rgb(red = 0, green = 0, blue = 1, alpha = 0.5))
-lines(dSup, density_all[28,], lwd=2,
-      xlab='Age', ylab='Density', type='l',col='lightgrey')
-lines(dSup, density_all[34,], lwd=2,
-      xlab='Age', ylab='Density', type='l',col=rgb(red = 1, green = 0, blue = 0, alpha = 0.5))
-lines(dSup, density_all[35,], lwd=2,
-      xlab='Age', ylab='Density', type='l',col=rgb(red = 1, green = 0, blue = 0, alpha = 0.5))
-lines(dSup, density_all[38,], lwd=2,
-      xlab='Age', ylab='Density', type='l',col=rgb(red = 1, green = 0, blue = 0, alpha = 0.5))
+for (j in ind_ls$Red) {
+  lines(dSup, density_all[j,], 
+        xlab='Age', ylab='Density', type='l', lwd=2, col=rgb(red = 1, green=0, blue = 0, alpha = 0.5))
+}
+
+for (j in ind_ls$Blue) {
+  lines(dSup, density_all[j,], 
+        xlab='Age', ylab='Density', type='l', lwd=2, col=rgb(red = 0, green=0, blue = 1, alpha = 0.5))
+}
 
 # Add a legend to the plot
 legend(20, 0.045, legend=c("Bottom 6", "Top 6"),
@@ -122,8 +88,8 @@ legend(20, 0.045, legend=c("Bottom 6", "Top 6"),
 grid(nx = NULL, ny = NULL, col = "lightgray", lty = "dotted",
      lwd = par("lwd"), equilogs = TRUE)
 
-
 dev.off()
+
 
 ################################################
 ## Codes for producing figure 5 in the document
