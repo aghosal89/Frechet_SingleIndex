@@ -42,24 +42,72 @@ end
 
 
 fig=figure;
-for cur = 1:size(eta_sim, 2)
-    subplot(2,3,cur)
-    histogram(eta_sim(:,cur), 'NumBins', 20, 'Normalization','pdf');
-    grid on
-    [~, eta0]=cart2polar(theta0);
-    xline(eta0, 'rx', 'LineWidth', 2.0);
-    set(findall(gcf,'-property','FontSize'),'FontSize',15);
-    xlabel('$\hat{{\eta}}$','interpreter','latex', 'FontWeight','bold');
-    if cur <= 3
-        xlim([-1.25,-.1]);
-        ylim([0, 6.5]);
-        title(['n=', num2str(nVal(nInd)), ', $\sigma^2=0.4$'],'interpreter','latex', 'FontWeight','bold');
-    else
-        xlim([-1.58,1.58]);
-        ylim([0, 3.5]);
-        title('n=', num2str(nVal(nInd)), ', $\sigma^2=0.8$','interpreter','latex', 'FontWeight','bold');
-    end
-end 
+
+subplot(2,3,1)
+histogram(eta_sim(:,1), 'NumBins', 20, 'Normalization','pdf');
+grid on
+[~, eta0]=cart2polar(theta0);
+xline(eta0, 'rx', 'LineWidth', 2.0);
+set(findall(gcf,'-property','FontSize'),'FontSize',15);
+xlabel('$\hat{{\eta}}$','interpreter','latex', 'FontWeight','bold');
+xlim([-1.25,-.1]);
+ylim([0, 6.5]);
+title(['n=50', ', $\sigma^2=0.4$'],'interpreter','latex', 'FontWeight','bold');
+
+subplot(2,3,2)
+histogram(eta_sim(:,2), 'NumBins', 20, 'Normalization','pdf');
+grid on
+[~, eta0]=cart2polar(theta0);
+xline(eta0, 'rx', 'LineWidth', 2.0);
+set(findall(gcf,'-property','FontSize'),'FontSize',15);
+xlabel('$\hat{{\eta}}$','interpreter','latex', 'FontWeight','bold');
+xlim([-1.25,-.1]);
+ylim([0, 6.5]);
+title(['n=100', ', $\sigma^2=0.4$'],'interpreter','latex', 'FontWeight','bold');
+
+subplot(2,3,3)
+histogram(eta_sim(:,3), 'NumBins', 20, 'Normalization','pdf');
+grid on
+[~, eta0]=cart2polar(theta0);
+xline(eta0, 'rx', 'LineWidth', 2.0);
+set(findall(gcf,'-property','FontSize'),'FontSize',15);
+xlabel('$\hat{{\eta}}$','interpreter','latex', 'FontWeight','bold');
+xlim([-1.25,-.1]);
+ylim([0, 6.5]);
+title(['n=200', ', $\sigma^2=0.4$'],'interpreter','latex', 'FontWeight','bold');
+
+subplot(2,3,4)
+histogram(eta_sim(:,4), 'NumBins', 20, 'Normalization','pdf');
+grid on
+[~, eta0]=cart2polar(theta0);
+xline(eta0, 'rx', 'LineWidth', 2.0);
+set(findall(gcf,'-property','FontSize'),'FontSize',15);
+xlabel('$\hat{{\eta}}$','interpreter','latex', 'FontWeight','bold');
+xlim([-1.58,1.58]);
+ylim([0, 3.5]);
+title(['n=50', ', $\sigma^2=0.8$'],'interpreter','latex', 'FontWeight','bold');
+
+subplot(2,3,5)
+histogram(eta_sim(:,5), 'NumBins', 20, 'Normalization','pdf');
+grid on
+[~, eta0]=cart2polar(theta0);
+xline(eta0, 'rx', 'LineWidth', 2.0);
+set(findall(gcf,'-property','FontSize'),'FontSize',15);
+xlabel('$\hat{{\eta}}$','interpreter','latex', 'FontWeight','bold');
+xlim([-1.58,1.58]);
+ylim([0, 3.5]);
+title(['n=100', ', $\sigma^2=0.8$'],'interpreter','latex', 'FontWeight','bold');
+
+subplot(2,3,6)
+histogram(eta_sim(:,6), 'NumBins', 20, 'Normalization','pdf');
+grid on
+[~, eta0]=cart2polar(theta0);
+xline(eta0, 'rx', 'LineWidth', 2.0);
+set(findall(gcf,'-property','FontSize'),'FontSize',15);
+xlabel('$\hat{{\eta}}$','interpreter','latex', 'FontWeight','bold');
+xlim([-1.58,1.58]);
+ylim([0, 3.5]);
+title(['n=200', ', $\sigma^2=0.8$'],'interpreter','latex', 'FontWeight','bold');
 
 han=axes(fig,'visible','off'); 
 han.Title.Visible='on';
