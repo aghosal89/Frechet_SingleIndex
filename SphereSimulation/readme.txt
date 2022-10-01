@@ -57,6 +57,6 @@ lines 4-5 of this script indicate, a result file from 'FinalSimResults' must fir
 be read into the Matlab workspace, then the corresponding summaries are computed for
 that particular simulation setting.
 
-3) To reproduce the histograms in Figure 2, run the script "Figure_etahat_distribution_p2.m"
+3) To reproduce the histograms in Figure 2, run the script "Figure_etahat_distribution_p2_new.m"
 
 4) To reproduce the boxplots in Figure 3, run the script "Figures_MSEE_boxplots.m"
