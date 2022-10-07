@@ -92,7 +92,7 @@ The outputs: each file below contains 30x1 matrix whose elements are the Mean Sq
     
     f) LF_HDI_folds.csv   : MSPE for Local Frechet using HDI in 30 folds.
 
-4) To run the FSI model, find the best bandwidth, estimate of the index parameter, obtain the Mean Square Prediction Error in 30 folds, run the codes in the script 'FSI_model.R', which works by sourcing the functions from the following scripts in your working directory:
+4) Our code for fitting the FSI model starts with leave-one-out cross-validation to find the best bandwidth, followed by estimation of the index parameter. Subsequently the Mean Square Prediction Error is calculated for each of the 30 folds, and then averaged.  To calculate the FSI model results, run the codes in the script 'FSI_model.R', which works by sourcing the functions from the following scripts in your working directory:
 
     a) FSIAuxFunctions.R
     
