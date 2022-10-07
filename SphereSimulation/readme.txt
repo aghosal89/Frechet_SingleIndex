@@ -50,7 +50,7 @@ The compiled data sets are all contained in the directory 'FinalSimResults', one
 .mat file for each of the 18 simulation settings.  The numeric and graphical
 summaries in the text can be reproduced as follows.
 
-1) To reproduce the panels in Figure 1, run the script "Figure_sphereplots.m".
+1) To reproduce the panels in Figure 1, run the script "Figure_sphereplots_new.m".
 
 2) To reproduce Tables 1 and 2, the script "Tables_1_2_computation.m" can be used.  As
 lines 4-5 of this script indicate, a result file from 'FinalSimResults' must first
@@ -59,4 +59,4 @@ that particular simulation setting.
 
 3) To reproduce the histograms in Figure 2, run the script "Figure_etahat_distribution_p2_new.m"
 
-4) To reproduce the boxplots in Figure 3, run the script "Figures_MSEE_boxplots.m"
+4) To reproduce the boxplots in Figure 3, run the script "Figures_MSEE_boxplots_new.m"
