@@ -92,7 +92,7 @@ The outputs: each file below contains 30x1 matrix whose elements are the Mean Sq
     
     f) LF_HDI_folds.csv   : MSPE for Local Frechet using HDI in 30 folds.
 
-6) To run the FSI model, find the best bandwidth, estimate of the index parameter, obtain the Mean Square Prediction Error in 30 folds, run the codes in the script 'FSI_model.R', which works by sourcing the functions from the following scripts in your working directory:
+4) To run the FSI model, find the best bandwidth, estimate of the index parameter, obtain the Mean Square Prediction Error in 30 folds, run the codes in the script 'FSI_model.R', which works by sourcing the functions from the following scripts in your working directory:
 
     a) FSIAuxFunctions.R
     
@@ -120,7 +120,7 @@ The outputs:
     
     5. FSI_MSPE_folds.csv : Mean Square Prediction Error in 30 folds by the FSI model using the best bandwidth above. 
 
-7) To run the computations for the table 5 in the paper run the codes in the script 'Table3_computation.R'. It sources the function 'frechet_Rsquared.R'. The inputs are:
+5) To run the computations for the table 3 in the paper run the codes in the script 'Table3_computation.R'. It sources the function 'frechet_Rsquared.R'. The inputs are:
 
     1. Countries_FSI.csv
     2. X_centerscale.csv
@@ -143,9 +143,9 @@ The outputs:
 
     17. FSI_MSPE_folds.csv
 
-Outputs: This script does not produce outputs to be saved for further use. It is used to compute the numbers in table 5 of the paper. 
+Outputs: This script does not produce outputs to be saved for further use. It is used to compute the numbers in table 3 of the paper. 
 
-8) To generate the figures 4 - 7 in the paper run the codes in the script 'Plots_new.R'. The following are the inputs:
+6) To generate the figures 4 - 7 in the paper run the codes in the script 'Plots_new.R'. The following are the inputs:
 
     a) density_all.csv
     
@@ -174,7 +174,7 @@ Outputs: This script does not produce outputs to be saved for further use. It is
     l) FSI_bw.csv
     
 
-9)  To prepare a similar file as Folds_new.csv, run the codes in the script Folds_generate.csv. The test/train partition of folds will not be identical to
+7)  To prepare a similar file as Folds_new.csv, run the codes in the script Folds_generate.csv. The test/train partition of folds will not be identical to
     the one used in our analysis. As output it produces:
     
     Folds_new.csv
