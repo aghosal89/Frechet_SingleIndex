@@ -1,3 +1,4 @@
+
 ## This script contains the codes to generate figures 4 - 7 in the paper. 
 
 # load necessary libraries 
@@ -136,7 +137,7 @@ ggplot(data = df_pred_plot, aes(x=Age, y=Density, fill=Country )) +
   scale_color_gradientn(colours = terrain.colors(10)) +
   labs(colour = "Mode Age")+
   theme(text=element_text(size=20))
-  
+
 ggsave(file="Rplot_models_predictions_r1.eps")
 
 
@@ -148,7 +149,7 @@ ggsave(file="Rplot_models_predictions_r1.eps")
 df_mspe_fold <- read.csv("MSPE_folds.csv", header = T)[,-1]
 
 df_mspe_fold$Model <- factor(df_mspe_fold$Model, 
-               levels=c("GF", "LF(HDI)", "LF(HCE)", "LF(GDPC)", "LF(IM)", "LF(CO2E)", "FSI"))
+                             levels=c("GF", "LF(HDI)", "LF(HCE)", "LF(GDPC)", "LF(IM)", "LF(CO2E)", "FSI"))
 df_mspe_fold$log.MSPE <- log(df_mspe_fold$MSPE)
 
 setEPS()
@@ -195,8 +196,8 @@ my.bp1 <- ggplot(data = log_ratio_df) +
   geom_boxplot(aes(y=MSPE.Ratio, x=Comparison, fill= Comparison), size = 0.3, outlier.size = 0.4) + 
   ylab('log Ratio') + 
   scale_fill_manual(values=c("red3",
-                             "purple3",
-                             "green3")) + 
+                             "green3",
+                             "purple3")) + 
   theme(axis.title.x=element_blank(),
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank()) + 
@@ -300,5 +301,3 @@ ggplot(data = hce_effect_data, aes(x=Age, y=Density, fill=HCE.group)) +
   theme(text=element_text(size=18))
 
 ggsave(file="Rplot_HCE_effect_r1.eps")
-
-
