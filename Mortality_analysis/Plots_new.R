@@ -191,7 +191,7 @@ log_ratio_df <- rbind(data.frame(Comparison = "LF(HDI):FSI",MSPE.Ratio = hdi_fsi
                       data.frame(Comparison = "LF(HCE):FSI", MSPE.Ratio = hce_fsi_ratio_log),
                       data.frame(Comparison = "GF:FSI", MSPE.Ratio = gf_fsi_ratio_log))
 
-postscript(file = "Rplot_mpse_compare_hdi_hce_fsi_r1.eps", width = 4, height = 5, paper = 'special')
+postscript(file = "Rplot_mspe_compare_hdi_hce_fsi_r1.eps", width = 4, height = 5, paper = 'special')
 my.bp1 <- ggplot(data = log_ratio_df) + 
   geom_boxplot(aes(y=MSPE.Ratio, x=Comparison, fill= Comparison), size = 0.3, outlier.size = 0.4) + 
   ylab('log Ratio') + 
